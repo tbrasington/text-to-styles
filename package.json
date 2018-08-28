@@ -1,0 +1,25 @@
+{
+  "name": "text-to-styles",
+  "version": "0.1.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "text-to-styles",
+    "manifest": "src/manifest.json",
+    "main": "text-to-styles.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.2"
+  },
+  "author": "Thomas Brasington <tom@2c2d.co.uk>"
+}
