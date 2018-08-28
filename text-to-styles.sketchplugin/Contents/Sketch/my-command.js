@@ -33159,8 +33159,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var pages = doc.pages();
   var TypographyStyles = [];
   var DocumentColours = {};
+  var textAlignments = [];
   pages.forEach(function (page) {
-    log(page.name()); // page styles
+    //  alignments
+    if (String(page.name()) === "Alignments") {
+      page.layers().forEach(function (layer) {
+        //log(layer.name() + ' ' + layer.textAlignment()) 
+        var alignment = 'left';
+        if (layer.textAlignment() === 4) alignment = 'left';
+        if (layer.textAlignment() === 2) alignment = 'center';
+        if (layer.textAlignment() === 1) alignment = 'right';
+        textAlignments.push(alignment);
+      });
+    } // page styles
+
 
     if (String(page.name()) === "Styles") {
       // get styles
@@ -33170,8 +33182,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           // log(layer.fontSize())
           // log(layer.lineHeight())
           // log(layer.characterSpacing())
-          //log(layer.style().textStyle().encodedAttributes() )
-          log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]);
+          // log(layer.style().textStyle().encodedAttributes() )
+          //log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])
+          var textTransform = 'none';
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
+
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase';
           TypographyStyles.push({
             name: layer.name(),
             styles: {
@@ -33179,10 +33195,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               fontSize: layer.fontSize(),
               lineHeight: layer.lineHeight(),
               characterSpacing: layer.characterSpacing(),
-              textTransform: layer.styleAttributes()["MSAttributedStringTextTransformAttribute"] //  null: none, 1: uppercase and 2 lowercase
-
+              textTransform: textTransform
             },
-            alignments: ["left"]
+            alignments: textAlignments
           });
         }
       });
@@ -33208,7 +33223,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var typeStyles = {};
     json.typography.forEach(function (item) {
       Object.keys(json.colours).forEach(function (colour) {
-        log(sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour]));
         item.alignments.map(function (align, index) {
           typeStyles["".concat(item.name, "/").concat(colour, "/").concat(index + '_' + align)] = _objectSpread({
             color: sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour]),
