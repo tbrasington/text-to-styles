@@ -12,7 +12,7 @@ export default function(context) {
 
   let TypographyStyles = []
   let DocumentColours = {};
-  let textAlignments =[];
+  let textAlignments = [];
 
   pages.forEach(page=>{
    
