@@ -33146,9 +33146,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _typeSheet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./typeSheet */ "./src/typeSheet.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -33241,8 +33243,71 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }, textStyles);
   var RenderPage = context.document.addBlankPage();
   RenderPage.name = "Rendered Styles";
-  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["View"], null), RenderPage);
+  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_typeSheet__WEBPACK_IMPORTED_MODULE_3__["TypeLayout"], {
+    colours: DesignSystemTokens.colours,
+    typography: DesignSystemTokens.typography
+  }), RenderPage);
 });
+
+/***/ }),
+
+/***/ "./src/typeSheet.js":
+/*!**************************!*\
+  !*** ./src/typeSheet.js ***!
+  \**************************/
+/*! exports provided: TypeLayout */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TypeLayout", function() { return TypeLayout; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-sketchapp */ "./node_modules/react-sketchapp/lib/index.js");
+/* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_2__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var TypeLayout = function TypeLayout(json) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["View"], {
+    style: {
+      "display": "flex",
+      "flexDirection": "row"
+    }
+  }, json.typography.map(function (style) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["View"], {
+      key: style.name,
+      style: {
+        "padding": 24,
+        "display": "flex",
+        "flexDirection": "column"
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["Text"], null, String(style.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["View"], {
+      name: "Styles ".concat(style.name),
+      style: {
+        "display": "flex",
+        "flexDirection": "column",
+        marginBottom: 24
+      }
+    }, Object.keys(json.colours).map(function (colour) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["Text"], {
+        key: "".concat(style.name, "/").concat(colour),
+        style: _objectSpread({
+          marginBottom: 24,
+          flex: 1,
+          color: sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour])
+        }, style.styles),
+        name: "".concat(String(style.name), "/").concat(colour)
+      }, String(style.name));
+    })));
+  }));
+};
 
 /***/ }),
 

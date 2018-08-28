@@ -1,6 +1,8 @@
 import React from 'react'
 import {render, TextStyles, Page, View} from 'react-sketchapp'
 import dom from 'sketch/dom'
+import {TypeLayout} from './typeSheet';
+
 export default function(context) {
   
   context.document.showMessage("It's alive 🙌");
@@ -104,5 +106,5 @@ export default function(context) {
 
 let RenderPage =  context.document.addBlankPage()
 RenderPage.name="Rendered Styles"
-render(<View />, RenderPage);
+render(<TypeLayout colours={DesignSystemTokens.colours}  typography={DesignSystemTokens.typography}/>, RenderPage);
 }
