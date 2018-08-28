@@ -25,6 +25,8 @@
   },
   "author": "Thomas Brasington <tbrasington@gmail.com>",
   "dependencies": {
-    "react-sketchapp": "^2.0.0"
+    "react": "^16.4.2",
+    "react-sketchapp": "^2.0.0",
+    "react-test-renderer": "^16.4.2"
   }
 }

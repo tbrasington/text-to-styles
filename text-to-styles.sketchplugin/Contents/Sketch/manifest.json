@@ -19,7 +19,7 @@
   "name": "text-to-styles",
   "identifier": "text-to-styles",
   "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml",
+  "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml",
   "author": "Thomas Brasington",
-  "authorEmail": "tom@2c2d.co.uk"
+  "authorEmail": "tbrasington@gmail.com"
 }

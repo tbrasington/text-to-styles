@@ -1,4 +1,8 @@
+import React from 'react'
+import {render, TextStyles, Page, View} from 'react-sketchapp'
+import dom from 'sketch/dom'
 export default function(context) {
+  
   context.document.showMessage("It's alive 🙌");
 
     
@@ -7,7 +11,8 @@ export default function(context) {
   
 
   let TypographyStyles = []
-  let DocumentColours = {}
+  let DocumentColours = {};
+
   pages.forEach(page=>{
     log(page.name())
     
@@ -33,7 +38,8 @@ export default function(context) {
               lineHeight : layer.lineHeight(),
               characterSpacing : layer.characterSpacing(),
               textTransform : layer.styleAttributes()["MSAttributedStringTextTransformAttribute"] //  null: none, 1: uppercase and 2 lowercase
-            }
+            },
+            alignments : ["left"]
           })
         }
       });
@@ -58,5 +64,32 @@ export default function(context) {
     typography : TypographyStyles
   }
 
-  log(DesignSystemTokens)
+  function generateTextStyles(json){
+  
+    let typeStyles={};
+
+  
+    json.typography.forEach(item=>{
+      Object.keys(json.colours).forEach(colour=>{ 
+         log(dom.Style.colorToString(json.colours[colour]))
+        item.alignments.map((align,index)=> {
+
+          typeStyles[`${item.name}/${colour}/${index+'_'+align}`] = {color: dom.Style.colorToString(json.colours[colour]), textAlign: align, ...item.styles }
+        })
+      })
+    })
+  
+    return typeStyles;
+  }
+
+  const textStyles = generateTextStyles(DesignSystemTokens);
+
+  TextStyles.create({
+    context: context,
+    clearExistingStyles: true,
+  }, textStyles);
+
+let RenderPage =  context.document.addBlankPage()
+RenderPage.name="Rendered Styles"
+render(<View />, RenderPage);
 }
