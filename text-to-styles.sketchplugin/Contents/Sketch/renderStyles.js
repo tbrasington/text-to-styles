@@ -33156,7 +33156,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  context.document.showMessage("It's alive 🙌");
   var doc = context.document;
   var pages = doc.pages();
   var TypographyStyles = [];
@@ -33243,7 +33242,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["TextStyles"].create({
     context: context,
     clearExistingStyles: true
-  }, textStyles);
+  }, textStyles); // success message
+
+  context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(TypographyStyles).length, " Text Styles * ").concat(Object.keys(DocumentColours).length, " colours * ").concat(Object.keys(textAlignments).length, " alignments) \uD83D\uDE4C"));
   var RenderPage = context.document.addBlankPage();
   RenderPage.name = "Rendered Styles";
   Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_typeSheet__WEBPACK_IMPORTED_MODULE_3__["TypeLayout"], {

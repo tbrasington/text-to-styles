@@ -15,7 +15,8 @@
       "renderStyles"
     ]
   },
-  "version": "1.0.0",
+  "version": "2.0.1",
+  "description": "Generates Sketch type styles programmatically from Artboards",
   "name": "Text to Styles",
   "identifier": "Text to Styles",
   "disableCocoaScriptPreprocessor": true,

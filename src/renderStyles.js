@@ -4,10 +4,7 @@ import dom from 'sketch/dom'
 import {TypeLayout} from './typeSheet';
 
 export default function(context) {
-  
-  context.document.showMessage("It's alive 🙌");
-
-    
+      
   const doc = context.document;
   const pages = doc.pages()
   
@@ -106,6 +103,9 @@ export default function(context) {
     context: context,
     clearExistingStyles: true,
   }, textStyles);
+
+  // success message
+  context.document.showMessage(`${Object.keys(textStyles).length} styles added (${Object.keys(TypographyStyles).length} Text Styles * ${Object.keys(DocumentColours).length} colours * ${Object.keys(textAlignments).length} alignments) 🙌`);
 
 let RenderPage =  context.document.addBlankPage()
 RenderPage.name="Rendered Styles"
