@@ -33189,7 +33189,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var textTransform = 'none';
           if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
 
-          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase';
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase'; // Does style have adjustments
+          // split style names
+          // can it split
+          // loop through exisiting names
+
           TypographyStyles.push({
             name: layer.name(),
             styles: {
@@ -33199,7 +33203,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               characterSpacing: layer.characterSpacing(),
               textTransform: textTransform
             },
-            alignments: textAlignments
+            alignments: textAlignments,
+            adjustments: []
           });
         }
       });
@@ -33226,7 +33231,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     json.typography.forEach(function (item) {
       Object.keys(json.colours).forEach(function (colour) {
         item.alignments.map(function (align, index) {
-          typeStyles["".concat(item.name, "/").concat(colour, "/").concat(index + '_' + align)] = _objectSpread({
+          // this splits at a slash and adds the adjustments for breakpoints after the alignment
+          var name = item.name.split('/');
+          typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
             color: sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour]),
             textAlign: align
           }, item.styles);

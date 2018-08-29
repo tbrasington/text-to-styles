@@ -89,7 +89,10 @@ export default function(context) {
     json.typography.forEach(item=>{
       Object.keys(json.colours).forEach(colour=>{ 
         item.alignments.map((align,index)=> {
-          typeStyles[`${item.name}/${colour}/${index+'_'+align}`] = {color: dom.Style.colorToString(json.colours[colour]), textAlign: align, ...item.styles }
+          // this splits at a slash and adds the adjustments for breakpoints after the alignment
+          // assumption is that there is only one adjusment
+          let name = item.name.split('/');
+          typeStyles[`${name[0]}/${colour}/${index+'_'+align + (name.length>1  ? '/' + name[1] : '')}` ] = {color: dom.Style.colorToString(json.colours[colour]), textAlign: align, ...item.styles }
         })
       })
     })
