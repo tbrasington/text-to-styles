@@ -4,15 +4,15 @@
   "icon": "icon.png",
   "commands": [
     {
-      "name": "my-command",
-      "identifier": "my-command-identifier",
-      "script": "./my-command.js"
+      "name": "Render Type Styles",
+      "identifier": "renderStyles",
+      "script": "./renderStyles.js"
     }
   ],
   "menu": {
-    "title": "text-to-styles",
+    "title": "Text to Styles",
     "items": [
-      "my-command-identifier"
+      "renderStyles"
     ]
   }
 }

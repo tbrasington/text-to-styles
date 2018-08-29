@@ -86,7 +86,7 @@ var exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/my-command.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/renderStyles.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -33131,10 +33131,10 @@ module.exports = function (bind, lib) {
 
 /***/ }),
 
-/***/ "./src/my-command.js":
-/*!***************************!*\
-  !*** ./src/my-command.js ***!
-  \***************************/
+/***/ "./src/renderStyles.js":
+/*!*****************************!*\
+  !*** ./src/renderStyles.js ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -33189,11 +33189,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var textTransform = 'none';
           if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
 
-          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase'; // Does style have adjustments
-          // split style names
-          // can it split
-          // loop through exisiting names
-
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase';
           TypographyStyles.push({
             name: layer.name(),
             styles: {
@@ -33203,8 +33199,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               characterSpacing: layer.characterSpacing(),
               textTransform: textTransform
             },
-            alignments: textAlignments,
-            adjustments: []
+            alignments: textAlignments
           });
         }
       });
@@ -33232,6 +33227,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Object.keys(json.colours).forEach(function (colour) {
         item.alignments.map(function (align, index) {
           // this splits at a slash and adds the adjustments for breakpoints after the alignment
+          // assumption is that there is only one adjusment
           var name = item.name.split('/');
           typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
             color: sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour]),
@@ -33338,4 +33334,4 @@ module.exports = require("sketch/dom");
 }
 that['onRun'] = __skpm_run.bind(this, 'default')
 
-//# sourceMappingURL=my-command.js.map
+//# sourceMappingURL=renderStyles.js.map

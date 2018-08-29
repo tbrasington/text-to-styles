@@ -4,20 +4,20 @@
   "icon": "icon.png",
   "commands": [
     {
-      "name": "my-command",
-      "identifier": "my-command-identifier",
-      "script": "my-command.js"
+      "name": "Render Type Styles",
+      "identifier": "renderStyles",
+      "script": "renderStyles.js"
     }
   ],
   "menu": {
-    "title": "text-to-styles",
+    "title": "Text to Styles",
     "items": [
-      "my-command-identifier"
+      "renderStyles"
     ]
   },
-  "version": "0.1.0",
-  "name": "text-to-styles",
-  "identifier": "text-to-styles",
+  "version": "1.0.0",
+  "name": "Text to Styles",
+  "identifier": "Text to Styles",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml",
   "author": "Thomas Brasington",
