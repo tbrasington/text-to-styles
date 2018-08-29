@@ -31,7 +31,7 @@ The breakpoint variation is optional.
 
 ## Your Page setup
 
-There is a sample project under sample/text-styles-sample.sketch to base your text and colour tokens off
+There is a sample project under [sample/text-styles-sample.sketch](https://github.com/tbrasington/text-to-styles/blob/master/sample/text-styles-sample.sketch) to base your text and colour tokens off
 
 You will need to set your Page structure and naming like this:
 
