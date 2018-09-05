@@ -1,4 +1,9 @@
 import React from 'react'
+import dialog from '@skpm/dialog'
+import path from '@skpm/path'
+import fs from '@skpm/fs'
+import jsonFormat from 'json-format'
+
 import {render, TextStyles, Page, View} from 'react-sketchapp'
 import dom from 'sketch/dom'
 import {TypeLayout} from './typeSheet';
@@ -47,10 +52,10 @@ export default function(context) {
           TypographyStyles.push({
             name  : layer.name(),
             styles : {
-              fontFamily : layer.font().fontName(),
+              fontFamily : String(layer.font().fontName()),
               fontSize : layer.fontSize(),
               lineHeight : layer.lineHeight(),
-              characterSpacing : layer.characterSpacing(),
+              characterSpacing : Number(layer.characterSpacing()),
               textTransform : textTransform 
             },
             alignments : textAlignments
@@ -73,7 +78,7 @@ export default function(context) {
 
   // log(TypographyStyles)
   // log(DocumentColours)
-  const DesignSystemTokens = {
+  let DesignSystemTokens = {
     colours: DocumentColours,
     typography : TypographyStyles
   }
@@ -107,6 +112,20 @@ export default function(context) {
   // success message
   context.document.showMessage(`${Object.keys(textStyles).length} styles added (${Object.keys(TypographyStyles).length} Text Styles * ${Object.keys(DocumentColours).length} colours * ${Object.keys(textAlignments).length} alignments) 🙌`);
 
+  // Save the file
+ dialog.showSaveDialog(doc, {title: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
+  log(filename)
+
+
+save(filename, jsonFormat(DesignSystemTokens))
+ })
+
+
+
+ function save(filename,fileContents){
+  const targetFile = path.resolve(filename);
+  fs.writeFileSync(targetFile, fileContents, 'utf8')
+ }
 let RenderPage =  context.document.addBlankPage()
 RenderPage.name="Rendered Styles"
 render(<TypeLayout colours={DesignSystemTokens.colours}  typography={DesignSystemTokens.typography}/>, RenderPage);

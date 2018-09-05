@@ -26,6 +26,11 @@
   },
   "author": "Thomas Brasington <tbrasington@gmail.com>",
   "dependencies": {
+    "@skpm/dialog": "^0.2.3",
+    "@skpm/fs": "^0.1.4",
+    "@skpm/path": "^0.1.0",
+    "json-format": "^1.0.1",
+    "path": "^0.12.7",
     "react": "^16.4.2",
     "react-sketchapp": "^2.0.0",
     "react-test-renderer": "^16.4.2"
