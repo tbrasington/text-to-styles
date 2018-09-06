@@ -1960,17 +1960,15 @@ function generateTextStyles(json) {
   return typeStyles;
 }
 
-function checkMatch(prevStyle, newStyle, prop) {
-  var value = false;
+function checkMatch(baseStyle, newStyle, prop) {
+  var value = true; // for now we are just going off the previous style. As this would need to check 
+  // every prop across every adjustment :/
 
-  if (prevStyle === null) {
-    value = true;
-  }
-
-  if (JSON.stringify(prevStyle[prop]) !== JSON.stringify(newStyle[prop])) {
+  if (JSON.stringify(baseStyle[prop]) === JSON.stringify(newStyle[prop])) {
     // very primitive and breaks if order is out of sync 
-    value = true;
-  }
+    value = false;
+  } //log( prop + ' ' + baseStyle[prop] + ' ----- ' + prop  + ' ' +newStyle[prop] + '  value ' + value)
+
 
   return value;
 }
@@ -1984,34 +1982,40 @@ function generateJSONStyles(json) {
 
     if (!typeStyles[name[0]]) {
       typeStyles[name[0]] = {
+        name: name[0],
         styles: item.styles,
         alignments: item.alignments,
         adjustments: []
       };
     } else {
-      var currentStyle = item.styles;
-      var previousStyle = typeStyles[name[0]].styles; // work out previous style
+      var currentStyle = item.styles; //let previousStyle = typeStyles[name[0]].styles
+      // work out previous style
 
-      log(typeStyles[name[0]].adjustments.length);
       var adjustmentLength = typeStyles[name[0]].adjustments.length;
       refinedBreakpoints[adjustmentLength] = {
         name: name[1],
-        styles: {}
+        styles: {} // if(adjustmentLength>0){
+        //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
+        // } 
+        //previousStyle,
+
       };
-
-      if (adjustmentLength > 0) {
-        previousStyle = typeStyles[name[0]].adjustments[adjustmentLength - 1];
-      }
-
       Object.keys(currentStyle).map(function (checked) {
-        if (checkMatch(previousStyle, currentStyle, checked)) {
+        if (checkMatch(typeStyles[name[0]].styles, currentStyle, checked)) {
           refinedBreakpoints[adjustmentLength].styles[checked] = currentStyle[checked];
         }
       });
       typeStyles[name[0]].adjustments.push(refinedBreakpoints[adjustmentLength]);
     }
-  });
-  return typeStyles;
+  }); // finally merge colours back in and return text to an array
+
+  var formattedTokens = {
+    colours: json.colours,
+    typography: Object.keys(typeStyles).map(function (key) {
+      return typeStyles[key];
+    })
+  };
+  return formattedTokens;
 }
 
 /***/ }),
@@ -2048,11 +2052,14 @@ function save(filename, fileContents) {
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
   var doc = context.document;
   var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["extractStyles"])(context, true);
-  var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["generateJSONStyles"])(designTokens);
-  log(arranged); // Save the file
-  //     dialog.showSaveDialog(doc, {defaultPath: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
-  //         save(filename, jsonFormat(designTokens))
-  //     })
+  var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["generateJSONStyles"])(designTokens); // Save the file
+
+  _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
+    defaultPath: "tokens.json",
+    message: "Choose a folder to save your tokens"
+  }, function (filename) {
+    save(filename, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
+  });
 });
 
 /***/ }),

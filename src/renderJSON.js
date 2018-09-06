@@ -14,10 +14,9 @@ export default function(context) {
     const doc = context.document;
     const designTokens = extractStyles(context,true)
     const arranged = generateJSONStyles(designTokens)
-    log(arranged)
-
+    
     // Save the file
-//     dialog.showSaveDialog(doc, {defaultPath: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
-//         save(filename, jsonFormat(designTokens))
-//     })
+    dialog.showSaveDialog(doc, {defaultPath: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
+        save(filename, jsonFormat(arranged))
+    })
 }

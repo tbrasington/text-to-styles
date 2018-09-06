@@ -102,14 +102,19 @@ export function generateTextStyles(json){
     return typeStyles;
 }
 
-function checkMatch(prevStyle, newStyle, prop) {
-    let value = false;
-    if (prevStyle === null) {
-        value =  true
-    }
-    if (JSON.stringify(prevStyle[prop]) !== JSON.stringify(newStyle[prop])) { // very primitive and breaks if order is out of sync 
-        value =  true       
+function checkMatch(baseStyle,  newStyle, prop) {
+    let value = true;
+  
+    // for now we are just going off the previous style. As this would need to check 
+    // every prop across every adjustment :/
+    if (JSON.stringify(baseStyle[prop]) === JSON.stringify(newStyle[prop])) { // very primitive and breaks if order is out of sync 
+        value =  false       
     } 
+
+    
+    //log( prop + ' ' + baseStyle[prop] + ' ----- ' + prop  + ' ' +newStyle[prop] + '  value ' + value)
+   
+
     return value;
 }
 
@@ -123,6 +128,7 @@ export function generateJSONStyles(json){
         if(!typeStyles[name[0]]) {
              
             typeStyles[name[0]] = {
+                name : name[0],
                 styles : item.styles,
                 alignments : item.alignments,
                 adjustments : []
@@ -131,19 +137,19 @@ export function generateJSONStyles(json){
         } else {
             
             let currentStyle = item.styles
-            let previousStyle = typeStyles[name[0]].styles
+            //let previousStyle = typeStyles[name[0]].styles
             // work out previous style
-            log(typeStyles[name[0]].adjustments.length)
             const adjustmentLength = typeStyles[name[0]].adjustments.length;
             refinedBreakpoints[adjustmentLength] = { name : name[1], styles:{}}
             
-            if(  adjustmentLength>0){
-                previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
-            } 
+            // if(adjustmentLength>0){
+            //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
+            // } 
+            
+            //previousStyle,
             Object.keys(currentStyle).map(checked => {
-                
                 if(checkMatch(
-                  previousStyle,
+                  typeStyles[name[0]].styles,
                   currentStyle,
                   checked
                 ) ) {
@@ -154,6 +160,14 @@ export function generateJSONStyles(json){
             typeStyles[name[0]].adjustments.push(refinedBreakpoints[adjustmentLength])
         }
     })
+
+    // finally merge colours back in and return text to an array
+    let formattedTokens = {
+        colours: json.colours,
+        typography : Object.keys(typeStyles).map(function(key) {
+            return typeStyles[key];
+          })
+    }
   
-    return typeStyles;
+    return formattedTokens;
 }
