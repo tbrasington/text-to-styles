@@ -8,7 +8,7 @@ function convertSketchColourToRGBA(colour) {
     return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
 }
 
-export function extractStyles(context,convertColour) {
+export function extractStyles(context,convert) {
       
     const doc = context.document;
     const pages = doc.pages()
@@ -53,9 +53,9 @@ export function extractStyles(context,convertColour) {
               name  : String(layer.name()),
               styles : {
                 fontFamily : String(layer.font().fontName()),   
-                fontSize : layer.fontSize(),
-                lineHeight : layer.lineHeight(),
-                characterSpacing : Number(layer.characterSpacing()),
+                fontSize : layer.fontSize()+(convert ? 'px' :''),
+                lineHeight : layer.lineHeight()+(convert ? 'px' :''),
+                letterSpacing :  (convert ? String( (layer.characterSpacing()/10)  +'em') : layer.characterSpacing() ),
                 textTransform : textTransform 
               },
               alignments : textAlignments,
@@ -68,7 +68,7 @@ export function extractStyles(context,convertColour) {
       // get colours
       if(String(page.name())==="Colours") {
         page.layers().forEach(layer=>{ 
-          DocumentColours[layer.name()] = (convertColour ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color())
+          DocumentColours[layer.name()] = (convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color())
         })
       }
     });

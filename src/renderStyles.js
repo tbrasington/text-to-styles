@@ -8,7 +8,7 @@ import {extractStyles,generateTextStyles} from './generators'
 export default function(context) {
 
 
-  const designTokens = extractStyles(context)
+  const designTokens = extractStyles(context,false)
   const textStyles = generateTextStyles(designTokens);
 
   TextStyles.create({

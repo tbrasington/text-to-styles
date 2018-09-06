@@ -33158,7 +33158,7 @@ function convertSketchColourToRGBA(colour) {
   return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
 }
 
-function extractStyles(context, convertColour) {
+function extractStyles(context, convert) {
   var doc = context.document;
   var pages = doc.pages();
   var TypographyStyles = [];
@@ -33196,9 +33196,9 @@ function extractStyles(context, convertColour) {
             name: String(layer.name()),
             styles: {
               fontFamily: String(layer.font().fontName()),
-              fontSize: layer.fontSize(),
-              lineHeight: layer.lineHeight(),
-              characterSpacing: Number(layer.characterSpacing()),
+              fontSize: layer.fontSize() + (convert ? 'px' : ''),
+              lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
+              letterSpacing: convert ? String(layer.characterSpacing() / 10 + 'em') : layer.characterSpacing(),
               textTransform: textTransform
             },
             alignments: textAlignments,
@@ -33211,7 +33211,7 @@ function extractStyles(context, convertColour) {
 
     if (String(page.name()) === "Colours") {
       page.layers().forEach(function (layer) {
-        DocumentColours[layer.name()] = convertColour ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
+        DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
   });
@@ -33320,7 +33320,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_3__["extractStyles"])(context);
+  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_3__["extractStyles"])(context, false);
   var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_3__["generateTextStyles"])(designTokens);
   react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["TextStyles"].create({
     context: context,
