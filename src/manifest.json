@@ -4,6 +4,11 @@
   "icon": "icon.png",
   "commands": [
     {
+      "name": "Render Type Styles",
+      "identifier": "renderStyles",
+      "script": "./renderStyles.js"
+    },
+    {
       "name": "Export JSON Tokens",
       "identifier": "renderJSON",
       "script": "./renderJSON.js"
@@ -12,6 +17,7 @@
   "menu": {
     "title": "Text to Styles",
     "items": [
+      "renderStyles",
       "renderJSON"
     ]
   }

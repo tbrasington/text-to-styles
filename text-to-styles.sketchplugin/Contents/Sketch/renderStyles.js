@@ -33135,12 +33135,30 @@ module.exports = function (bind, lib) {
 /*!***************************!*\
   !*** ./src/generators.js ***!
   \***************************/
-/*! exports provided: default */
+/*! exports provided: extractStyles, generateTextStyles, generateJSONStyles */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (function (context) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "extractStyles", function() { return extractStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTextStyles", function() { return generateTextStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateJSONStyles", function() { return generateJSONStyles; });
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function convertSketchColourToRGBA(colour) {
+  var red = Math.round(colour.red() * 255);
+  var green = Math.round(colour.green() * 255);
+  var blue = Math.round(colour.blue() * 255);
+  return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
+}
+
+function extractStyles(context, convertColour) {
   var doc = context.document;
   var pages = doc.pages();
   var TypographyStyles = [];
@@ -33175,7 +33193,7 @@ __webpack_require__.r(__webpack_exports__);
 
           if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase';
           TypographyStyles.push({
-            name: layer.name(),
+            name: String(layer.name()),
             styles: {
               fontFamily: String(layer.font().fontName()),
               fontSize: layer.fontSize(),
@@ -33183,7 +33201,8 @@ __webpack_require__.r(__webpack_exports__);
               characterSpacing: Number(layer.characterSpacing()),
               textTransform: textTransform
             },
-            alignments: textAlignments
+            alignments: textAlignments,
+            adjustments: []
           });
         }
       });
@@ -33192,9 +33211,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (String(page.name()) === "Colours") {
       page.layers().forEach(function (layer) {
-        // log(layer.name())
-        // log(layer.style().firstEnabledFill().color())
-        DocumentColours[layer.name()] = layer.style().firstEnabledFill().color();
+        DocumentColours[layer.name()] = convertColour ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
   });
@@ -33204,7 +33221,82 @@ __webpack_require__.r(__webpack_exports__);
     textAlignments: textAlignments
   };
   return DesignSystemTokens;
-});
+}
+function generateTextStyles(json) {
+  var typeStyles = {};
+  json.typography.forEach(function (item) {
+    Object.keys(json.colours).forEach(function (colour) {
+      item.alignments.map(function (align, index) {
+        // this splits at a slash and adds the adjustments for breakpoints after the alignment
+        // assumption is that there is only one adjusment
+        var name = item.name.split('/');
+        typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
+          color: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
+          textAlign: align
+        }, item.styles);
+      });
+    });
+  });
+  return typeStyles;
+}
+
+function checkMatch(baseStyle, newStyle, prop) {
+  var value = true; // for now we are just going off the previous style. As this would need to check 
+  // every prop across every adjustment :/
+
+  if (JSON.stringify(baseStyle[prop]) === JSON.stringify(newStyle[prop])) {
+    // very primitive and breaks if order is out of sync 
+    value = false;
+  } //log( prop + ' ' + baseStyle[prop] + ' ----- ' + prop  + ' ' +newStyle[prop] + '  value ' + value)
+
+
+  return value;
+}
+
+function generateJSONStyles(json) {
+  var typeStyles = {};
+  var refinedBreakpoints = []; //log(json.typography)
+
+  json.typography.forEach(function (item) {
+    var name = item.name.split('/');
+
+    if (!typeStyles[name[0]]) {
+      typeStyles[name[0]] = {
+        name: name[0],
+        styles: item.styles,
+        alignments: item.alignments,
+        adjustments: []
+      };
+    } else {
+      var currentStyle = item.styles; //let previousStyle = typeStyles[name[0]].styles
+      // work out previous style
+
+      var adjustmentLength = typeStyles[name[0]].adjustments.length;
+      refinedBreakpoints[adjustmentLength] = {
+        name: name[1],
+        styles: {} // if(adjustmentLength>0){
+        //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
+        // } 
+        //previousStyle,
+
+      };
+      Object.keys(currentStyle).map(function (checked) {
+        if (checkMatch(typeStyles[name[0]].styles, currentStyle, checked)) {
+          refinedBreakpoints[adjustmentLength].styles[checked] = currentStyle[checked];
+        }
+      });
+      typeStyles[name[0]].adjustments.push(refinedBreakpoints[adjustmentLength]);
+    }
+  }); // finally merge colours back in and return text to an array
+
+  var formattedTokens = {
+    colours: json.colours,
+    typography: Object.keys(typeStyles).map(function (key) {
+      return typeStyles[key];
+    })
+  };
+  return formattedTokens;
+}
 
 /***/ }),
 
@@ -33221,40 +33313,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-sketchapp */ "./node_modules/react-sketchapp/lib/index.js");
 /* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
-/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _typeSheet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./typeSheet */ "./src/typeSheet.js");
-/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+/* harmony import */ var _typeSheet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./typeSheet */ "./src/typeSheet.js");
+/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  function generateTextStyles(json) {
-    var typeStyles = {};
-    json.typography.forEach(function (item) {
-      Object.keys(json.colours).forEach(function (colour) {
-        item.alignments.map(function (align, index) {
-          // this splits at a slash and adds the adjustments for breakpoints after the alignment
-          // assumption is that there is only one adjusment
-          var name = item.name.split('/');
-          typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
-            color: sketch_dom__WEBPACK_IMPORTED_MODULE_2___default.a.Style.colorToString(json.colours[colour]),
-            textAlign: align
-          }, item.styles);
-        });
-      });
-    });
-    return typeStyles;
-  }
-
-  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["default"])(context);
-  var textStyles = generateTextStyles(designTokens);
+  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_3__["extractStyles"])(context);
+  var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_3__["generateTextStyles"])(designTokens);
   react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["TextStyles"].create({
     context: context,
     clearExistingStyles: true
@@ -33263,7 +33330,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
   var RenderPage = context.document.addBlankPage();
   RenderPage.name = "Rendered Styles";
-  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_typeSheet__WEBPACK_IMPORTED_MODULE_3__["TypeLayout"], {
+  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_typeSheet__WEBPACK_IMPORTED_MODULE_2__["TypeLayout"], {
     colours: designTokens.colours,
     typography: designTokens.typography
   }), RenderPage);
