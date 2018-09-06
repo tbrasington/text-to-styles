@@ -69,7 +69,7 @@ export default function(context) {
       page.layers().forEach(layer=>{ 
         // log(layer.name())
         // log(layer.style().firstEnabledFill().color())
-        DocumentColours[layer.name()] = layer.style().firstEnabledFill().color()
+        DocumentColours[layer.name()] = String(layer.style().firstEnabledFill().color())
       })
     }
 
@@ -113,7 +113,7 @@ export default function(context) {
   context.document.showMessage(`${Object.keys(textStyles).length} styles added (${Object.keys(TypographyStyles).length} Text Styles * ${Object.keys(DocumentColours).length} colours * ${Object.keys(textAlignments).length} alignments) 🙌`);
 
   // Save the file
- dialog.showSaveDialog(doc, {title: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
+ dialog.showSaveDialog(doc, {nameFieldLabel: "tokens.json", message: "Choose a folder to save your tokens"}, function(filename) {
   log(filename)
 
 
