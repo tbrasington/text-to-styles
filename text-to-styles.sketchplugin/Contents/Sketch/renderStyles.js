@@ -33253,7 +33253,7 @@ function checkMatch(baseStyle, newStyle, prop) {
   return value;
 }
 
-function generateJSONStyles(json) {
+function generateJSONStyles(json, arrayFormat) {
   var typeStyles = {};
   var refinedBreakpoints = []; //log(json.typography)
 
@@ -33291,9 +33291,9 @@ function generateJSONStyles(json) {
 
   var formattedTokens = {
     colours: json.colours,
-    typography: Object.keys(typeStyles).map(function (key) {
+    typography: arrayFormat ? Object.keys(typeStyles).map(function (key) {
       return typeStyles[key];
-    })
+    }) : typeStyles
   };
   return formattedTokens;
 }

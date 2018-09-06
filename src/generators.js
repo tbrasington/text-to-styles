@@ -118,7 +118,7 @@ function checkMatch(baseStyle,  newStyle, prop) {
     return value;
 }
 
-export function generateJSONStyles(json){
+export function generateJSONStyles(json,arrayFormat){
   
     let typeStyles={};
     let refinedBreakpoints = []
@@ -164,10 +164,9 @@ export function generateJSONStyles(json){
     // finally merge colours back in and return text to an array
     let formattedTokens = {
         colours: json.colours,
-        typography : Object.keys(typeStyles).map(function(key) {
+        typography : (arrayFormat ? Object.keys(typeStyles).map(function(key) {
             return typeStyles[key];
-          })
+          }) : typeStyles) 
     }
-  
     return formattedTokens;
 }

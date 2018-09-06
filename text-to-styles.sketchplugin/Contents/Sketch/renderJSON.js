@@ -1973,7 +1973,7 @@ function checkMatch(baseStyle, newStyle, prop) {
   return value;
 }
 
-function generateJSONStyles(json) {
+function generateJSONStyles(json, arrayFormat) {
   var typeStyles = {};
   var refinedBreakpoints = []; //log(json.typography)
 
@@ -2011,9 +2011,9 @@ function generateJSONStyles(json) {
 
   var formattedTokens = {
     colours: json.colours,
-    typography: Object.keys(typeStyles).map(function (key) {
+    typography: arrayFormat ? Object.keys(typeStyles).map(function (key) {
       return typeStyles[key];
-    })
+    }) : typeStyles
   };
   return formattedTokens;
 }
@@ -2037,7 +2037,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _skpm_fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_skpm_fs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var json_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! json-format */ "./node_modules/json-format/index.js");
 /* harmony import */ var json_format__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(json_format__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sketch */ "sketch");
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
+
 
 
 
@@ -2051,16 +2054,35 @@ function save(filename, fileContents) {
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
   var doc = context.document;
-  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["extractStyles"])(context, true);
-  var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_4__["generateJSONStyles"])(designTokens); // Save the file
+  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["extractStyles"])(context, true);
+  var options = ["Array", "Object"];
+  var textSaveSelection = sketch__WEBPACK_IMPORTED_MODULE_4___default.a.UI.getSelectionFromUser("Would you like the text styles as an Array or Object", options);
 
-  _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
-    defaultPath: "tokens.json",
-    message: "Choose a folder to save your tokens"
-  }, function (filename) {
-    save(filename, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
-  });
+  if (textSaveSelection[2]) {
+    var textSaveMethod = true;
+    if (options[textSaveSelection[1]] === "Object") textSaveMethod = false;
+    if (options[textSaveSelection[1]] === "Array") textSaveMethod = true;
+    var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["generateJSONStyles"])(designTokens, textSaveMethod); // Save the file
+
+    _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
+      defaultPath: "tokens.json",
+      message: "Choose a folder to save your tokens"
+    }, function (filename) {
+      save(filename, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
+    });
+  }
 });
+
+/***/ }),
+
+/***/ "sketch":
+/*!*************************!*\
+  !*** external "sketch" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch");
 
 /***/ }),
 

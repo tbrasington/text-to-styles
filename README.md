@@ -69,6 +69,80 @@ Order is done alphabetically.
 Add your alignments here by setting each text layer to your preffered alignment.
 Order is set Left, Center, Right. 
 
+## Commands
+
+There are two commands available `Render Type Styles` and `Export JSON Tokens`
+
+### Render Type Styles
+Will generate all of your text styles into the Sketch Document and create a Page called "Rendered Styles" to show the output. Note this won't apply it to the styles themselves. It is recommended that you use this document now as a Library for your text styles.
+
+### Export JSON Tokens
+This will export out the text styles and colour palettes as a JSON file to use in other applications. Perhaps your production code base or documentation. 
+
+You will be presented with two options for formatting the text style json. Either an Array or an Object. Depending on your needs you may want the Object.
+
+
+#### Array formatting 
+
+```
+{
+    "name": "Style 1",
+    "styles": {
+        "fontFamily": "SFUIDisplay-Semibold",
+        "fontSize": 28,
+        "lineHeight": 34,
+        "characterSpacing": 0.2,
+        "textTransform": "none"
+    },
+    "alignments": [
+        "center",
+        "right",
+        "center"
+    ],
+    "adjustments": [
+        {
+            "name": "BP3",
+            "styles": {
+                "fontSize": 42,
+                "lineHeight": 48,
+                "characterSpacing": 0.3
+            }
+        }
+    ]
+}
+
+```
+#### Object formatting 
+
+```
+"Style 1": {
+    "name": "Style 1",
+    "styles": {
+        "fontFamily": "SFUIDisplay-Semibold",
+        "fontSize": 28,
+        "lineHeight": 34,
+        "characterSpacing": 0.2,
+        "textTransform": "none"
+    },
+    "alignments": [
+        "center",
+        "right",
+        "center"
+    ],
+    "adjustments": [
+        {
+            "name": "BP3",
+            "styles": {
+                "fontSize": 42,
+                "lineHeight": 48,
+                "characterSpacing": 0.3
+            }
+        }
+    ]
+},
+```
+
+
 ---
 
 @tbrasington | tbrasington.com
