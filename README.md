@@ -2,7 +2,7 @@
 
 # Text to Styles
 
-![demo](artwork/text-to-styles.gif)
+![demo of exporting text layers to text styles](artwork/text-to-styles.gif)
 
 
 ## What?
@@ -77,6 +77,10 @@ There are two commands available `Render Type Styles` and `Export JSON Tokens`
 Will generate all of your text styles into the Sketch Document and create a Page called "Rendered Styles" to show the output. Note this won't apply it to the styles themselves. It is recommended that you use this document now as a Library for your text styles.
 
 ### Export JSON Tokens
+
+![demo of exporting text layers to json](artwork/text-to-json.gif)
+
+
 This will export out the text styles and colour palettes as a JSON file to use in other applications. Perhaps your production code base or documentation. 
 
 You will be presented with two options for formatting the text style json. Either an Array or an Object. Depending on your needs you may want the Object.
