@@ -1,6 +1,6 @@
 {
   "name": "text-to-styles",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "MIT",
   "repository": "https://github.com/tbrasington/text-to-styles.git",
   "description": "Generates Sketch type styles programmatically from Artboards",
