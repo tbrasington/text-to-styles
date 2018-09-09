@@ -47,7 +47,7 @@ Add your base text styles here. This plugin will pick up on:
 - Font Family
 - Font Size
 - Line Height
-- Character Spacing
+- Letter Spacing
 - Text Transform (uppercase,lowercase)
 
 #### Breakpoint adjustments
@@ -69,7 +69,7 @@ Order is done alphabetically.
 Add your alignments here by setting each text layer to your preffered alignment.
 Order is set Left, Center, Right. 
 
-## Commands
+## Commands
 
 There are two commands available `Render Type Styles` and `Export JSON Tokens`
 
@@ -95,7 +95,7 @@ You will be presented with two options for formatting the text style json. Eithe
         "fontFamily": "SFUIDisplay-Semibold",
         "fontSize": 28,
         "lineHeight": 34,
-        "characterSpacing": 0.2,
+        "letterSpacing": 0.2,
         "textTransform": "none"
     },
     "alignments": [
@@ -109,7 +109,7 @@ You will be presented with two options for formatting the text style json. Eithe
             "styles": {
                 "fontSize": 42,
                 "lineHeight": 48,
-                "characterSpacing": 0.3
+                "letterSpacing": 0.3
             }
         }
     ]
