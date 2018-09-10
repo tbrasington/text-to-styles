@@ -139,7 +139,7 @@ You will be presented with two options for formatting the text style json. Eithe
             "styles": {
                 "fontSize": 42,
                 "lineHeight": 48,
-                "characterSpacing": 0.3
+                "letterSpacing": 0.3
             }
         }
     ]
