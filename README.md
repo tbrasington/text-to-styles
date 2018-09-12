@@ -93,9 +93,9 @@ You will be presented with two options for formatting the text style json. Eithe
     "name": "Style 1",
     "styles": {
         "fontFamily": "SFUIDisplay-Semibold",
-        "fontSize": 28,
-        "lineHeight": 34,
-        "letterSpacing": 0.2,
+        "fontSize": "28px",
+        "lineHeight": "34px",
+        "letterSpacing": "0.02em",
         "textTransform": "none"
     },
     "alignments": [
@@ -107,9 +107,9 @@ You will be presented with two options for formatting the text style json. Eithe
         {
             "name": "BP3",
             "styles": {
-                "fontSize": 42,
-                "lineHeight": 48,
-                "letterSpacing": 0.3
+                "fontSize": "42px",
+                "lineHeight": "48px",
+                "letterSpacing": "0.03em"
             }
         }
     ]
@@ -123,9 +123,9 @@ You will be presented with two options for formatting the text style json. Eithe
     "name": "Style 1",
     "styles": {
         "fontFamily": "SFUIDisplay-Semibold",
-        "fontSize": 28,
-        "lineHeight": 34,
-        "characterSpacing": 0.2,
+        "fontSize": "28px",
+        "lineHeight": "34px",
+        "letterSpacing": "0.02em",
         "textTransform": "none"
     },
     "alignments": [
@@ -137,14 +137,15 @@ You will be presented with two options for formatting the text style json. Eithe
         {
             "name": "BP3",
             "styles": {
-                "fontSize": 42,
-                "lineHeight": 48,
-                "letterSpacing": 0.3
+                "fontSize": "42px",
+                "lineHeight": "48px",
+                "letterSpacing": "0.03em"
             }
         }
     ]
 },
 ```
+
 
 
 ---
