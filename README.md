@@ -1,8 +1,8 @@
-![logo](assets/icon.png)
+![logo](https://github.com/tbrasington/text-to-styles/raw/master/assets/icon.png)
 
 # Text to Styles
 
-![demo of exporting text layers to text styles](artwork/text-to-styles.gif)
+![demo of exporting text layers to text styles](https://github.com/tbrasington/text-to-styles/raw/master/artwork/text-to-styles.gif)
 
 
 ## What?
@@ -78,7 +78,7 @@ Will generate all of your text styles into the Sketch Document and create a Page
 
 ### Export JSON Tokens
 
-![demo of exporting text layers to json](artwork/text-to-json.gif)
+![demo of exporting text layers to json](https://github.com/tbrasington/text-to-styles/raw/master/artwork/text-to-json.gif)
 
 
 This will export out the text styles and colour palettes as a JSON file to use in other applications. Perhaps your production code base or documentation. 
@@ -146,6 +146,7 @@ You will be presented with two options for formatting the text style json. Eithe
 },
 ```
 
+[![Install Text to Styles with Sketchpacks](http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png "Install Text to Styles with Sketchpacks")](https://sketchpacks.com/tbrasington/text-to-styles/install)
 
 
 ---
