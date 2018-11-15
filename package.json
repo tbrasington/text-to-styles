@@ -34,7 +34,7 @@
     "json-format": "^1.0.1",
     "path": "^0.12.7",
     "react": "^16.4.2",
-    "react-sketchapp": "^2.0.0",
+    "react-sketchapp": "^2.1.1",
     "react-test-renderer": "^16.4.2"
   }
 }
