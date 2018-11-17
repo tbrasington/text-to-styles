@@ -16,8 +16,9 @@ If your text style system requires the use of different alignments or colour var
 This plugin aims to solve the generation and maintenance of Sketch text styles where you need colour and alignment variations of your text styles. 
 
 ## Installation
+Either install via Sketchpacks, Sketch Runner or...
 
-1. Download the [text-to-styles.zip](https://github.com/tbrasington/text-to-styles/blob/master/text-to-styles.zip   )
+1. Download from the [releases page](https://github.com/tbrasington/text-to-styles/releases)
 2. Unzip
 3. Double Click on `text-to-styles.sketchplugin` 
 
