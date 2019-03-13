@@ -48,14 +48,14 @@ export function extractStyles(context,convert) {
             let textTransform = 'none';
             if(String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])==='1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
             if(String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])==='2') textTransform = 'lowercase'; 
-  
             TypographyStyles.push({
               name  : String(layer.name()),
               styles : {
                 fontFamily : String(layer.font().fontName()),   
                 fontSize : layer.fontSize()+(convert ? 'px' :''),
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
-                letterSpacing :  (convert ? String( (layer.characterSpacing()/10)  +'em') : layer.characterSpacing() ),
+                fontWeight : dom.fromNative(layer).style.fontWeight,
+                kerning :  (convert ? String( (layer.characterSpacing()/10)  +'em') : layer.characterSpacing() ),
                 textTransform : textTransform 
               },
               alignments : textAlignments,
@@ -66,7 +66,8 @@ export function extractStyles(context,convert) {
       }
   
       // get colours
-      if(String(page.name())==="Colours") {
+      if(String(page.name())==="Colours" || String(page.name())==="Colors") {
+        DocumentColours = {};
         page.layers().forEach(layer=>{ 
           DocumentColours[layer.name()] = (convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color())
         })
@@ -94,7 +95,7 @@ export function generateTextStyles(json){
           // this splits at a slash and adds the adjustments for breakpoints after the alignment
           // assumption is that there is only one adjusment
           let name = item.name.split('/');
-          typeStyles[`${name[0]}/${colour}/${index+'_'+align + (name.length>1  ? '/' + name[1] : '')}` ] = {color: dom.Style.colorToString(json.colours[colour]), textAlign: align, ...item.styles }
+          typeStyles[`${name[0]}/${colour}/${index+'_'+align + (name.length>1  ? '/' + name[1] : '')}` ] = {textColor: dom.Style.colorToString(json.colours[colour]), alignment: align, ...item.styles }
         })
       })
     })
