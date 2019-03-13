@@ -55,7 +55,9 @@ export function extractStyles(context,convert) {
                 fontSize : layer.fontSize()+(convert ? 'px' :''),
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
                 fontWeight : dom.fromNative(layer).style.fontWeight,
-                kerning :  (convert ? String( (layer.characterSpacing()/10)  +'em') : layer.characterSpacing() ),
+                fontStyle : dom.fromNative(layer).style.fontStyle,
+                ...convert && { letterSpacing: String( (layer.characterSpacing()/10)  +'em') },
+                ...!convert && { kerning: layer.characterSpacing()  },
                 textTransform : textTransform 
               },
               alignments : textAlignments,

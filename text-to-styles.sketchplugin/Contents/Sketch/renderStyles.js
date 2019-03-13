@@ -2110,14 +2110,19 @@ function extractStyles(context, convert) {
           if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase';
           TypographyStyles.push({
             name: String(layer.name()),
-            styles: {
+            styles: _objectSpread({
               fontFamily: String(layer.font().fontName()),
               fontSize: layer.fontSize() + (convert ? 'px' : ''),
               lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
               fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
-              kerning: convert ? String(layer.characterSpacing() / 10 + 'em') : layer.characterSpacing(),
+              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle
+            }, convert && {
+              letterSpacing: String(layer.characterSpacing() / 10 + 'em')
+            }, !convert && {
+              kerning: layer.characterSpacing()
+            }, {
               textTransform: textTransform
-            },
+            }),
             alignments: textAlignments,
             adjustments: []
           });
