@@ -5,7 +5,7 @@
   "repository": "https://github.com/tbrasington/text-to-styles.git",
   "description": "Generates Sketch type styles programmatically from Artboards",
   "engines": {
-    "sketch": ">=52.0"
+    "sketch": ">=53.0"
   },
   "skpm": {
     "name": "Text to Styles",

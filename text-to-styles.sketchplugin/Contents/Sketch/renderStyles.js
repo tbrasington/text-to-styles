@@ -124,7 +124,7 @@ function extractStyles(context, convert) {
   var TypographyStyles = [];
   var DocumentColours = {};
   var textAlignments = [];
-  pages.forEach(function (page) {
+  pages.forEach(function (page, index) {
     //  alignments
     if (String(page.name()) === "Alignments") {
       page.layers().forEach(function (layer) {
@@ -159,7 +159,8 @@ function extractStyles(context, convert) {
               fontSize: layer.fontSize() + (convert ? 'px' : ''),
               lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
               fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
-              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle
+              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle,
+              paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
             }, convert && {
               letterSpacing: String(layer.characterSpacing() / 10 + 'em')
             }, !convert && {
@@ -181,7 +182,14 @@ function extractStyles(context, convert) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
-  });
+  }); // Remove previous rendered pages
+
+  for (var index = pages.length - 1; index >= 0; index -= 1) {
+    if (pages.length > 1) {
+      String(pages[index].name()) === 'Rendered Styles' && doc.documentData().removePageAtIndex(index);
+    }
+  }
+
   var DesignSystemTokens = {
     colours: DocumentColours,
     typography: TypographyStyles,
@@ -286,18 +294,19 @@ __webpack_require__.r(__webpack_exports__);
   var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_1__["generateTextStyles"])(designTokens);
   var RenderPage = context.document.addBlankPage();
   RenderPage.name = "Rendered Styles";
-  var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document);
+  var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document); // reset styles
+
   document.sharedTextStyles = {};
-  var count = 0,
-      previousFrame = null;
+  var previousFrame = null;
   Object.keys(textStyles).forEach(function (style) {
     document.sharedTextStyles.push({
       name: String(style),
       style: textStyles[style]
-    });
-    console.log(previousFrame != null ? previousFrame.fra : 0);
+    }); //sharedStyleId
+
+    var stylename = String(style);
     var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-      text: String(style),
+      text: style.toString(),
       parent: RenderPage,
       style: textStyles[style],
       frame: {
@@ -305,11 +314,11 @@ __webpack_require__.r(__webpack_exports__);
         y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
       }
     });
+    textLayer.name = stylename;
     previousFrame = textLayer;
-    count++;
   }); // success message
 
-  context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C")); // render(<TypeLayout colours={designTokens.colours}  typography={designTokens.typography}/>, RenderPage);
+  context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
 });
 
 /***/ }),

@@ -18,7 +18,7 @@ export function extractStyles(context,convert) {
     let DocumentColours = {};
     let textAlignments = [];
   
-    pages.forEach(page=>{
+    pages.forEach((page,index)=>{
      
       //  alignments
       if(String(page.name())==="Alignments") {
@@ -56,6 +56,7 @@ export function extractStyles(context,convert) {
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
                 fontWeight : dom.fromNative(layer).style.fontWeight,
                 fontStyle : dom.fromNative(layer).style.fontStyle,
+                paragraphSpacing : dom.fromNative(layer).style.paragraphSpacing,
                 ...convert && { letterSpacing: String( (layer.characterSpacing()/10)  +'em') },
                 ...!convert && { kerning: layer.characterSpacing()  },
                 textTransform : textTransform 
@@ -75,6 +76,12 @@ export function extractStyles(context,convert) {
         })
       }
     });
+    // Remove previous rendered pages
+    for (let index = pages.length - 1; index >= 0; index -= 1) {
+      if (pages.length > 1) {
+         ( String(pages[index].name()) ==='Rendered Styles') && doc.documentData().removePageAtIndex(index);
+      }
+    }
 
     const DesignSystemTokens = {
         colours: DocumentColours,

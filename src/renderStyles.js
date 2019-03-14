@@ -14,31 +14,31 @@ export default function(context) {
 
   let document = sketch.fromNative(context.document)
 
-
+  // reset styles
   document.sharedTextStyles ={}
-  let count=0, previousFrame = null;
+
+  let previousFrame = null;
   Object.keys(textStyles).forEach(style=>{
     
     document.sharedTextStyles.push({
         name: String(style),
         style: textStyles[style]
       });
-
-      console.log ( (previousFrame !=null ? previousFrame.fra : 0) )
-      let textLayer = new Text({
-        text: String(style),
+ 
+      //sharedStyleId
+      let stylename = String(style);
+      let textLayer = new Text({ 
+        text: style.toString(),
         parent : RenderPage,
         style: textStyles[style],
         frame : { x : 0 , y :  (previousFrame   !=null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0)}
       });
 
+      textLayer.name = stylename;
       previousFrame = textLayer;
-      count++;
   })
 
   // success message
   context.document.showMessage(`${Object.keys(textStyles).length} styles added (${Object.keys(designTokens.typography).length} Text Styles * ${Object.keys(designTokens.colours).length} colours * ${Object.keys(designTokens.textAlignments).length} alignments) 🙌`);
-
-// render(<TypeLayout colours={designTokens.colours}  typography={designTokens.typography}/>, RenderPage);
 
 }
