@@ -15,7 +15,7 @@
       "assets/**/*"
     ],
     "identifier": "text-to-styles.plugin",
-    "appcast_path": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml"
+    "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml"
   },
   "scripts": {
     "build": "skpm-build",

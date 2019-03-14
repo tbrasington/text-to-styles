@@ -2,6 +2,9 @@
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
+  "name": "Text to Styles",
+  "identifier": "text-to-styles.plugin",
+  "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml",
   "commands": [
     {
       "name": "Render Type Styles",
