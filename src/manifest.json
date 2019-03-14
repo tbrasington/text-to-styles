@@ -3,17 +3,16 @@
   "bundleVersion": 1,
   "icon": "icon.png",
   "commands": [
-  
     {
-      "name": "Export JSON Tokens",
-      "identifier": "renderJSON",
-      "script": "./renderJSON.js"
+      "name": "Render Type Styles",
+      "identifier": "renderStyles",
+      "script": "./renderStyles.js"
     }
   ],
   "menu": {
     "title": "Text to Styles",
     "items": [
-      "renderJSON"
+      "renderStyles"
     ]
   }
 }
