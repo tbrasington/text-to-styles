@@ -76,7 +76,7 @@ export function extractStyles(context,convert) {
         })
       }
     });
-    // Remove previous rendered pages
+    // Remove previous rendered pages (thanks to react-sketchapp)
     for (let index = pages.length - 1; index >= 0; index -= 1) {
       if (pages.length > 1) {
          ( String(pages[index].name()) ==='Rendered Styles') && doc.documentData().removePageAtIndex(index);

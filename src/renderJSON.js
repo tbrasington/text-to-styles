@@ -29,9 +29,8 @@ export default function(context) {
             } else {
                 if(value[2]) {
                     let textSaveMethod = true;
-                    if(options[value[1]]==="Object") textSaveMethod = false;
-                    if(options[value[1]]==="Array") textSaveMethod = true;
-            
+                    if(value==="Object") textSaveMethod = false;
+                    if(value==="Array") textSaveMethod = true;
                     const arranged = generateJSONStyles(designTokens,textSaveMethod)
             
                     // Save the file

@@ -1884,7 +1884,7 @@ function extractStyles(context, convert) {
   var TypographyStyles = [];
   var DocumentColours = {};
   var textAlignments = [];
-  pages.forEach(function (page) {
+  pages.forEach(function (page, index) {
     //  alignments
     if (String(page.name()) === "Alignments") {
       page.layers().forEach(function (layer) {
@@ -1919,7 +1919,8 @@ function extractStyles(context, convert) {
               fontSize: layer.fontSize() + (convert ? 'px' : ''),
               lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
               fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
-              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle
+              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle,
+              paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
             }, convert && {
               letterSpacing: String(layer.characterSpacing() / 10 + 'em')
             }, !convert && {
@@ -1941,7 +1942,14 @@ function extractStyles(context, convert) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
-  });
+  }); // Remove previous rendered pages (thanks to react-sketchapp)
+
+  for (var index = pages.length - 1; index >= 0; index -= 1) {
+    if (pages.length > 1) {
+      String(pages[index].name()) === 'Rendered Styles' && doc.documentData().removePageAtIndex(index);
+    }
+  }
+
   var DesignSystemTokens = {
     colours: DocumentColours,
     typography: TypographyStyles,
@@ -2073,8 +2081,8 @@ function save(filename, fileContents) {
     } else {
       if (value[2]) {
         var textSaveMethod = true;
-        if (options[value[1]] === "Object") textSaveMethod = false;
-        if (options[value[1]] === "Array") textSaveMethod = true;
+        if (value === "Object") textSaveMethod = false;
+        if (value === "Array") textSaveMethod = true;
         var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["generateJSONStyles"])(designTokens, textSaveMethod); // Save the file
 
         _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {

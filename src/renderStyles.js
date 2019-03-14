@@ -1,5 +1,4 @@
 import  sketch, {Text} from 'sketch/dom'
-
 import {extractStyles,generateTextStyles} from './generators'
 
 
@@ -24,14 +23,18 @@ export default function(context) {
         name: String(style),
         style: textStyles[style]
       });
- 
-      //sharedStyleId
+
+      // attach the style to the render
+      let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
+      let latestStyle = sharedStyles[sharedStyles.length-1]
+
       let stylename = String(style);
       let textLayer = new Text({ 
         text: style.toString(),
         parent : RenderPage,
         style: textStyles[style],
-        frame : { x : 0 , y :  (previousFrame   !=null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0)}
+        frame : { x : 0 , y :  (previousFrame   !=null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0)},
+        sharedStyleId: latestStyle.objectID()
       });
 
       textLayer.name = stylename;

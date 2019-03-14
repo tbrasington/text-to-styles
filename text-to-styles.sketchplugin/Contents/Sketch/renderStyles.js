@@ -182,7 +182,7 @@ function extractStyles(context, convert) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
-  }); // Remove previous rendered pages
+  }); // Remove previous rendered pages (thanks to react-sketchapp)
 
   for (var index = pages.length - 1; index >= 0; index -= 1) {
     if (pages.length > 1) {
@@ -302,8 +302,10 @@ __webpack_require__.r(__webpack_exports__);
     document.sharedTextStyles.push({
       name: String(style),
       style: textStyles[style]
-    }); //sharedStyleId
+    }); // attach the style to the render
 
+    var sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
+    var latestStyle = sharedStyles[sharedStyles.length - 1];
     var stylename = String(style);
     var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
       text: style.toString(),
@@ -312,7 +314,8 @@ __webpack_require__.r(__webpack_exports__);
       frame: {
         x: 0,
         y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
-      }
+      },
+      sharedStyleId: latestStyle.objectID()
     });
     textLayer.name = stylename;
     previousFrame = textLayer;
