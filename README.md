@@ -99,14 +99,16 @@ You will be presented with two options for formatting the text style json. Eithe
 {
     "name": "Style 1",
     "styles": {
-        "fontFamily": "SFUIDisplay-Semibold",
+        "fontFamily": "SFProDisplay-Semibold",
         "fontSize": "28px",
         "lineHeight": "34px",
+        "fontWeight": 8,
+        "paragraphSpacing": 25,
         "letterSpacing": "0.02em",
         "textTransform": "none"
     },
     "alignments": [
-        "center",
+        "left",
         "right",
         "center"
     ],
@@ -116,12 +118,12 @@ You will be presented with two options for formatting the text style json. Eithe
             "styles": {
                 "fontSize": "42px",
                 "lineHeight": "48px",
+                "paragraphSpacing": 100,
                 "letterSpacing": "0.03em"
             }
         }
     ]
 }
-
 ```
 #### Object formatting 
 
@@ -129,14 +131,16 @@ You will be presented with two options for formatting the text style json. Eithe
 "Style 1": {
     "name": "Style 1",
     "styles": {
-        "fontFamily": "SFUIDisplay-Semibold",
+        "fontFamily": "SFProDisplay-Semibold",
         "fontSize": "28px",
         "lineHeight": "34px",
+        "fontWeight": 8,
+        "paragraphSpacing": 25,
         "letterSpacing": "0.02em",
         "textTransform": "none"
     },
     "alignments": [
-        "center",
+        "left",
         "right",
         "center"
     ],
@@ -146,6 +150,7 @@ You will be presented with two options for formatting the text style json. Eithe
             "styles": {
                 "fontSize": "42px",
                 "lineHeight": "48px",
+                "paragraphSpacing": 100,
                 "letterSpacing": "0.03em"
             }
         }
