@@ -293,6 +293,7 @@ module.exports = function messageBox(document, options, callback) {
 
 /* eslint-disable no-not-accumulator-reassign/no-not-accumulator-reassign */
 var RunDelegate = __webpack_require__(/*! ./run-delegate */ "./node_modules/@skpm/dialog/lib/run-delegate.js")
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@skpm/dialog/lib/utils.js")
 
 // https://github.com/electron/electron/blob/master/docs/api/dialog.md#dialogshowopendialogbrowserwindow-options-callback
 module.exports = function openDialog(document, options, callback) {
@@ -312,7 +313,7 @@ module.exports = function openDialog(document, options, callback) {
   }
 
   if (options.defaultPath) {
-    dialog.directoryURL = NSURL.URLWithString(options.defaultPath)
+    dialog.setDirectoryURL(utils.getURL(options.defaultPath))
   }
 
   if (options.buttonLabel) {
@@ -341,7 +342,7 @@ module.exports = function openDialog(document, options, callback) {
       } else if (p === 'showHiddenFiles') {
         dialog.showsHiddenFiles = true
       } else if (p === 'createDirectory') {
-        dialog.createDirectory = true
+        dialog.canCreateDirectories = true
       } else if (p === 'noResolveAliases') {
         dialog.resolvesAliases = false
       } else if (p === 'treatPackageAsDirectory') {
@@ -511,6 +512,7 @@ module.exports = new ObjCClass({
 
 /* eslint-disable no-not-accumulator-reassign/no-not-accumulator-reassign */
 var RunDelegate = __webpack_require__(/*! ./run-delegate */ "./node_modules/@skpm/dialog/lib/run-delegate.js")
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@skpm/dialog/lib/utils.js")
 
 // https://github.com/electron/electron/blob/master/docs/api/dialog.md#dialogshowsavedialogbrowserwindow-options-callback
 module.exports = function saveDialog(document, options, callback) {
@@ -533,19 +535,14 @@ module.exports = function saveDialog(document, options, callback) {
   }
 
   if (options.defaultPath) {
+    // that's a path
+    dialog.setDirectoryURL(utils.getURL(options.defaultPath))
+
     if (
       options.defaultPath[0] === '.' ||
       options.defaultPath[0] === '~' ||
       options.defaultPath[0] === '/'
     ) {
-      // that's a path
-      dialog.setDirectoryURL(
-        NSURL.URLWithString(
-          NSString.stringWithString(
-            options.defaultPath
-          ).stringByExpandingTildeInPath()
-        )
-      )
       var parts = options.defaultPath.split('/')
       if (parts.length > 1 && parts[parts.length - 1]) {
         dialog.setNameFieldStringValue(parts[parts.length - 1])
@@ -677,6 +674,24 @@ module.exports = function saveDialog(document, options, callback) {
   }
 
   return undefined
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/utils.js":
+/*!************************************************!*\
+  !*** ./node_modules/@skpm/dialog/lib/utils.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports.getURL = function getURL(path) {
+  return NSURL.URLWithString(
+    String(
+      NSString.stringWithString(path).stringByExpandingTildeInPath()
+    ).replace(/ /g, '%20')
+  )
 }
 
 
@@ -1034,7 +1049,7 @@ module.exports.writeFileSync = function(path, data, options) {
   !*** ./node_modules/@skpm/path/index.js ***!
   \******************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1056,6 +1071,8 @@ module.exports.writeFileSync = function(path, data, options) {
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var sketchSpecifics = __webpack_require__(/*! ./sketch-specifics */ "./node_modules/@skpm/path/sketch-specifics.js")
 
 // we only expose the posix implementation since Sketch only runs on macOS
 
@@ -1139,21 +1156,6 @@ function _format(sep, pathObject) {
   return dir + sep + base
 }
 
-function normalizePath(path) {
-  if (typeof path === 'string') {
-    return path
-  }
-  if (path && path.class && typeof path.class === 'function') {
-    const className = String(path.class())
-    if (className === 'NSString') {
-      return String(path)
-    } else if (className === 'NSURL') {
-      return String(path.path())
-    }
-  }
-  throw new Error('path should be a string')
-}
-
 var posix = {
   // path.resolve([from ...], to)
   resolve: function resolve() {
@@ -1163,14 +1165,16 @@ var posix = {
 
     for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i -= 1) {
       var path
-      if (i >= 0) path = arguments[i]
-      else {
-        if (cwd === undefined)
-          cwd = posix.dirname(String(__command.script().URL().path()) || MSPluginManager.defaultPluginURL())
+      if (i >= 0) {
+        path = arguments[i]
+      } else {
+        if (cwd === undefined) {
+          cwd = posix.dirname(sketchSpecifics.cwd())
+        }
         path = cwd
       }
 
-      path = normalizePath(path)
+      path = sketchSpecifics.getString(path, 'path')
 
       // Skip empty entries
       if (path.length === 0) {
@@ -1198,7 +1202,7 @@ var posix = {
   },
 
   normalize: function normalize(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
 
     if (path.length === 0) return '.'
 
@@ -1217,7 +1221,7 @@ var posix = {
   },
 
   isAbsolute: function isAbsolute(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     return path.length > 0 && path.charCodeAt(0) === CHAR_FORWARD_SLASH
   },
 
@@ -1226,7 +1230,7 @@ var posix = {
     var joined
     for (var i = 0; i < arguments.length; i += 1) {
       var arg = arguments[i]
-      arg = normalizePath(arg)
+      arg = sketchSpecifics.getString(arg, 'path')
       if (arg.length > 0) {
         if (joined === undefined) joined = arg
         else joined += '/' + arg
@@ -1237,8 +1241,8 @@ var posix = {
   },
 
   relative: function relative(from, to) {
-    from = normalizePath(from)
-    to = normalizePath(to)
+    from = sketchSpecifics.getString(from, 'from path')
+    to = sketchSpecifics.getString(to, 'to path')
 
     if (from === to) return ''
 
@@ -1324,7 +1328,7 @@ var posix = {
   },
 
   dirname: function dirname(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     if (path.length === 0) return '.'
     var code = path.charCodeAt(0)
     var hasRoot = code === CHAR_FORWARD_SLASH
@@ -1349,9 +1353,9 @@ var posix = {
   },
 
   basename: function basename(path, ext) {
-    if (ext !== undefined && typeof ext !== 'string')
-      throw new Error('ext should be a string')
-    path = normalizePath(path)
+    if (ext !== undefined)
+      ext = sketchSpecifics.getString(ext, 'ext')
+    path = sketchSpecifics.getString(path, 'path')
 
     var start = 0
     var end = -1
@@ -1422,7 +1426,7 @@ var posix = {
   },
 
   extname: function extname(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     var startDot = -1
     var startPart = 0
     var end = -1
@@ -1479,7 +1483,7 @@ var posix = {
   },
 
   parse: function parse(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
 
     var ret = { root: '', dir: '', base: '', ext: '', name: '' }
     if (path.length === 0) return ret
@@ -1565,11 +1569,53 @@ var posix = {
   delimiter: ':',
   win32: null,
   posix: null,
+
+  resourcePath: sketchSpecifics.resourcePath,
 }
 
-posix.posix = posix
-
 module.exports = posix
+module.exports.posix = posix
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/path/sketch-specifics.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@skpm/path/sketch-specifics.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var util = __webpack_require__(/*! util */ "util")
+
+module.exports.getString = function getString(path, argumentName) {
+  if (!util.isString(path)) {
+    // let's make a special case for NSURL
+    if (util.getNativeClass(path) === 'NSURL') {
+      return String(path.path().copy())
+    }
+    throw new Error(argumentName + ' should be a string. Got ' + typeof path + ' instead.')
+  }
+  return String(path)
+}
+
+module.exports.cwd = function cwd() {
+  if (typeof __command !== 'undefined' && __command.script() && __command.script().URL()) {
+    return String(__command.script().URL().path().copy())
+  }
+  return String(MSPluginManager.defaultPluginURL().path().copy())
+}
+
+module.exports.resourcePath = function resourcePath(resourceName) {
+  if (typeof __command === 'undefined' || !__command.pluginBundle()) {
+    return undefined
+  }
+  var resource = __command.pluginBundle().urlForResourceNamed(resourceName)
+  if (!resource) {
+    return undefined
+  }
+  return String(resource.path())
+}
 
 
 /***/ }),
@@ -2117,6 +2163,17 @@ module.exports = require("sketch");
 /***/ (function(module, exports) {
 
 module.exports = require("sketch/dom");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("util");
 
 /***/ })
 
