@@ -95,6 +95,7 @@ You will be presented with two options for formatting the text style json. Eithe
 
 #### Array formatting 
 
+```
 {
     "name": "Style 1",
     "styles": {
