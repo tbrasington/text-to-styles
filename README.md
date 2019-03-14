@@ -40,7 +40,7 @@ There is a sample project under [sample/text-styles-sample.sketch](https://githu
 You will need to set your Page structure and naming like this:
 
 - Styles
-- Colours
+- Colours or Colors
 - Alignments
 
 Please note that this is case sensitive! 
@@ -50,9 +50,12 @@ Add your base text styles here. This plugin will pick up on:
 
 - Font Family
 - Font Size
+- Font Weight
+- Font Style
 - Line Height
 - Letter Spacing
 - Text Transform (uppercase,lowercase)
+- Paragraph Spacing
 
 #### Breakpoint adjustments
 If you wish to add breakpoint adjustment for styles use the following naming syntax for the layer

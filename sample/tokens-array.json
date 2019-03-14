@@ -1,0 +1,128 @@
+{
+	"colours": {
+		"Black": "rgba(0,0,0,1)",
+		"Hot UI Blue": "rgba(0,88,255,1)",
+		"Pinky Red": "rgba(254,84,105,1)",
+		"Baby Green": "rgba(58,175,149,1)"
+	},
+	"typography": [
+		{
+			"name": "Style 1",
+			"styles": {
+				"fontFamily": "SFProDisplay-Semibold",
+				"fontSize": "28px",
+				"lineHeight": "34px",
+				"fontWeight": 8,
+				"paragraphSpacing": 25,
+				"letterSpacing": "0.02em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": [
+				{
+					"name": "BP3",
+					"styles": {
+						"fontSize": "42px",
+						"lineHeight": "48px",
+						"paragraphSpacing": 100,
+						"letterSpacing": "0.03em"
+					}
+				}
+			]
+		},
+		{
+			"name": "Style 2",
+			"styles": {
+				"fontFamily": "SFProText-Regular",
+				"fontSize": "14px",
+				"lineHeight": "0px",
+				"fontWeight": 5,
+				"paragraphSpacing": 0,
+				"letterSpacing": "0em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		},
+		{
+			"name": "Style 3",
+			"styles": {
+				"fontFamily": "SFProText-Bold",
+				"fontSize": "14px",
+				"lineHeight": "0px",
+				"fontWeight": 9,
+				"paragraphSpacing": 0,
+				"letterSpacing": "0em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		},
+		{
+			"name": "Style 4",
+			"styles": {
+				"fontFamily": "SFProDisplay-Regular",
+				"fontSize": "14px",
+				"lineHeight": "16px",
+				"fontWeight": 5,
+				"paragraphSpacing": 20,
+				"letterSpacing": "0.2em",
+				"textTransform": "uppercase"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": [
+				{
+					"name": "bp2",
+					"styles": {
+						"fontSize": "18px",
+						"lineHeight": "20px",
+						"letterSpacing": "0.5em"
+					}
+				},
+				{
+					"name": "bp3",
+					"styles": {
+						"fontSize": "18px",
+						"lineHeight": "40px",
+						"letterSpacing": "0.5000625000000001em"
+					}
+				}
+			]
+		},
+		{
+			"name": "Style 5",
+			"styles": {
+				"fontFamily": "SFProDisplay-LightItalic",
+				"fontSize": "200px",
+				"lineHeight": "200px",
+				"fontWeight": 3,
+				"fontStyle": "italic",
+				"paragraphSpacing": 500,
+				"letterSpacing": "2em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		}
+	]
+}
