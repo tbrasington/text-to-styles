@@ -8,25 +8,28 @@ export default function(context) {
   const designTokens = extractStyles(context,false)
   const textStyles = generateTextStyles(designTokens);
 
-  let RenderPage =  context.document.addBlankPage()
+  //console.log(textStyles)
+
+  let RenderPage =  context.document.addBlankPage();
   RenderPage.name="Rendered Styles";
 
-  let document = sketch.fromNative(context.document)
+  let document = sketch.fromNative(context.document);
 
   // reset styles
-  document.sharedTextStyles ={}
+  document.sharedTextStyles = [];
+
 
   let previousFrame = null;
   Object.keys(textStyles).forEach(style=>{
     
-    document.sharedTextStyles.push({
+      document.sharedTextStyles.push({
         name: String(style),
         style: textStyles[style]
       });
 
       // attach the style to the render
-      let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
-      let latestStyle = sharedStyles[sharedStyles.length-1]
+     let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
+     let latestStyle = sharedStyles[sharedStyles.length-1];
 
       let stylename = String(style);
       let textLayer = new Text({ 

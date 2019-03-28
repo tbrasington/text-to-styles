@@ -46,16 +46,24 @@ export function extractStyles(context,convert) {
             // log(layer.style().textStyle().encodedAttributes() )
             //log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])
             let textTransform = 'none';
+           
             if(String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])==='1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
             if(String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])==='2') textTransform = 'lowercase'; 
+
+           // console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
+           // console.log("-----" )
+
+            // fontFamily : dom.fromNative(layer).style.fontFamily ,  
+            // fontWeight : dom.fromNative(layer).style.fontWeight ,
+
             TypographyStyles.push({
               name  : String(layer.name()),
               styles : {
-                fontFamily : String(layer.font().fontName()),   
+                fontFamily : dom.fromNative(layer).style.fontFamily,     
+                fontWeight :  dom.fromNative(layer).style.fontWeight ,
                 fontSize : layer.fontSize()+(convert ? 'px' :''),
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
-                fontWeight : dom.fromNative(layer).style.fontWeight,
-                fontStyle : dom.fromNative(layer).style.fontStyle,
+                fontStyle :  "normal" ,//dom.fromNative(layer).style.fontStyle   ,
                 paragraphSpacing : dom.fromNative(layer).style.paragraphSpacing,
                 ...convert && { letterSpacing: String( (layer.characterSpacing()/10)  +'em') },
                 ...!convert && { kerning: layer.characterSpacing()  },
@@ -89,7 +97,7 @@ export function extractStyles(context,convert) {
         textAlignments : textAlignments
     }
 
-    return  DesignSystemTokens
+    return  DesignSystemTokens;
 }
 
 
