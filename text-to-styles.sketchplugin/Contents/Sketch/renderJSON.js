@@ -1,69 +1,2194 @@
-var that=this;function __skpm_run(e,t){that.context=t;var n=function(e){var t={};function n(r){if(t[r])return t[r].exports;var i=t[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var i in e)n.d(r,i,function(t){return e[t]}.bind(null,i));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s="./src/renderJSON.js")}({"./node_modules/@skpm/dialog/lib/index.js":
+var that = this;
+function __skpm_run (key, context) {
+  that.context = context;
+
+var exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/renderJSON.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/@skpm/dialog/lib/index.js":
 /*!************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/index.js ***!
   \************************************************/
-/*! no static exports found */function(e,t,n){e.exports={showOpenDialog:n(/*! ./open-dialog */"./node_modules/@skpm/dialog/lib/open-dialog.js"),showSaveDialog:n(/*! ./save-dialog */"./node_modules/@skpm/dialog/lib/save-dialog.js"),showMessageBox:n(/*! ./message-box */"./node_modules/@skpm/dialog/lib/message-box.js")}},"./node_modules/@skpm/dialog/lib/message-box.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* let's try to match the API from Electron's Dialog
+(https://github.com/electron/electron/blob/master/docs/api/dialog.md) */
+
+module.exports = {
+  showOpenDialog: __webpack_require__(/*! ./open-dialog */ "./node_modules/@skpm/dialog/lib/open-dialog.js"),
+  showSaveDialog: __webpack_require__(/*! ./save-dialog */ "./node_modules/@skpm/dialog/lib/save-dialog.js"),
+  showMessageBox: __webpack_require__(/*! ./message-box */ "./node_modules/@skpm/dialog/lib/message-box.js"),
+  // showErrorBox: require('./error-box'),
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/message-box.js":
 /*!******************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/message-box.js ***!
   \******************************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! ./run-delegate */"./node_modules/@skpm/dialog/lib/run-delegate.js"),i={none:0,info:1,error:2,question:1,warning:2};e.exports=function(e,t,n){var o;!e||"function"!=typeof e.class&&!e.sketchObject?(n=t,t=e,e=void 0):e.sketchObject&&(e=e.sketchObject),t||(t={});var a=NSAlert.alloc().init();if(t.type&&(a.alertStyle=i[t.type]||0),t.buttons&&t.buttons.length&&t.buttons.forEach(function(e){a.addButtonWithTitle(t.normalizeAccessKeys?e.replace(/&/g,""):e)}),void 0!==t.defaultId){var l=a.buttons();t.defaultId<l.length&&(l[0].setKeyEquivalent(""),l[t.defaultId].setKeyEquivalent("\r"))}if(t.title,t.message&&(a.messageText=t.message),t.detail&&(a.informativeText=t.detail),t.checkboxLabel&&(a.showsSuppressionButton=!0,a.suppressionButton().title=t.checkboxLabel,void 0!==t.checkboxChecked&&(a.suppressionButton().state=t.checkboxChecked?NSOnState:NSOffState)),t.icon)"string"==typeof t.icon&&(t.icon=NSImage.alloc().initWithContentsOfFile(t.icon)),a.icon=t.icon;else if("undefined"!=typeof __command&&__command.pluginBundle()&&__command.pluginBundle().icon())a.icon=__command.pluginBundle().icon();else{var s=NSImage.imageNamed("plugins");s&&(a.icon=s)}if(!e){if(o=Number(a.runModal())-1e3,n){var c=!1;return t.checkboxLabel&&(c=a.suppressionButton().state()==NSOnState),void n({response:o,checkboxChecked:c})}return o}var u,d=r.new();a.buttons().forEach(function(e,t){e.setTarget(d),e.setAction(NSSelectorFromString("buttonClicked:")),e.setTag(t)}),n&&(coscript.createFiber?u=coscript.createFiber():coscript.shouldKeepAround=!0),d.options=NSDictionary.dictionaryWithDictionary({onClicked:function(e){n?(n({response:Number(e),checkboxChecked:a.suppressionButton().state()==NSOnState}),NSApp.endSheet(a.window()),u?u.cleanup():coscript.shouldKeepAround=!1):NSApp.stopModalWithCode(Number(e))}});var f=(e.sketchObject||e).documentWindow();if(a.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo(f,null,null,null),!n)return o=Number(NSApp.runModalForWindow(f)),NSApp.endSheet(a.window()),o}},"./node_modules/@skpm/dialog/lib/open-dialog.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable no-not-accumulator-reassign/no-not-accumulator-reassign */
+var RunDelegate = __webpack_require__(/*! ./run-delegate */ "./node_modules/@skpm/dialog/lib/run-delegate.js")
+
+// https://github.com/electron/electron/blob/master/docs/api/dialog.md#dialogshowmessageboxbrowserwindow-options-callback
+var typeMap = {
+  none: 0,
+  info: 1,
+  error: 2,
+  question: 1,
+  warning: 2,
+}
+module.exports = function messageBox(document, options, callback) {
+  if (!document ||
+    (typeof document.class !== 'function' && !document.sketchObject)
+  ) {
+    callback = options
+    options = document
+    document = undefined
+  } else if (document.sketchObject) {
+    document = document.sketchObject
+  }
+  if (!options) {
+    options = {}
+  }
+
+  var response
+
+  var dialog = NSAlert.alloc().init()
+
+  if (options.type) {
+    dialog.alertStyle = typeMap[options.type] || 0
+  }
+
+  if (options.buttons && options.buttons.length) {
+    options.buttons.forEach(function addButton(button) {
+      dialog.addButtonWithTitle(
+        options.normalizeAccessKeys ? button.replace(/&/g, '') : button
+      )
+      // TODO: add keyboard shortcut if options.normalizeAccessKeys
+    })
+  }
+
+  if (typeof options.defaultId !== 'undefined') {
+    var buttons = dialog.buttons()
+    if (options.defaultId < buttons.length) {
+      // Focus the button at defaultId if the user opted to do so.
+      // The first button added gets set as the default selected.
+      // So remove that default, and make the requested button the default.
+      buttons[0].setKeyEquivalent('')
+      buttons[options.defaultId].setKeyEquivalent('\r')
+    }
+  }
+
+  if (options.title) {
+    // not shown on macOS
+  }
+
+  if (options.message) {
+    dialog.messageText = options.message
+  }
+
+  if (options.detail) {
+    dialog.informativeText = options.detail
+  }
+
+  if (options.checkboxLabel) {
+    dialog.showsSuppressionButton = true
+    dialog.suppressionButton().title = options.checkboxLabel
+
+    if (typeof options.checkboxChecked !== 'undefined') {
+      dialog.suppressionButton().state = options.checkboxChecked ?
+        NSOnState :
+        NSOffState
+    }
+  }
+
+  if (options.icon) {
+    if (typeof options.icon === 'string') {
+      options.icon = NSImage.alloc().initWithContentsOfFile(options.icon)
+    }
+    dialog.icon = options.icon
+  } else if (
+    typeof __command !== 'undefined' &&
+    __command.pluginBundle() &&
+    __command.pluginBundle().icon()
+  ) {
+    dialog.icon = __command.pluginBundle().icon()
+  } else {
+    var icon = NSImage.imageNamed('plugins')
+    if (icon) {
+      dialog.icon = icon
+    }
+  }
+
+  if (!document) {
+    response = Number(dialog.runModal()) - 1000
+    if (callback) {
+      var checkboxChecked = false
+      if (options.checkboxLabel) {
+        checkboxChecked = dialog.suppressionButton().state() == NSOnState
+      }
+      callback({
+        response: response,
+        checkboxChecked: checkboxChecked,
+      })
+      return undefined
+    }
+    return response
+  }
+
+  var delegate = RunDelegate.new()
+
+  dialog.buttons().forEach(function hookButton(button, i) {
+    button.setTarget(delegate)
+    button.setAction(NSSelectorFromString('buttonClicked:'))
+    button.setTag(i)
+  })
+
+  var fiber
+  if (callback) {
+    if (coscript.createFiber) {
+      fiber = coscript.createFiber()
+    } else {
+      coscript.shouldKeepAround = true
+    }
+  }
+
+  delegate.options = NSDictionary.dictionaryWithDictionary({
+    onClicked: function handleEnd(returnCode) {
+      if (callback) {
+        callback({
+          response: Number(returnCode),
+          checkboxChecked: dialog.suppressionButton().state() == NSOnState,
+        })
+        NSApp.endSheet(dialog.window())
+        if (fiber) {
+          fiber.cleanup()
+        } else {
+          coscript.shouldKeepAround = false
+        }
+      } else {
+        NSApp.stopModalWithCode(Number(returnCode))
+      }
+    },
+  })
+
+  var window = (document.sketchObject || document).documentWindow()
+  dialog.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo(
+    window,
+    null,
+    null,
+    null
+  )
+
+  if (!callback) {
+    response = Number(NSApp.runModalForWindow(window))
+    NSApp.endSheet(dialog.window())
+    return response
+  }
+
+  return undefined
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/open-dialog.js":
 /*!******************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/open-dialog.js ***!
   \******************************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! ./run-delegate */"./node_modules/@skpm/dialog/lib/run-delegate.js"),i=n(/*! ./utils */"./node_modules/@skpm/dialog/lib/utils.js");e.exports=function(e,t,n){e&&"function"==typeof e.class||(n=t,t=e,e=void 0),t||(t={});var o,a=NSOpenPanel.openPanel();if(t.title&&(a.title=t.title),t.defaultPath&&a.setDirectoryURL(i.getURL(t.defaultPath)),t.buttonLabel&&(a.prompt=t.buttonLabel),t.filters&&t.filters.length){var l=[];t.filters.forEach(function(e){e.extensions.forEach(function(e){l.push(e)})}),a.allowedFileTypes=l}function s(){for(var e=[],t=a.URLs(),n=0;n<t.length;n+=1)e.push(String(t[n].path()));return e}if(t.properties&&t.properties.length&&t.properties.forEach(function(e){"openFile"===e?a.canChooseFiles=!0:"openDirectory"===e?a.canChooseDirectories=!0:"multiSelections"===e?a.allowsMultipleSelection=!0:"showHiddenFiles"===e?a.showsHiddenFiles=!0:"createDirectory"===e?a.canCreateDirectories=!0:"noResolveAliases"===e?a.resolvesAliases=!1:"treatPackageAsDirectory"===e&&(a.treatsFilePackagesAsDirectories=!0)}),t.message&&(a.message=t.message),!e)return(o=a.runModal())==NSOKButton?n?void n(s()):s():[];var c=NSButton.class();function u(e,t){if(t&&t.subviews&&t.subviews())for(var n=t.subviews(),r=0;r<n.length;r+=1){var i=n[r];if(i.isKindOfClass(c)&&String(i.title())==e)return i;var o=u(e,i);if(o)return o}}var d,f=u("Cancel",a.contentView()),g=u(t.buttonLabel||"Open",a.contentView()),p=r.new();f.setTarget(p),f.setAction(NSSelectorFromString("button1Clicked:")),g.setTarget(p),g.setAction(NSSelectorFromString("button0Clicked:")),n&&(coscript.createFiber?d=coscript.createFiber():coscript.shouldKeepAround=!0),p.options=NSDictionary.dictionaryWithDictionary({onClicked:function(e){n?(n(0==e?s():void 0),NSApp.endSheet(a),d?d.cleanup():coscript.shouldKeepAround=!1):NSApp.stopModalWithCode(e)}});var h=(e.sketchObject||e).documentWindow();return a.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo(null,null,h,null,null,null),n?void 0:(o=NSApp.runModalForWindow(h),NSApp.endSheet(a),0==o?s():void 0)}},"./node_modules/@skpm/dialog/lib/run-delegate.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable no-not-accumulator-reassign/no-not-accumulator-reassign */
+var RunDelegate = __webpack_require__(/*! ./run-delegate */ "./node_modules/@skpm/dialog/lib/run-delegate.js")
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@skpm/dialog/lib/utils.js")
+
+// https://github.com/electron/electron/blob/master/docs/api/dialog.md#dialogshowopendialogbrowserwindow-options-callback
+module.exports = function openDialog(document, options, callback) {
+  if (!document || typeof document.class !== 'function') {
+    callback = options
+    options = document
+    document = undefined
+  }
+  if (!options) {
+    options = {}
+  }
+
+  var dialog = NSOpenPanel.openPanel()
+
+  if (options.title) {
+    dialog.title = options.title
+  }
+
+  if (options.defaultPath) {
+    dialog.setDirectoryURL(utils.getURL(options.defaultPath))
+  }
+
+  if (options.buttonLabel) {
+    dialog.prompt = options.buttonLabel
+  }
+
+  if (options.filters && options.filters.length) {
+    var exts = []
+    options.filters.forEach(function setFilter(filter) {
+      filter.extensions.forEach(function setExtension(ext) {
+        exts.push(ext)
+      })
+    })
+
+    dialog.allowedFileTypes = exts
+  }
+
+  if (options.properties && options.properties.length) {
+    options.properties.forEach(function setProperty(p) {
+      if (p === 'openFile') {
+        dialog.canChooseFiles = true
+      } else if (p === 'openDirectory') {
+        dialog.canChooseDirectories = true
+      } else if (p === 'multiSelections') {
+        dialog.allowsMultipleSelection = true
+      } else if (p === 'showHiddenFiles') {
+        dialog.showsHiddenFiles = true
+      } else if (p === 'createDirectory') {
+        dialog.canCreateDirectories = true
+      } else if (p === 'noResolveAliases') {
+        dialog.resolvesAliases = false
+      } else if (p === 'treatPackageAsDirectory') {
+        dialog.treatsFilePackagesAsDirectories = true
+      }
+    })
+  }
+
+  if (options.message) {
+    dialog.message = options.message
+  }
+
+  var buttonClicked
+
+  function getURLs() {
+    var result = []
+    var urls = dialog.URLs()
+    for (var k = 0; k < urls.length; k += 1) {
+      result.push(String(urls[k].path()))
+    }
+
+    return result
+  }
+
+  if (!document) {
+    buttonClicked = dialog.runModal()
+    if (buttonClicked == NSOKButton) {
+      if (callback) {
+        callback(getURLs())
+        return undefined
+      }
+      return getURLs()
+    }
+
+    return []
+  }
+
+  var nsButtonClass = NSButton.class()
+
+  function findButtonWithTitleInView(title, view) {
+    if (!view || !view.subviews || !view.subviews()) {
+      return undefined
+    }
+    var subviews = view.subviews()
+    for (var i = 0; i < subviews.length; i += 1) {
+      var subview = subviews[i]
+      if (
+        subview.isKindOfClass(nsButtonClass) &&
+        String(subview.title()) == title
+      ) {
+        return subview
+      }
+      var foundButton = findButtonWithTitleInView(title, subview)
+      if (foundButton) {
+        return foundButton
+      }
+    }
+    return undefined
+  }
+
+  var cancelButton = findButtonWithTitleInView('Cancel', dialog.contentView())
+  var okButton = findButtonWithTitleInView(
+    options.buttonLabel || 'Open',
+    dialog.contentView()
+  )
+
+  var delegate = RunDelegate.new()
+
+  cancelButton.setTarget(delegate)
+  cancelButton.setAction(NSSelectorFromString('button1Clicked:'))
+  okButton.setTarget(delegate)
+  okButton.setAction(NSSelectorFromString('button0Clicked:'))
+
+  var fiber
+  if (callback) {
+    if (coscript.createFiber) {
+      fiber = coscript.createFiber()
+    } else {
+      coscript.shouldKeepAround = true
+    }
+  }
+
+  delegate.options = NSDictionary.dictionaryWithDictionary({
+    onClicked: function handleEnd(returnCode) {
+      if (callback) {
+        callback(returnCode == 0 ? getURLs() : undefined)
+        NSApp.endSheet(dialog)
+        if (fiber) {
+          fiber.cleanup()
+        } else {
+          coscript.shouldKeepAround = false
+        }
+      } else {
+        NSApp.stopModalWithCode(returnCode)
+      }
+    },
+  })
+
+  var window = (document.sketchObject || document).documentWindow()
+  dialog.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo(
+    null,
+    null,
+    window,
+    null,
+    null,
+    null
+  )
+
+  if (!callback) {
+    buttonClicked = NSApp.runModalForWindow(window)
+    NSApp.endSheet(dialog)
+    if (buttonClicked == 0) {
+      return getURLs()
+    }
+    return undefined
+  }
+
+  return undefined
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/run-delegate.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/run-delegate.js ***!
   \*******************************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! cocoascript-class */"./node_modules/cocoascript-class/lib/index.js").default;e.exports=new r({options:null,"buttonClicked:":function(e){this.options.onClicked&&this.options.onClicked(e.tag()),this.release()},"button0Clicked:":function(){this.options.onClicked&&this.options.onClicked(0),this.release()},"button1Clicked:":function(){this.options.onClicked&&this.options.onClicked(1),this.release()}})},"./node_modules/@skpm/dialog/lib/save-dialog.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ObjCClass = __webpack_require__(/*! cocoascript-class */ "./node_modules/cocoascript-class/lib/index.js").default
+
+module.exports = new ObjCClass({
+  options: null,
+
+  'buttonClicked:': function handleButtonClicked(sender) {
+    if (this.options.onClicked) {
+      this.options.onClicked(sender.tag())
+    }
+    this.release()
+  },
+
+  'button0Clicked:': function handleButtonClicked() {
+    if (this.options.onClicked) {
+      this.options.onClicked(0)
+    }
+    this.release()
+  },
+
+  'button1Clicked:': function handleButtonClicked() {
+    if (this.options.onClicked) {
+      this.options.onClicked(1)
+    }
+    this.release()
+  },
+})
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/save-dialog.js":
 /*!******************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/save-dialog.js ***!
   \******************************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! ./run-delegate */"./node_modules/@skpm/dialog/lib/run-delegate.js"),i=n(/*! ./utils */"./node_modules/@skpm/dialog/lib/utils.js");e.exports=function(e,t,n){var o,a;e&&"function"==typeof e.class||(n=t,t=e,e=void 0),t||(t={});var l=NSSavePanel.savePanel();if(t.title&&(l.title=t.title),t.defaultPath)if(l.setDirectoryURL(i.getURL(t.defaultPath)),"."===t.defaultPath[0]||"~"===t.defaultPath[0]||"/"===t.defaultPath[0]){var s=t.defaultPath.split("/");s.length>1&&s[s.length-1]&&l.setNameFieldStringValue(s[s.length-1])}else l.setNameFieldStringValue(t.defaultPath);if(t.buttonLabel&&(l.prompt=t.buttonLabel),t.filters&&t.filters.length){var c=[];t.filters.forEach(function(e){e.extensions.forEach(function(e){c.push(e)})}),l.allowedFileTypes=c}if(t.message&&(l.message=t.message),t.nameFieldLabel&&(l.nameFieldLabel=t.nameFieldLabel),t.showsTagField&&(l.showsTagField=t.showsTagField),!e)return(o=l.runModal())==NSOKButton?(a=String(l.URL().path()),n?void n(a):a):void 0;var u=NSButton.class();function d(e,t){if(t&&t.subviews&&t.subviews())for(var n=t.subviews(),r=0;r<n.length;r+=1){var i=n[r];if(i.isKindOfClass(u)&&String(i.title())==e)return i;var o=d(e,i);if(o)return o}}var f,g=d("Cancel",l.contentView()),p=d(t.buttonLabel||"Save",l.contentView()),h=r.new();g.setTarget(h),g.setAction(NSSelectorFromString("button1Clicked:")),p.setTarget(h),p.setAction(NSSelectorFromString("button0Clicked:")),n&&(coscript.createFiber?f=coscript.createFiber():coscript.shouldKeepAround=!0),h.options=NSDictionary.dictionaryWithDictionary({onClicked:function(e){n?(n(0==e?String(l.URL().path()):void 0),NSApp.endSheet(l),f?f.cleanup():coscript.shouldKeepAround=!1):NSApp.stopModalWithCode(e)}});var S=(e.sketchObject||e).documentWindow();return l.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo(null,null,S,null,null,null),n?void 0:(o=NSApp.runModalForWindow(S),NSApp.endSheet(l),0==o?String(l.URL().path()):void 0)}},"./node_modules/@skpm/dialog/lib/utils.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable no-not-accumulator-reassign/no-not-accumulator-reassign */
+var RunDelegate = __webpack_require__(/*! ./run-delegate */ "./node_modules/@skpm/dialog/lib/run-delegate.js")
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/@skpm/dialog/lib/utils.js")
+
+// https://github.com/electron/electron/blob/master/docs/api/dialog.md#dialogshowsavedialogbrowserwindow-options-callback
+module.exports = function saveDialog(document, options, callback) {
+  if (!document || typeof document.class !== 'function') {
+    callback = options
+    options = document
+    document = undefined
+  }
+  if (!options) {
+    options = {}
+  }
+
+  var buttonClicked
+  var url
+
+  var dialog = NSSavePanel.savePanel()
+
+  if (options.title) {
+    dialog.title = options.title
+  }
+
+  if (options.defaultPath) {
+    // that's a path
+    dialog.setDirectoryURL(utils.getURL(options.defaultPath))
+
+    if (
+      options.defaultPath[0] === '.' ||
+      options.defaultPath[0] === '~' ||
+      options.defaultPath[0] === '/'
+    ) {
+      var parts = options.defaultPath.split('/')
+      if (parts.length > 1 && parts[parts.length - 1]) {
+        dialog.setNameFieldStringValue(parts[parts.length - 1])
+      }
+    } else {
+      dialog.setNameFieldStringValue(options.defaultPath)
+    }
+  }
+
+  if (options.buttonLabel) {
+    dialog.prompt = options.buttonLabel
+  }
+
+  if (options.filters && options.filters.length) {
+    var exts = []
+    options.filters.forEach(function setFilter(filter) {
+      filter.extensions.forEach(function setExtension(ext) {
+        exts.push(ext)
+      })
+    })
+
+    dialog.allowedFileTypes = exts
+  }
+
+  if (options.message) {
+    dialog.message = options.message
+  }
+
+  if (options.nameFieldLabel) {
+    dialog.nameFieldLabel = options.nameFieldLabel
+  }
+
+  if (options.showsTagField) {
+    dialog.showsTagField = options.showsTagField
+  }
+
+  if (!document) {
+    buttonClicked = dialog.runModal()
+    if (buttonClicked == NSOKButton) {
+      url = String(dialog.URL().path())
+
+      if (callback) {
+        callback(url)
+        return undefined
+      }
+      return url
+    }
+    return undefined
+  }
+
+  var nsButtonClass = NSButton.class()
+
+  function findButtonWithTitleInView(title, view) {
+    if (!view || !view.subviews || !view.subviews()) {
+      return undefined
+    }
+    var subviews = view.subviews()
+    for (var i = 0; i < subviews.length; i += 1) {
+      var subview = subviews[i]
+      if (
+        subview.isKindOfClass(nsButtonClass) &&
+        String(subview.title()) == title
+      ) {
+        return subview
+      }
+      var foundButton = findButtonWithTitleInView(title, subview)
+      if (foundButton) {
+        return foundButton
+      }
+    }
+    return undefined
+  }
+
+  var cancelButton = findButtonWithTitleInView('Cancel', dialog.contentView())
+  var okButton = findButtonWithTitleInView(
+    options.buttonLabel || 'Save',
+    dialog.contentView()
+  )
+
+  var delegate = RunDelegate.new()
+
+  cancelButton.setTarget(delegate)
+  cancelButton.setAction(NSSelectorFromString('button1Clicked:'))
+  okButton.setTarget(delegate)
+  okButton.setAction(NSSelectorFromString('button0Clicked:'))
+
+  var fiber
+  if (callback) {
+    if (coscript.createFiber) {
+      fiber = coscript.createFiber()
+    } else {
+      coscript.shouldKeepAround = true
+    }
+  }
+
+  delegate.options = NSDictionary.dictionaryWithDictionary({
+    onClicked: function handleEnd(returnCode) {
+      if (callback) {
+        callback(returnCode == 0 ? String(dialog.URL().path()) : undefined)
+        NSApp.endSheet(dialog)
+        if (fiber) {
+          fiber.cleanup()
+        } else {
+          coscript.shouldKeepAround = false
+        }
+      } else {
+        NSApp.stopModalWithCode(returnCode)
+      }
+    },
+  })
+
+  var window = (document.sketchObject || document).documentWindow()
+  dialog.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo(
+    null,
+    null,
+    window,
+    null,
+    null,
+    null
+  )
+
+  if (!callback) {
+    buttonClicked = NSApp.runModalForWindow(window)
+    NSApp.endSheet(dialog)
+    if (buttonClicked == 0) {
+      return String(dialog.URL().path())
+    }
+    return undefined
+  }
+
+  return undefined
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/dialog/lib/utils.js":
 /*!************************************************!*\
   !*** ./node_modules/@skpm/dialog/lib/utils.js ***!
   \************************************************/
-/*! no static exports found */function(e,t){e.exports.getURL=function(e){return NSURL.URLWithString(String(NSString.stringWithString(e).stringByExpandingTildeInPath()).replace(/ /g,"%20"))}},"./node_modules/@skpm/fs/index.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports.getURL = function getURL(path) {
+  return NSURL.URLWithString(
+    String(
+      NSString.stringWithString(path).stringByExpandingTildeInPath()
+    ).replace(/ /g, '%20')
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/fs/index.js":
 /*!****************************************!*\
   !*** ./node_modules/@skpm/fs/index.js ***!
   \****************************************/
-/*! no static exports found */function(e,t){e.exports.constants={F_OK:0,R_OK:4,W_OK:2,X_OK:1},e.exports.accessSync=function(t,n){n|=0;var r=NSFileManager.defaultManager();switch(n){case 0:return e.exports.existsSync(t);case 1:return Boolean(r.isExecutableFileAtPath(t));case 2:return Boolean(r.isWritableFileAtPath(t));case 3:return Boolean(r.isExecutableFileAtPath(t)&&r.isWritableFileAtPath(t));case 4:return Boolean(r.isReadableFileAtPath(t));case 5:return Boolean(r.isReadableFileAtPath(t)&&r.isExecutableFileAtPath(t));case 6:return Boolean(r.isReadableFileAtPath(t)&&r.isWritableFileAtPath(t));case 7:return Boolean(r.isReadableFileAtPath(t)&&r.isWritableFileAtPath(t)&&r.isExecutableFileAtPath(t))}},e.exports.appendFileSync=function(t,n,r){if(!e.exports.existsSync(t))return e.exports.writeFileSync(t,n,r);var i=NSFileHandle.fileHandleForWritingAtPath(t);if(i.seekToEndOfFile(),n&&n.mocha&&"NSData"===n.mocha().class())i.writeData(n);else{var o=r&&r.encoding?r.encoding:r||"utf8",a=NSString.stringWithString(n);switch(o){case"utf8":a.dataUsingEncoding(NSUTF8StringEncoding);break;case"ascii":a.dataUsingEncoding(NSASCIIStringEncoding);break;case"utf16le":case"ucs2":a.dataUsingEncoding(NSUTF16LittleEndianStringEncoding);break;case"base64":a.dataUsingEncoding(NSUTF8StringEncoding).base64EncodedStringWithOptions(0).dataUsingEncoding(NSUTF8StringEncoding);break;case"latin1":case"binary":a.dataUsingEncoding(NSISOLatin1StringEncoding);break;case"hex":default:a.dataUsingEncoding(NSUTF8StringEncoding)}i.writeData(n)}},e.exports.chmodSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().setAttributes_ofItemAtPath_error({NSFilePosixPermissions:t},e,n),null!==n.value())throw new Error(n.value())},e.exports.copyFileSync=function(e,t,n){var r=MOPointer.alloc().init();if(NSFileManager.defaultManager().copyItemAtPath_toPath_error(e,t,r),null!==r.value())throw new Error(r.value())},e.exports.existsSync=function(e){var t=NSFileManager.defaultManager();return Boolean(t.fileExistsAtPath(e))},e.exports.linkSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().linkItemAtPath_toPath_error(e,t,n),null!==n.value())throw new Error(n.value())},e.exports.mkdirSync=function(e,t){t=t||511;var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(e,!1,{NSFilePosixPermissions:t},n),null!==n.value())throw new Error(n.value())},e.exports.mkdtempSync=function(t){var n=t+function(){for(var e="",t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",n=0;n<6;n++)e+=t.charAt(Math.floor(Math.random()*t.length));return e}();return e.exports.mkdirSync(n),n},e.exports.readdirSync=function(e){for(var t=NSFileManager.defaultManager().subpathsAtPath(e),n=[],r=0;r<t.length;r++)n.push(t[r]);return n},e.exports.readFileSync=function(e,t){var n=t&&t.encoding?t.encoding:t||"buffer",r=NSFileManager.defaultManager().contentsAtPath(e);switch(n){case"utf8":return String(NSString.alloc().initWithData_encoding(r,NSUTF8StringEncoding));case"ascii":return String(NSString.alloc().initWithData_encoding(r,NSASCIIStringEncoding));case"utf16le":case"ucs2":return String(NSString.alloc().initWithData_encoding(r,NSUTF16LittleEndianStringEncoding));case"base64":var i=NSData.alloc().initWithBase64EncodedData_options(r,0);return String(NSString.alloc().initWithData_encoding(i,NSUTF8StringEncoding));case"latin1":case"binary":return String(NSString.alloc().initWithData_encoding(r,NSISOLatin1StringEncoding));case"hex":default:return r}},e.exports.readlinkSync=function(e){var t=MOPointer.alloc().init(),n=NSFileManager.defaultManager().destinationOfSymbolicLinkAtPath_error(e,t);if(null!==t.value())throw new Error(t.value());return n},e.exports.realpathSync=function(e){return NSString.stringByResolvingSymlinksInPath(e)},e.exports.renameSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().moveItemAtPath_toPath_error(e,t,n),null!==n.value())throw new Error(n.value())},e.exports.rmdirSync=function(e){var t=MOPointer.alloc().init();if(NSFileManager.defaultManager().removeItemAtPath_error(e,t),null!==t.value())throw new Error(t.value())},e.exports.statSync=function(e){var t=MOPointer.alloc().init(),n=NSFileManager.defaultManager().attributesOfItemAtPath_error(e,t);if(null!==t.value())throw new Error(t.value());return{dev:String(n.NSFileDeviceIdentifier),mode:n.NSFileType|n.NSFilePosixPermissions,nlink:Number(n.NSFileReferenceCount),uid:String(n.NSFileOwnerAccountID),gid:String(n.NSFileGroupOwnerAccountID),size:Number(n.NSFileSize),atimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),mtimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),ctimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),birthtimeMs:1e3*Number(n.NSFileCreationDate.timeIntervalSince1970()),atime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),mtime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),ctime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),birthtime:new Date(1e3*Number(n.NSFileCreationDate.timeIntervalSince1970())+.5),isBlockDevice:function(){return n.NSFileType===NSFileTypeBlockSpecial},isCharacterDevice:function(){return n.NSFileType===NSFileTypeCharacterSpecial},isDirectory:function(){return n.NSFileType===NSFileTypeDirectory},isFIFO:function(){return!1},isFile:function(){return n.NSFileType===NSFileTypeRegular},isSocket:function(){return n.NSFileType===NSFileTypeSocket},isSymbolicLink:function(){return n.NSFileType===NSFileTypeSymbolicLink}}},e.exports.symlinkSync=function(e,t){var n=MOPointer.alloc().init();NSFileManager.defaultManager().createSymbolicLinkAtPath_withDestinationPath_error(t,e,n);if(null!==n.value())throw new Error(n.value())},e.exports.truncateSync=function(e,t){var n=NSFileHandle.fileHandleForUpdatingAtPath(sFilePath);n.truncateFileAtOffset(t||0),n.closeFile()},e.exports.unlinkSync=function(e){var t=MOPointer.alloc().init();NSFileManager.defaultManager().removeItemAtPath_error(e,t);if(null!==t.value())throw new Error(t.value())},e.exports.utimesSync=function(e,t,n){var r=MOPointer.alloc().init();NSFileManager.defaultManager().setAttributes_ofItemAtPath_error({NSFileModificationDate:t},e,r);if(null!==r.value())throw new Error(r.value())},e.exports.writeFileSync=function(e,t,n){var r=n&&n.encoding?n.encoding:n||"utf8";if(t&&t.mocha&&"NSData"===t.mocha().class())t.writeToFile_atomically(e,!0);else{var i=MOPointer.alloc().init(),o=NSString.stringWithString(t);switch(r){case"utf8":o.writeToFile_atomically_encoding_error(e,!0,NSUTF8StringEncoding,i);break;case"ascii":o.writeToFile_atomically_encoding_error(e,!0,NSASCIIStringEncoding,i);break;case"utf16le":case"ucs2":o.writeToFile_atomically_encoding_error(e,!0,NSUTF16LittleEndianStringEncoding,i);break;case"base64":o.dataUsingEncoding(NSUTF8StringEncoding).base64EncodedStringWithOptions(0).writeToFile_atomically(e,!0);break;case"latin1":case"binary":o.writeToFile_atomically_encoding_error(e,!0,NSISOLatin1StringEncoding,i);break;case"hex":default:o.writeToFile_atomically_encoding_error(e,!0,NSUTF8StringEncoding,i)}if(null!==i.value())throw new Error(i.value())}}},"./node_modules/@skpm/path/index.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// TODO: async. Should probably be done with NSFileHandle and some notifications
+// TODO: file descriptor. Needs to be done with NSFileHandle
+
+module.exports.constants = {
+  F_OK: 0,
+  R_OK: 4,
+  W_OK: 2,
+  X_OK: 1
+}
+
+module.exports.accessSync = function(path, mode) {
+  mode = mode | 0
+  var fileManager = NSFileManager.defaultManager()
+
+  switch (mode) {
+    case 0:
+      return module.exports.existsSync(path)
+    case 1:
+      return Boolean(fileManager.isExecutableFileAtPath(path))
+    case 2:
+      return Boolean(fileManager.isWritableFileAtPath(path))
+    case 3:
+      return Boolean(fileManager.isExecutableFileAtPath(path) && fileManager.isWritableFileAtPath(path))
+    case 4:
+      return Boolean(fileManager.isReadableFileAtPath(path))
+    case 5:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isExecutableFileAtPath(path))
+    case 6:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isWritableFileAtPath(path))
+    case 7:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isWritableFileAtPath(path) && fileManager.isExecutableFileAtPath(path))
+  }
+}
+
+module.exports.appendFileSync = function(file, data, options) {
+  if (!module.exports.existsSync(file)) {
+    return module.exports.writeFileSync(file, data, options)
+  }
+
+  var handle = NSFileHandle.fileHandleForWritingAtPath(file)
+  handle.seekToEndOfFile()
+
+  if (data && data.mocha && data.mocha().class() === 'NSData') {
+    handle.writeData(data)
+    return
+  }
+
+  var encoding = options && options.encoding ? options.encoding : (options ? options : 'utf8')
+
+  var string = NSString.stringWithString(data)
+  var nsdata
+
+  switch (encoding) {
+    case 'utf8':
+      nsdata = string.dataUsingEncoding(NSUTF8StringEncoding)
+      break
+    case 'ascii':
+      nsdata = string.dataUsingEncoding(NSASCIIStringEncoding)
+      break
+    case 'utf16le':
+    case 'ucs2':
+      nsdata = string.dataUsingEncoding(NSUTF16LittleEndianStringEncoding)
+      break
+    case 'base64':
+      var plainData = string.dataUsingEncoding(NSUTF8StringEncoding)
+      nsdata = plainData.base64EncodedStringWithOptions(0).dataUsingEncoding(NSUTF8StringEncoding)
+      break
+    case 'latin1':
+    case 'binary':
+      nsdata = string.dataUsingEncoding(NSISOLatin1StringEncoding)
+      break
+    case 'hex':
+      // TODO: how?
+    default:
+      nsdata = string.dataUsingEncoding(NSUTF8StringEncoding)
+      break
+  }
+
+  handle.writeData(data)
+}
+
+module.exports.chmodSync = function(path, mode) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.setAttributes_ofItemAtPath_error({
+    NSFilePosixPermissions: mode
+  }, path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.copyFileSync = function(path, dest, flags) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.copyItemAtPath_toPath_error(path, dest, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.existsSync = function(path) {
+  var fileManager = NSFileManager.defaultManager()
+  return Boolean(fileManager.fileExistsAtPath(path))
+}
+
+module.exports.linkSync = function(existingPath, newPath) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.linkItemAtPath_toPath_error(existingPath, newPath, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.mkdirSync = function(path, mode) {
+  mode = mode || 0o777
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error(path, false, {
+    NSFilePosixPermissions: mode
+  }, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.mkdtempSync = function(path) {
+  function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 6; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+  var tempPath = path + makeid()
+  module.exports.mkdirSync(tempPath)
+  return tempPath
+}
+
+module.exports.readdirSync = function(path) {
+  var fileManager = NSFileManager.defaultManager()
+  var paths = fileManager.subpathsAtPath(path)
+  var arr = []
+  for (var i = 0; i < paths.length; i++) {
+    arr.push(paths[i])
+  }
+  return arr
+}
+
+module.exports.readFileSync = function(path, options) {
+  var encoding = options && options.encoding ? options.encoding : (options ? options : 'buffer')
+  var fileManager = NSFileManager.defaultManager()
+  var data = fileManager.contentsAtPath(path)
+  switch (encoding) {
+    case 'utf8':
+      return String(NSString.alloc().initWithData_encoding(data, NSUTF8StringEncoding))
+    case 'ascii':
+      return String(NSString.alloc().initWithData_encoding(data, NSASCIIStringEncoding))
+    case 'utf16le':
+    case 'ucs2':
+      return String(NSString.alloc().initWithData_encoding(data, NSUTF16LittleEndianStringEncoding))
+    case 'base64':
+      var nsdataDecoded = NSData.alloc().initWithBase64EncodedData_options(data, 0)
+      return String(NSString.alloc().initWithData_encoding(nsdataDecoded, NSUTF8StringEncoding))
+    case 'latin1':
+    case 'binary':
+      return String(NSString.alloc().initWithData_encoding(data, NSISOLatin1StringEncoding))
+    case 'hex':
+      // TODO: how?
+      return data
+    default:
+      return data
+  }
+}
+
+module.exports.readlinkSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.destinationOfSymbolicLinkAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+
+  return result
+}
+
+module.exports.realpathSync = function(path) {
+  return NSString.stringByResolvingSymlinksInPath(path)
+}
+
+module.exports.renameSync = function(oldPath, newPath) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.moveItemAtPath_toPath_error(oldPath, newPath, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.rmdirSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.removeItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.statSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.attributesOfItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+
+  return {
+    dev: String(result.NSFileDeviceIdentifier),
+    // ino: 48064969, The file system specific "Inode" number for the file.
+    mode: result.NSFileType | result.NSFilePosixPermissions,
+    nlink: Number(result.NSFileReferenceCount),
+    uid: String(result.NSFileOwnerAccountID),
+    gid: String(result.NSFileGroupOwnerAccountID),
+    // rdev: 0, A numeric device identifier if the file is considered "special".
+    size: Number(result.NSFileSize),
+    // blksize: 4096, The file system block size for i/o operations.
+    // blocks: 8, The number of blocks allocated for this file.
+    atimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    mtimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    ctimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    birthtimeMs: Number(result.NSFileCreationDate.timeIntervalSince1970()) * 1000,
+    atime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5), // the 0.5 comes from the node source. Not sure why it's added but in doubt...
+    mtime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    ctime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    birthtime: new Date(Number(result.NSFileCreationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    isBlockDevice: function() { return result.NSFileType === NSFileTypeBlockSpecial },
+    isCharacterDevice: function() { return result.NSFileType === NSFileTypeCharacterSpecial },
+    isDirectory: function() { return result.NSFileType === NSFileTypeDirectory },
+    isFIFO: function() { return false },
+    isFile: function() { return result.NSFileType === NSFileTypeRegular },
+    isSocket: function() { return result.NSFileType === NSFileTypeSocket },
+    isSymbolicLink: function() { return result.NSFileType === NSFileTypeSymbolicLink },
+  }
+}
+
+module.exports.symlinkSync = function(target, path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.createSymbolicLinkAtPath_withDestinationPath_error(path, target, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.truncateSync = function(path, len) {
+  var hFile = NSFileHandle.fileHandleForUpdatingAtPath(sFilePath)
+  hFile.truncateFileAtOffset(len || 0)
+  hFile.closeFile()
+}
+
+module.exports.unlinkSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.removeItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.utimesSync = function(path, aTime, mTime) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.setAttributes_ofItemAtPath_error({
+    NSFileModificationDate: aTime
+  }, path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.writeFileSync = function(path, data, options) {
+  var encoding = options && options.encoding ? options.encoding : (options ? options : 'utf8')
+
+  if (data && data.mocha && data.mocha().class() === 'NSData') {
+    data.writeToFile_atomically(path, true)
+    return
+  }
+
+  var err = MOPointer.alloc().init()
+  var string = NSString.stringWithString(data)
+
+  switch (encoding) {
+    case 'utf8':
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, err)
+      break
+    case 'ascii':
+      string.writeToFile_atomically_encoding_error(path, true, NSASCIIStringEncoding, err)
+      break
+    case 'utf16le':
+    case 'ucs2':
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF16LittleEndianStringEncoding, err)
+      break
+    case 'base64':
+      var plainData = string.dataUsingEncoding(NSUTF8StringEncoding)
+      var nsdataEncoded = plainData.base64EncodedStringWithOptions(0)
+      nsdataEncoded.writeToFile_atomically(path, true)
+      break
+    case 'latin1':
+    case 'binary':
+      string.writeToFile_atomically_encoding_error(path, true, NSISOLatin1StringEncoding, err)
+      break
+    case 'hex':
+      // TODO: how?
+    default:
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, err)
+      break
+  }
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/path/index.js":
 /*!******************************************!*\
   !*** ./node_modules/@skpm/path/index.js ***!
   \******************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! ./sketch-specifics */"./node_modules/@skpm/path/sketch-specifics.js"),i=47,o=46;function a(e,t){for(var n,r="",a=0,l=-1,s=0,c=0;c<=e.length;c+=1){if(c<e.length)n=e.charCodeAt(c);else{if(n===i)break;n=i}if(n===i){if(l===c-1||1===s);else if(l!==c-1&&2===s){if(r.length<2||2!==a||r.charCodeAt(r.length-1)!==o||r.charCodeAt(r.length-2)!==o)if(r.length>2){var u=r.lastIndexOf("/");if(u!==r.length-1){-1===u?(r="",a=0):a=(r=r.slice(0,u)).length-1-r.lastIndexOf("/"),l=c,s=0;continue}}else if(2===r.length||1===r.length){r="",a=0,l=c,s=0;continue}t&&(r.length>0?r+="/..":r="..",a=2)}else r.length>0?r+="/"+e.slice(l+1,c):r=e.slice(l+1,c),a=c-l-1;l=c,s=0}else n===o&&-1!==s?++s:s=-1}return r}var l={resolve:function(){for(var e,t="",n=!1,o=arguments.length-1;o>=-1&&!n;o-=1){var s;o>=0?s=arguments[o]:(void 0===e&&(e=l.dirname(r.cwd())),s=e),0!==(s=r.getString(s,"path")).length&&(t=s+"/"+t,n=s.charCodeAt(0)===i)}return t=a(t,!n),n?t.length>0?"/"+t:"/":t.length>0?t:"."},normalize:function(e){if(0===(e=r.getString(e,"path")).length)return".";var t=e.charCodeAt(0)===i,n=e.charCodeAt(e.length-1)===i;return 0!==(e=a(e,!t)).length||t||(e="."),e.length>0&&n&&(e+="/"),t?"/"+e:e},isAbsolute:function(e){return(e=r.getString(e,"path")).length>0&&e.charCodeAt(0)===i},join:function(){if(0===arguments.length)return".";for(var e,t=0;t<arguments.length;t+=1){var n=arguments[t];(n=r.getString(n,"path")).length>0&&(void 0===e?e=n:e+="/"+n)}return void 0===e?".":l.normalize(e)},relative:function(e,t){if((e=r.getString(e,"from path"))===(t=r.getString(t,"to path")))return"";if((e=l.resolve(e))===(t=l.resolve(t)))return"";for(var n=1;n<e.length&&e.charCodeAt(n)===i;n+=1);for(var o=e.length,a=o-n,s=1;s<t.length&&t.charCodeAt(s)===i;s+=1);for(var c=t.length-s,u=a<c?a:c,d=-1,f=0;f<=u;f+=1){if(f===u){if(c>u){if(t.charCodeAt(s+f)===i)return t.slice(s+f+1);if(0===f)return t.slice(s+f)}else a>u&&(e.charCodeAt(n+f)===i?d=f:0===f&&(d=0));break}var g=e.charCodeAt(n+f);if(g!==t.charCodeAt(s+f))break;g===i&&(d=f)}var p="";for(f=n+d+1;f<=o;f+=1)f!==o&&e.charCodeAt(f)!==i||(0===p.length?p+="..":p+="/..");return p.length>0?p+t.slice(s+d):(s+=d,t.charCodeAt(s)===i&&(s+=1),t.slice(s))},toNamespacedPath:function(e){return e},dirname:function(e){if(0===(e=r.getString(e,"path")).length)return".";for(var t=e.charCodeAt(0),n=t===i,o=-1,a=!0,l=e.length-1;l>=1;l-=1)if((t=e.charCodeAt(l))===i){if(!a){o=l;break}}else a=!1;return-1===o?n?"/":".":n&&1===o?"//":e.slice(0,o)},basename:function(e,t){void 0!==t&&(t=r.getString(t,"ext")),e=r.getString(e,"path");var n,o=0,a=-1,l=!0;if(void 0!==t&&t.length>0&&t.length<=e.length){if(t.length===e.length&&t===e)return"";var s=t.length-1,c=-1;for(n=e.length-1;n>=0;n-=1){var u=e.charCodeAt(n);if(u===i){if(!l){o=n+1;break}}else-1===c&&(l=!1,c=n+1),s>=0&&(u===t.charCodeAt(s)?-1==--s&&(a=n):(s=-1,a=c))}return o===a?a=c:-1===a&&(a=e.length),e.slice(o,a)}for(n=e.length-1;n>=0;--n)if(e.charCodeAt(n)===i){if(!l){o=n+1;break}}else-1===a&&(l=!1,a=n+1);return-1===a?"":e.slice(o,a)},extname:function(e){for(var t=-1,n=0,a=-1,l=!0,s=0,c=(e=r.getString(e,"path")).length-1;c>=0;--c){var u=e.charCodeAt(c);if(u!==i)-1===a&&(l=!1,a=c+1),u===o?-1===t?t=c:1!==s&&(s=1):-1!==t&&(s=-1);else if(!l){n=c+1;break}}return-1===t||-1===a||0===s||1===s&&t===a-1&&t===n+1?"":e.slice(t,a)},format:function(e){if(null===e||"object"!=typeof e)throw new Error("pathObject should be an Object");return function(e,t){var n=t.dir||t.root,r=t.base||(t.name||"")+(t.ext||"");return n?n===t.root?n+r:n+e+r:r}("/",e)},parse:function(e){var t={root:"",dir:"",base:"",ext:"",name:""};if(0===(e=r.getString(e,"path")).length)return t;var n,a=e.charCodeAt(0),l=a===i;l?(t.root="/",n=1):n=0;for(var s=-1,c=0,u=-1,d=!0,f=e.length-1,g=0;f>=n;--f)if((a=e.charCodeAt(f))!==i)-1===u&&(d=!1,u=f+1),a===o?-1===s?s=f:1!==g&&(g=1):-1!==s&&(g=-1);else if(!d){c=f+1;break}return-1===s||-1===u||0===g||1===g&&s===u-1&&s===c+1?-1!==u&&(t.base=t.name=0===c&&l?e.slice(1,u):e.slice(c,u)):(0===c&&l?(t.name=e.slice(1,s),t.base=e.slice(1,u)):(t.name=e.slice(c,s),t.base=e.slice(c,u)),t.ext=e.slice(s,u)),c>0?t.dir=e.slice(0,c-1):l&&(t.dir="/"),t},sep:"/",delimiter:":",win32:null,posix:null,resourcePath:r.resourcePath};e.exports=l,e.exports.posix=l},"./node_modules/@skpm/path/sketch-specifics.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var sketchSpecifics = __webpack_require__(/*! ./sketch-specifics */ "./node_modules/@skpm/path/sketch-specifics.js")
+
+// we only expose the posix implementation since Sketch only runs on macOS
+
+var CHAR_FORWARD_SLASH = 47
+var CHAR_DOT = 46
+
+// Resolves . and .. elements in a path with directory names
+function normalizeString(path, allowAboveRoot) {
+  var res = ''
+  var lastSegmentLength = 0
+  var lastSlash = -1
+  var dots = 0
+  var code
+  for (var i = 0; i <= path.length; i += 1) {
+    if (i < path.length) code = path.charCodeAt(i)
+    else if (code === CHAR_FORWARD_SLASH) break
+    else code = CHAR_FORWARD_SLASH
+    if (code === CHAR_FORWARD_SLASH) {
+      if (lastSlash === i - 1 || dots === 1) {
+        // NOOP
+      } else if (lastSlash !== i - 1 && dots === 2) {
+        if (
+          res.length < 2 ||
+          lastSegmentLength !== 2 ||
+          res.charCodeAt(res.length - 1) !== CHAR_DOT ||
+          res.charCodeAt(res.length - 2) !== CHAR_DOT
+        ) {
+          if (res.length > 2) {
+            var lastSlashIndex = res.lastIndexOf('/')
+            if (lastSlashIndex !== res.length - 1) {
+              if (lastSlashIndex === -1) {
+                res = ''
+                lastSegmentLength = 0
+              } else {
+                res = res.slice(0, lastSlashIndex)
+                lastSegmentLength = res.length - 1 - res.lastIndexOf('/')
+              }
+              lastSlash = i
+              dots = 0
+              continue
+            }
+          } else if (res.length === 2 || res.length === 1) {
+            res = ''
+            lastSegmentLength = 0
+            lastSlash = i
+            dots = 0
+            continue
+          }
+        }
+        if (allowAboveRoot) {
+          if (res.length > 0) res += '/..'
+          else res = '..'
+          lastSegmentLength = 2
+        }
+      } else {
+        if (res.length > 0) res += '/' + path.slice(lastSlash + 1, i)
+        else res = path.slice(lastSlash + 1, i)
+        lastSegmentLength = i - lastSlash - 1
+      }
+      lastSlash = i
+      dots = 0
+    } else if (code === CHAR_DOT && dots !== -1) {
+      ++dots
+    } else {
+      dots = -1
+    }
+  }
+  return res
+}
+
+function _format(sep, pathObject) {
+  var dir = pathObject.dir || pathObject.root
+  var base =
+    pathObject.base || (pathObject.name || '') + (pathObject.ext || '')
+  if (!dir) {
+    return base
+  }
+  if (dir === pathObject.root) {
+    return dir + base
+  }
+  return dir + sep + base
+}
+
+var posix = {
+  // path.resolve([from ...], to)
+  resolve: function resolve() {
+    var resolvedPath = ''
+    var resolvedAbsolute = false
+    var cwd
+
+    for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i -= 1) {
+      var path
+      if (i >= 0) {
+        path = arguments[i]
+      } else {
+        if (cwd === undefined) {
+          cwd = posix.dirname(sketchSpecifics.cwd())
+        }
+        path = cwd
+      }
+
+      path = sketchSpecifics.getString(path, 'path')
+
+      // Skip empty entries
+      if (path.length === 0) {
+        continue
+      }
+
+      resolvedPath = path + '/' + resolvedPath
+      resolvedAbsolute = path.charCodeAt(0) === CHAR_FORWARD_SLASH
+    }
+
+    // At this point the path should be resolved to a full absolute path, but
+    // handle relative paths to be safe (might happen when process.cwd() fails)
+
+    // Normalize the path
+    resolvedPath = normalizeString(resolvedPath, !resolvedAbsolute)
+
+    if (resolvedAbsolute) {
+      if (resolvedPath.length > 0) return '/' + resolvedPath
+      else return '/'
+    } else if (resolvedPath.length > 0) {
+      return resolvedPath
+    } else {
+      return '.'
+    }
+  },
+
+  normalize: function normalize(path) {
+    path = sketchSpecifics.getString(path, 'path')
+
+    if (path.length === 0) return '.'
+
+    var isAbsolute = path.charCodeAt(0) === CHAR_FORWARD_SLASH
+    var trailingSeparator =
+      path.charCodeAt(path.length - 1) === CHAR_FORWARD_SLASH
+
+    // Normalize the path
+    path = normalizeString(path, !isAbsolute)
+
+    if (path.length === 0 && !isAbsolute) path = '.'
+    if (path.length > 0 && trailingSeparator) path += '/'
+
+    if (isAbsolute) return '/' + path
+    return path
+  },
+
+  isAbsolute: function isAbsolute(path) {
+    path = sketchSpecifics.getString(path, 'path')
+    return path.length > 0 && path.charCodeAt(0) === CHAR_FORWARD_SLASH
+  },
+
+  join: function join() {
+    if (arguments.length === 0) return '.'
+    var joined
+    for (var i = 0; i < arguments.length; i += 1) {
+      var arg = arguments[i]
+      arg = sketchSpecifics.getString(arg, 'path')
+      if (arg.length > 0) {
+        if (joined === undefined) joined = arg
+        else joined += '/' + arg
+      }
+    }
+    if (joined === undefined) return '.'
+    return posix.normalize(joined)
+  },
+
+  relative: function relative(from, to) {
+    from = sketchSpecifics.getString(from, 'from path')
+    to = sketchSpecifics.getString(to, 'to path')
+
+    if (from === to) return ''
+
+    from = posix.resolve(from)
+    to = posix.resolve(to)
+
+    if (from === to) return ''
+
+    // Trim any leading backslashes
+    var fromStart = 1
+    for (; fromStart < from.length; fromStart += 1) {
+      if (from.charCodeAt(fromStart) !== CHAR_FORWARD_SLASH) break
+    }
+    var fromEnd = from.length
+    var fromLen = fromEnd - fromStart
+
+    // Trim any leading backslashes
+    var toStart = 1
+    for (; toStart < to.length; toStart += 1) {
+      if (to.charCodeAt(toStart) !== CHAR_FORWARD_SLASH) break
+    }
+    var toEnd = to.length
+    var toLen = toEnd - toStart
+
+    // Compare paths to find the longest common path from root
+    var length = fromLen < toLen ? fromLen : toLen
+    var lastCommonSep = -1
+    var i = 0
+    for (; i <= length; i += 1) {
+      if (i === length) {
+        if (toLen > length) {
+          if (to.charCodeAt(toStart + i) === CHAR_FORWARD_SLASH) {
+            // We get here if `from` is the exact base path for `to`.
+            // For example: from='/foo/bar'; to='/foo/bar/baz'
+            return to.slice(toStart + i + 1)
+          } else if (i === 0) {
+            // We get here if `from` is the root
+            // For example: from='/'; to='/foo'
+            return to.slice(toStart + i)
+          }
+        } else if (fromLen > length) {
+          if (from.charCodeAt(fromStart + i) === CHAR_FORWARD_SLASH) {
+            // We get here if `to` is the exact base path for `from`.
+            // For example: from='/foo/bar/baz'; to='/foo/bar'
+            lastCommonSep = i
+          } else if (i === 0) {
+            // We get here if `to` is the root.
+            // For example: from='/foo'; to='/'
+            lastCommonSep = 0
+          }
+        }
+        break
+      }
+      var fromCode = from.charCodeAt(fromStart + i)
+      var toCode = to.charCodeAt(toStart + i)
+      if (fromCode !== toCode) break
+      else if (fromCode === CHAR_FORWARD_SLASH) lastCommonSep = i
+    }
+
+    var out = ''
+    // Generate the relative path based on the path difference between `to`
+    // and `from`
+    for (i = fromStart + lastCommonSep + 1; i <= fromEnd; i += 1) {
+      if (i === fromEnd || from.charCodeAt(i) === CHAR_FORWARD_SLASH) {
+        if (out.length === 0) out += '..'
+        else out += '/..'
+      }
+    }
+
+    // Lastly, append the rest of the destination (`to`) path that comes after
+    // the common path parts
+    if (out.length > 0) return out + to.slice(toStart + lastCommonSep)
+    else {
+      toStart += lastCommonSep
+      if (to.charCodeAt(toStart) === CHAR_FORWARD_SLASH) toStart += 1
+      return to.slice(toStart)
+    }
+  },
+
+  toNamespacedPath: function toNamespacedPath(path) {
+    // Non-op on posix systems
+    return path
+  },
+
+  dirname: function dirname(path) {
+    path = sketchSpecifics.getString(path, 'path')
+    if (path.length === 0) return '.'
+    var code = path.charCodeAt(0)
+    var hasRoot = code === CHAR_FORWARD_SLASH
+    var end = -1
+    var matchedSlash = true
+    for (var i = path.length - 1; i >= 1; i -= 1) {
+      code = path.charCodeAt(i)
+      if (code === CHAR_FORWARD_SLASH) {
+        if (!matchedSlash) {
+          end = i
+          break
+        }
+      } else {
+        // We saw the first non-path separator
+        matchedSlash = false
+      }
+    }
+
+    if (end === -1) return hasRoot ? '/' : '.'
+    if (hasRoot && end === 1) return '//'
+    return path.slice(0, end)
+  },
+
+  basename: function basename(path, ext) {
+    if (ext !== undefined)
+      ext = sketchSpecifics.getString(ext, 'ext')
+    path = sketchSpecifics.getString(path, 'path')
+
+    var start = 0
+    var end = -1
+    var matchedSlash = true
+    var i
+
+    if (ext !== undefined && ext.length > 0 && ext.length <= path.length) {
+      if (ext.length === path.length && ext === path) return ''
+      var extIdx = ext.length - 1
+      var firstNonSlashEnd = -1
+      for (i = path.length - 1; i >= 0; i -= 1) {
+        var code = path.charCodeAt(i)
+        if (code === CHAR_FORWARD_SLASH) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            start = i + 1
+            break
+          }
+        } else {
+          if (firstNonSlashEnd === -1) {
+            // We saw the first non-path separator, remember this index in case
+            // we need it if the extension ends up not matching
+            matchedSlash = false
+            firstNonSlashEnd = i + 1
+          }
+          if (extIdx >= 0) {
+            // Try to match the explicit extension
+            if (code === ext.charCodeAt(extIdx)) {
+              if (--extIdx === -1) {
+                // We matched the extension, so mark this as the end of our path
+                // component
+                end = i
+              }
+            } else {
+              // Extension does not match, so our result is the entire path
+              // component
+              extIdx = -1
+              end = firstNonSlashEnd
+            }
+          }
+        }
+      }
+
+      if (start === end) end = firstNonSlashEnd
+      else if (end === -1) end = path.length
+      return path.slice(start, end)
+    } else {
+      for (i = path.length - 1; i >= 0; --i) {
+        if (path.charCodeAt(i) === CHAR_FORWARD_SLASH) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            start = i + 1
+            break
+          }
+        } else if (end === -1) {
+          // We saw the first non-path separator, mark this as the end of our
+          // path component
+          matchedSlash = false
+          end = i + 1
+        }
+      }
+
+      if (end === -1) return ''
+      return path.slice(start, end)
+    }
+  },
+
+  extname: function extname(path) {
+    path = sketchSpecifics.getString(path, 'path')
+    var startDot = -1
+    var startPart = 0
+    var end = -1
+    var matchedSlash = true
+    // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find
+    var preDotState = 0
+    for (var i = path.length - 1; i >= 0; --i) {
+      var code = path.charCodeAt(i)
+      if (code === CHAR_FORWARD_SLASH) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1
+          break
+        }
+        continue
+      }
+      if (end === -1) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension
+        matchedSlash = false
+        end = i + 1
+      }
+      if (code === CHAR_DOT) {
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1) startDot = i
+        else if (preDotState !== 1) preDotState = 1
+      } else if (startDot !== -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension
+        preDotState = -1
+      }
+    }
+
+    if (
+      startDot === -1 ||
+      end === -1 ||
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+    ) {
+      return ''
+    }
+    return path.slice(startDot, end)
+  },
+
+  format: function format(pathObject) {
+    if (pathObject === null || typeof pathObject !== 'object') {
+      throw new Error('pathObject should be an Object')
+    }
+    return _format('/', pathObject)
+  },
+
+  parse: function parse(path) {
+    path = sketchSpecifics.getString(path, 'path')
+
+    var ret = { root: '', dir: '', base: '', ext: '', name: '' }
+    if (path.length === 0) return ret
+    var code = path.charCodeAt(0)
+    var isAbsolute = code === CHAR_FORWARD_SLASH
+    var start
+    if (isAbsolute) {
+      ret.root = '/'
+      start = 1
+    } else {
+      start = 0
+    }
+    var startDot = -1
+    var startPart = 0
+    var end = -1
+    var matchedSlash = true
+    var i = path.length - 1
+
+    // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find
+    var preDotState = 0
+
+    // Get non-dir info
+    for (; i >= start; --i) {
+      code = path.charCodeAt(i)
+      if (code === CHAR_FORWARD_SLASH) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1
+          break
+        }
+        continue
+      }
+      if (end === -1) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension
+        matchedSlash = false
+        end = i + 1
+      }
+      if (code === CHAR_DOT) {
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1) startDot = i
+        else if (preDotState !== 1) preDotState = 1
+      } else if (startDot !== -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension
+        preDotState = -1
+      }
+    }
+
+    if (
+      startDot === -1 ||
+      end === -1 ||
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+    ) {
+      if (end !== -1) {
+        if (startPart === 0 && isAbsolute)
+          ret.base = ret.name = path.slice(1, end)
+        else ret.base = ret.name = path.slice(startPart, end)
+      }
+    } else {
+      if (startPart === 0 && isAbsolute) {
+        ret.name = path.slice(1, startDot)
+        ret.base = path.slice(1, end)
+      } else {
+        ret.name = path.slice(startPart, startDot)
+        ret.base = path.slice(startPart, end)
+      }
+      ret.ext = path.slice(startDot, end)
+    }
+
+    if (startPart > 0) ret.dir = path.slice(0, startPart - 1)
+    else if (isAbsolute) ret.dir = '/'
+
+    return ret
+  },
+
+  sep: '/',
+  delimiter: ':',
+  win32: null,
+  posix: null,
+
+  resourcePath: sketchSpecifics.resourcePath,
+}
+
+module.exports = posix
+module.exports.posix = posix
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/path/sketch-specifics.js":
 /*!*****************************************************!*\
   !*** ./node_modules/@skpm/path/sketch-specifics.js ***!
   \*****************************************************/
-/*! no static exports found */function(e,t,n){var r=n(/*! util */"util");e.exports.getString=function(e,t){if(!r.isString(e)){if("NSURL"===r.getNativeClass(e))return String(e.path().copy());throw new Error(t+" should be a string. Got "+typeof e+" instead.")}return String(e)},e.exports.cwd=function(){return"undefined"!=typeof __command&&__command.script()&&__command.script().URL()?String(__command.script().URL().path().copy()):String(MSPluginManager.defaultPluginURL().path().copy())},e.exports.resourcePath=function(e){if("undefined"!=typeof __command&&__command.pluginBundle()){var t=__command.pluginBundle().urlForResourceNamed(e);if(t)return String(t.path())}}},"./node_modules/cocoascript-class/lib/index.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var util = __webpack_require__(/*! util */ "util")
+
+module.exports.getString = function getString(path, argumentName) {
+  if (!util.isString(path)) {
+    // let's make a special case for NSURL
+    if (util.getNativeClass(path) === 'NSURL') {
+      return String(path.path().copy())
+    }
+    throw new Error(argumentName + ' should be a string. Got ' + typeof path + ' instead.')
+  }
+  return String(path)
+}
+
+module.exports.cwd = function cwd() {
+  if (typeof __command !== 'undefined' && __command.script() && __command.script().URL()) {
+    return String(__command.script().URL().path().copy())
+  }
+  return String(MSPluginManager.defaultPluginURL().path().copy())
+}
+
+module.exports.resourcePath = function resourcePath(resourceName) {
+  if (typeof __command === 'undefined' || !__command.pluginBundle()) {
+    return undefined
+  }
+  var resource = __command.pluginBundle().urlForResourceNamed(resourceName)
+  if (!resource) {
+    return undefined
+  }
+  return String(resource.path())
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/cocoascript-class/lib/index.js":
 /*!*****************************************************!*\
   !*** ./node_modules/cocoascript-class/lib/index.js ***!
   \*****************************************************/
-/*! no static exports found */function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SuperCall=void 0,t.default=function(e){const t=e.superclass||NSObject,n=(e.className||e.classname||"ObjCClass")+NSUUID.UUID().UUIDString(),o=new Set(["className","classname","superclass"]);var a=MOClassDescription.allocateDescriptionForClassWithName_superclass_(n,t);const l=[];for(var s in e){const t=e[s];if("function"==typeof t&&"init"!==s){var c=NSSelectorFromString(s);a.addInstanceMethodWithSelector_function_(c,t)}else o.has(s)||(l.push(s),a.addInstanceVariableWithName_typeEncoding(s,"@"))}return a.addInstanceMethodWithSelector_function_(NSSelectorFromString("init"),function(){const t=i.call(this);return l.map(n=>{Object.defineProperty(t,n,{get:()=>(function(e,t){const n=MOPointer.new();return(0,r.object_getInstanceVariable)(e,t,n),n.value().retain().autorelease()})(t,n),set(e){(0,r.object_setInstanceVariable)(t,n,e)}}),t[n]=e[n]}),"function"==typeof e.init&&e.init.call(this),t}),a.registerClass()};var r=n(/*! ./runtime.js */"./node_modules/cocoascript-class/lib/runtime.js");t.SuperCall=r.SuperCall;const i=(0,r.SuperCall)(NSStringFromSelector("init"),[],{type:"@"})},"./node_modules/cocoascript-class/lib/runtime.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SuperCall = undefined;
+exports.default = ObjCClass;
+
+var _runtime = __webpack_require__(/*! ./runtime.js */ "./node_modules/cocoascript-class/lib/runtime.js");
+
+exports.SuperCall = _runtime.SuperCall;
+
+// super when returnType is id and args are void
+// id objc_msgSendSuper(struct objc_super *super, SEL op, void)
+
+const SuperInit = (0, _runtime.SuperCall)(NSStringFromSelector("init"), [], { type: "@" });
+
+// Returns a real ObjC class. No need to use new.
+function ObjCClass(defn) {
+  const superclass = defn.superclass || NSObject;
+  const className = (defn.className || defn.classname || "ObjCClass") + NSUUID.UUID().UUIDString();
+  const reserved = new Set(['className', 'classname', 'superclass']);
+  var cls = MOClassDescription.allocateDescriptionForClassWithName_superclass_(className, superclass);
+  // Add each handler to the class description
+  const ivars = [];
+  for (var key in defn) {
+    const v = defn[key];
+    if (typeof v == 'function' && key !== 'init') {
+      var selector = NSSelectorFromString(key);
+      cls.addInstanceMethodWithSelector_function_(selector, v);
+    } else if (!reserved.has(key)) {
+      ivars.push(key);
+      cls.addInstanceVariableWithName_typeEncoding(key, "@");
+    }
+  }
+
+  cls.addInstanceMethodWithSelector_function_(NSSelectorFromString('init'), function () {
+    const self = SuperInit.call(this);
+    ivars.map(name => {
+      Object.defineProperty(self, name, {
+        get() {
+          return getIvar(self, name);
+        },
+        set(v) {
+          (0, _runtime.object_setInstanceVariable)(self, name, v);
+        }
+      });
+      self[name] = defn[name];
+    });
+    // If there is a passsed-in init funciton, call it now.
+    if (typeof defn.init == 'function') defn.init.call(this);
+    return self;
+  });
+
+  return cls.registerClass();
+};
+
+function getIvar(obj, name) {
+  const retPtr = MOPointer.new();
+  (0, _runtime.object_getInstanceVariable)(obj, name, retPtr);
+  return retPtr.value().retain().autorelease();
+}
+
+/***/ }),
+
+/***/ "./node_modules/cocoascript-class/lib/runtime.js":
 /*!*******************************************************!*\
   !*** ./node_modules/cocoascript-class/lib/runtime.js ***!
   \*******************************************************/
-/*! no static exports found */function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SuperCall=function(e,t,n){const i=o("objc_msgSendSuper",[{type:"^"+r},{type:":"},...t],n);return function(...t){const n=function(e,t){return function e(t){if("object"!=typeof t||0==Object.keys(t).length)return t;const n=Object.keys(t)[0];const r=t[n];const i=MOStruct.structureWithName_memberNames_runtime(n,Object.keys(r),Mocha.sharedRuntime());Object.keys(r).map(t=>{i[t]=e(r[t])});return i}({objc_super:{receiver:e,super_class:t}})}(this,this.superclass()),r=MOPointer.alloc().initWithValue_(n);return i(r,e,...t)}},t.CFunc=o;const r='{objc_super="receiver"@"super_class"#}';function i(e,t){const n=NSMutableDictionary.dictionary();n.o=e,Object.keys(t).map(e=>n.setValue_forKeyPath(t[e],"o."+e))}function o(e,t,n){function r(e){if(!e)return null;const t=MOBridgeSupportArgument.alloc().init();return i(t,{type64:e.type}),t}const o=MOBridgeSupportFunction.alloc().init();return i(o,{name:e,arguments:t.map(r),returnValue:r(n)}),o}t.object_getInstanceVariable=o("object_getInstanceVariable",[{type:"@"},{type:"*"},{type:"^@"}],{type:"^{objc_ivar=}"}),t.object_setInstanceVariable=o("object_setInstanceVariable",[{type:"@"},{type:"*"},{type:"@"}],{type:"^{objc_ivar=}"});!function(e,t){const n=MOBridgeSupportController.sharedController().valueForKey("symbols");if(!n)throw Error("Something has changed within bridge support so we can't add our definitions");if(null!==n[e])return;const r=MOBridgeSupportStruct.alloc().init();i(r,{name:e,type:t.type}),n[e]=r}("objc_super",{type:r})},"./node_modules/json-format/index.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SuperCall = SuperCall;
+exports.CFunc = CFunc;
+const objc_super_typeEncoding = '{objc_super="receiver"@"super_class"#}';
+
+// You can store this to call your function. this must be bound to the current instance.
+function SuperCall(selector, argTypes, returnType) {
+  const func = CFunc("objc_msgSendSuper", [{ type: '^' + objc_super_typeEncoding }, { type: ":" }, ...argTypes], returnType);
+  return function (...args) {
+    const struct = make_objc_super(this, this.superclass());
+    const structPtr = MOPointer.alloc().initWithValue_(struct);
+    return func(structPtr, selector, ...args);
+  };
+}
+
+// Recursively create a MOStruct
+function makeStruct(def) {
+  if (typeof def !== 'object' || Object.keys(def).length == 0) {
+    return def;
+  }
+  const name = Object.keys(def)[0];
+  const values = def[name];
+
+  const structure = MOStruct.structureWithName_memberNames_runtime(name, Object.keys(values), Mocha.sharedRuntime());
+
+  Object.keys(values).map(member => {
+    structure[member] = makeStruct(values[member]);
+  });
+
+  return structure;
+}
+
+function make_objc_super(self, cls) {
+  return makeStruct({
+    objc_super: {
+      receiver: self,
+      super_class: cls
+    }
+  });
+}
+
+// Due to particularities of the JS bridge, we can't call into MOBridgeSupport objects directly
+// But, we can ask key value coding to do the dirty work for us ;)
+function setKeys(o, d) {
+  const funcDict = NSMutableDictionary.dictionary();
+  funcDict.o = o;
+  Object.keys(d).map(k => funcDict.setValue_forKeyPath(d[k], "o." + k));
+}
+
+// Use any C function, not just ones with BridgeSupport
+function CFunc(name, args, retVal) {
+  function makeArgument(a) {
+    if (!a) return null;
+    const arg = MOBridgeSupportArgument.alloc().init();
+    setKeys(arg, {
+      type64: a.type
+    });
+    return arg;
+  }
+  const func = MOBridgeSupportFunction.alloc().init();
+  setKeys(func, {
+    name: name,
+    arguments: args.map(makeArgument),
+    returnValue: makeArgument(retVal)
+  });
+  return func;
+}
+
+/*
+@encode(char*) = "*"
+@encode(id) = "@"
+@encode(Class) = "#"
+@encode(void*) = "^v"
+@encode(CGRect) = "{CGRect={CGPoint=dd}{CGSize=dd}}"
+@encode(SEL) = ":"
+*/
+
+function addStructToBridgeSupport(key, structDef) {
+  // OK, so this is probably the nastiest hack in this file.
+  // We go modify MOBridgeSupportController behind its back and use kvc to add our own definition
+  // There isn't another API for this though. So the only other way would be to make a real bridgesupport file.
+  const symbols = MOBridgeSupportController.sharedController().valueForKey('symbols');
+  if (!symbols) throw Error("Something has changed within bridge support so we can't add our definitions");
+  // If someone already added this definition, don't re-register it.
+  if (symbols[key] !== null) return;
+  const def = MOBridgeSupportStruct.alloc().init();
+  setKeys(def, {
+    name: key,
+    type: structDef.type
+  });
+  symbols[key] = def;
+};
+
+// This assumes the ivar is an object type. Return value is pretty useless.
+const object_getInstanceVariable = exports.object_getInstanceVariable = CFunc("object_getInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "^@" }], { type: "^{objc_ivar=}" });
+// Again, ivar is of object type
+const object_setInstanceVariable = exports.object_setInstanceVariable = CFunc("object_setInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "@" }], { type: "^{objc_ivar=}" });
+
+// We need Mocha to understand what an objc_super is so we can use it as a function argument
+addStructToBridgeSupport('objc_super', { type: objc_super_typeEncoding });
+
+/***/ }),
+
+/***/ "./node_modules/json-format/index.js":
 /*!*******************************************!*\
   !*** ./node_modules/json-format/index.js ***!
   \*******************************************/
-/*! no static exports found */function(e,t){var n=[],r={tab:{char:"\t",size:1},space:{char:" ",size:4}},i={type:"tab"},o=function(e){return"\\"+n.push(e)+"\\"},a=function(e,t){return n[t-1]},l=function(e,t){return new Array(e+1).join(t)};e.exports=function(e,t){var s=r[(t=t||i).type];if(null==s)throw new Error('Unrecognized indent type: "'+t.type+'"');var c=new Array((t.size||s.size)+1).join(s.char);return function(e,t){n=[];var r="",i=0;e=e.replace(/\\./g,o).replace(/(".*?"|'.*?')/g,o).replace(/\s+/,"");for(var s=0;s<e.length;s++){var c=e.charAt(s);switch(c){case"{":case"[":r+=c+"\n"+l(++i,t);break;case"}":case"]":r+="\n"+l(--i,t)+c;break;case",":r+=",\n"+l(i,t);break;case":":r+=": ";break;default:r+=c}}return r=r.replace(/\[[\d,\s]+?\]/g,function(e){return e.replace(/\s/g,"")}).replace(/\\(\d+)\\/g,a).replace(/\\(\d+)\\/g,a)}(JSON.stringify(e),c)}},"./src/generators.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+  change for npm modules.
+  by Luiz Estácio.
+
+  json-format v.1.1
+  http://github.com/phoboslab/json-format
+
+  Released under MIT license:
+  http://www.opensource.org/licenses/mit-license.php
+*/
+var p = [],
+  indentConfig = {
+    tab: { char: '\t', size: 1 },
+    space: { char: ' ', size: 4 }
+  },
+  configDefault = {
+    type: 'tab'
+  },
+  push = function( m ) { return '\\' + p.push( m ) + '\\'; },
+  pop = function( m, i ) { return p[i-1] },
+  tabs = function( count, indentType) { return new Array( count + 1 ).join( indentType ); };
+
+function JSONFormat ( json, indentType ) {
+  p = [];
+  var out = "",
+      indent = 0;
+
+  // Extract backslashes and strings
+  json = json
+    .replace( /\\./g, push )
+    .replace( /(".*?"|'.*?')/g, push )
+    .replace( /\s+/, '' );    
+
+  // Indent and insert newlines
+  for( var i = 0; i < json.length; i++ ) {
+    var c = json.charAt(i);
+
+    switch(c) {
+      case '{':
+      case '[':
+        out += c + "\n" + tabs(++indent, indentType);
+        break;
+      case '}':
+      case ']':
+        out += "\n" + tabs(--indent, indentType) + c;
+        break;
+      case ',':
+        out += ",\n" + tabs(indent, indentType);
+        break;
+      case ':':
+        out += ": ";
+        break;
+      default:
+        out += c;
+        break;      
+    }         
+  }
+
+  // Strip whitespace from numeric arrays and put backslashes 
+  // and strings back in
+  out = out
+    .replace( /\[[\d,\s]+?\]/g, function(m){ return m.replace(/\s/g,''); } )
+    .replace( /\\(\d+)\\/g, pop ) // strings
+    .replace( /\\(\d+)\\/g, pop ); // backslashes in strings
+
+  return out;
+};
+
+module.exports = function(json, config){
+  config = config || configDefault;
+  var indent = indentConfig[config.type];
+
+  if ( indent == null ) {
+    throw new Error('Unrecognized indent type: "' + config.type + '"');
+  }
+  var indentType = new Array((config.size || indent.size) + 1).join(indent.char);
+  return JSONFormat(JSON.stringify(json), indentType);
+}
+
+
+/***/ }),
+
+/***/ "./src/generators.js":
 /*!***************************!*\
   !*** ./src/generators.js ***!
   \***************************/
-/*! exports provided: extractStyles, generateTextStyles, generateJSONStyles */function(e,t,n){"use strict";n.r(t),n.d(t,"extractStyles",function(){return l}),n.d(t,"generateTextStyles",function(){return s}),n.d(t,"generateJSONStyles",function(){return c});var r=n(/*! sketch/dom */"sketch/dom"),i=n.n(r);function o(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{},r=Object.keys(n);"function"==typeof Object.getOwnPropertySymbols&&(r=r.concat(Object.getOwnPropertySymbols(n).filter(function(e){return Object.getOwnPropertyDescriptor(n,e).enumerable}))),r.forEach(function(t){a(e,t,n[t])})}return e}function a(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function l(e,t){var n=e.document,r=n.pages(),a=[],l={},s=[];r.forEach(function(e,n){"Alignments"===String(e.name())&&e.layers().forEach(function(e){var t="left";4===e.textAlignment()&&(t="left"),2===e.textAlignment()&&(t="center"),1===e.textAlignment()&&(t="right"),s.push(t)}),"Styles"===String(e.name())&&e.layers().forEach(function(e){if(e.class()===MSTextLayer){var n="none";"1"===String(e.styleAttributes().MSAttributedStringTextTransformAttribute)&&(n="uppercase"),"2"===String(e.styleAttributes().MSAttributedStringTextTransformAttribute)&&(n="lowercase"),a.push({name:String(e.name()),styles:o({fontFamily:i.a.fromNative(e).style.fontFamily,fontWeight:i.a.fromNative(e).style.fontWeight,fontSize:e.fontSize()+(t?"px":""),lineHeight:e.lineHeight()+(t?"px":""),fontStyle:"normal",paragraphSpacing:i.a.fromNative(e).style.paragraphSpacing},t&&{letterSpacing:String(e.characterSpacing()/10+"em")},!t&&{kerning:e.characterSpacing()},{textTransform:n}),alignments:s,adjustments:[]})}}),"Colours"!==String(e.name())&&"Colors"!==String(e.name())||(l={},e.layers().forEach(function(e){l[e.name()]=t?function(e){return"rgba("+Math.round(255*e.red())+","+Math.round(255*e.green())+","+Math.round(255*e.blue())+","+e.alpha()+")"}(e.style().firstEnabledFill().color()):e.style().firstEnabledFill().color()}))});for(var c=r.length-1;c>=0;c-=1)r.length>1&&"Rendered Styles"===String(r[c].name())&&n.documentData().removePageAtIndex(c);return{colours:l,typography:a,textAlignments:s}}function s(e){var t={};return e.typography.forEach(function(n){Object.keys(e.colours).forEach(function(r){n.alignments.map(function(a,l){var s=n.name.split("/");t["".concat(s[0],"/").concat(r,"/").concat(l+"_"+a+(s.length>1?"/"+s[1]:""))]=o({textColor:i.a.Style.colorToString(e.colours[r]),alignment:a},n.styles)})})}),t}function c(e,t){var n={},r=[];return e.typography.forEach(function(e){var t=e.name.split("/");if(n[t[0]]){var i=e.styles,o=n[t[0]].adjustments.length;r[o]={name:t[1],styles:{}},Object.keys(i).map(function(e){(function(e,t,n){var r=!0;return JSON.stringify(e[n])===JSON.stringify(t[n])&&(r=!1),r})(n[t[0]].styles,i,e)&&(r[o].styles[e]=i[e])}),n[t[0]].adjustments.push(r[o])}else n[t[0]]={name:t[0],styles:e.styles,alignments:e.alignments,adjustments:[]}}),{colours:e.colours,typography:t?Object.keys(n).map(function(e){return n[e]}):n}}},"./src/renderJSON.js":
+/*! exports provided: extractStyles, generateTextStyles, generateJSONStyles */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "extractStyles", function() { return extractStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateTextStyles", function() { return generateTextStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateJSONStyles", function() { return generateJSONStyles; });
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function convertSketchColourToRGBA(colour) {
+  var red = Math.round(colour.red() * 255);
+  var green = Math.round(colour.green() * 255);
+  var blue = Math.round(colour.blue() * 255);
+  return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
+}
+
+function extractStyles(context, convert) {
+  var doc = context.document;
+  var pages = doc.pages();
+  var TypographyStyles = [];
+  var DocumentColours = {};
+  var textAlignments = [];
+  pages.forEach(function (page, index) {
+    //  alignments
+    if (String(page.name()) === "Alignments") {
+      page.layers().forEach(function (layer) {
+        //log(layer.name() + ' ' + layer.textAlignment()) 
+        var alignment = 'left';
+        if (layer.textAlignment() === 4) alignment = 'left';
+        if (layer.textAlignment() === 2) alignment = 'center';
+        if (layer.textAlignment() === 1) alignment = 'right';
+        textAlignments.push(alignment);
+      });
+    } // page styles
+
+
+    if (String(page.name()) === "Styles") {
+      // get styles
+      page.layers().forEach(function (layer) {
+        if (layer.class() === MSTextLayer) {
+          // log(layer.font().fontName())
+          // log(layer.fontSize())
+          // log(layer.lineHeight())
+          // log(layer.characterSpacing())
+          // log(layer.style().textStyle().encodedAttributes() )
+          //log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])
+          var textTransform = 'none';
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
+
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase'; // console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
+          // console.log("-----" )
+          // fontFamily : dom.fromNative(layer).style.fontFamily ,  
+          // fontWeight : dom.fromNative(layer).style.fontWeight ,
+          //console.log(dom.fromNative(layer).style.fontStyle)
+
+          TypographyStyles.push({
+            name: String(layer.name()),
+            styles: _objectSpread({
+              fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
+              fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
+              fontSize: layer.fontSize() + (convert ? 'px' : ''),
+              lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
+              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : "normal",
+              paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
+            }, convert && {
+              letterSpacing: String(layer.characterSpacing() / 10 + 'em')
+            }, !convert && {
+              kerning: layer.characterSpacing()
+            }, {
+              textTransform: textTransform
+            }),
+            alignments: textAlignments,
+            adjustments: []
+          });
+        }
+      });
+    } // get colours
+
+
+    if (String(page.name()) === "Colours" || String(page.name()) === "Colors") {
+      DocumentColours = {};
+      page.layers().forEach(function (layer) {
+        DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
+      });
+    }
+  }); // Remove previous rendered pages (thanks to react-sketchapp)
+
+  for (var index = pages.length - 1; index >= 0; index -= 1) {
+    if (pages.length > 1) {
+      String(pages[index].name()) === 'Rendered Styles' && doc.documentData().removePageAtIndex(index);
+    }
+  }
+
+  var DesignSystemTokens = {
+    colours: DocumentColours,
+    typography: TypographyStyles,
+    textAlignments: textAlignments
+  };
+  return DesignSystemTokens;
+}
+function generateTextStyles(json) {
+  var typeStyles = {};
+  json.typography.forEach(function (item) {
+    Object.keys(json.colours).forEach(function (colour) {
+      item.alignments.map(function (align, index) {
+        // this splits at a slash and adds the adjustments for breakpoints after the alignment
+        // assumption is that there is only one adjusment
+        var name = item.name.split('/');
+        typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
+          textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
+          alignment: align
+        }, item.styles);
+      });
+    });
+  });
+  return typeStyles;
+}
+
+function checkMatch(baseStyle, newStyle, prop) {
+  var value = true; // for now we are just going off the previous style. As this would need to check 
+  // every prop across every adjustment :/
+
+  if (JSON.stringify(baseStyle[prop]) === JSON.stringify(newStyle[prop])) {
+    // very primitive and breaks if order is out of sync 
+    value = false;
+  } //log( prop + ' ' + baseStyle[prop] + ' ----- ' + prop  + ' ' +newStyle[prop] + '  value ' + value)
+
+
+  return value;
+}
+
+function generateJSONStyles(json, arrayFormat) {
+  var typeStyles = {};
+  var refinedBreakpoints = []; //log(json.typography)
+
+  json.typography.forEach(function (item) {
+    var name = item.name.split('/');
+
+    if (!typeStyles[name[0]]) {
+      typeStyles[name[0]] = {
+        name: name[0],
+        styles: item.styles,
+        alignments: item.alignments,
+        adjustments: []
+      };
+    } else {
+      var currentStyle = item.styles; //let previousStyle = typeStyles[name[0]].styles
+      // work out previous style
+
+      var adjustmentLength = typeStyles[name[0]].adjustments.length;
+      refinedBreakpoints[adjustmentLength] = {
+        name: name[1],
+        styles: {} // if(adjustmentLength>0){
+        //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
+        // } 
+        //previousStyle,
+
+      };
+      Object.keys(currentStyle).map(function (checked) {
+        if (checkMatch(typeStyles[name[0]].styles, currentStyle, checked)) {
+          refinedBreakpoints[adjustmentLength].styles[checked] = currentStyle[checked];
+        }
+      });
+      typeStyles[name[0]].adjustments.push(refinedBreakpoints[adjustmentLength]);
+    }
+  }); // finally merge colours back in and return text to an array
+
+  var formattedTokens = {
+    colours: json.colours,
+    typography: arrayFormat ? Object.keys(typeStyles).map(function (key) {
+      return typeStyles[key];
+    }) : typeStyles
+  };
+  return formattedTokens;
+}
+
+/***/ }),
+
+/***/ "./src/renderJSON.js":
 /*!***************************!*\
   !*** ./src/renderJSON.js ***!
   \***************************/
-/*! exports provided: default */function(e,t,n){"use strict";n.r(t);var r=n(/*! @skpm/dialog */"./node_modules/@skpm/dialog/lib/index.js"),i=n.n(r),o=n(/*! @skpm/path */"./node_modules/@skpm/path/index.js"),a=n.n(o),l=n(/*! @skpm/fs */"./node_modules/@skpm/fs/index.js"),s=n.n(l),c=n(/*! json-format */"./node_modules/json-format/index.js"),u=n.n(c),d=n(/*! sketch */"sketch"),f=n.n(d),g=n(/*! ./generators */"./src/generators.js");t.default=function(e){var t=e.document,n=Object(g.extractStyles)(e,!0);f.a.UI.getInputFromUser("Would you like the text styles as an Array or Object",{type:f.a.UI.INPUT_TYPE.selection,possibleValues:["Array","Object"]},function(e,r){if(!e&&r[2]){var o=!0;"Object"===r&&(o=!1),"Array"===r&&(o=!0);var l=Object(g.generateJSONStyles)(n,o);i.a.showSaveDialog(t,{defaultPath:"tokens.json",message:"Choose a folder to save your tokens"},function(e){!function(e,t){var n=a.a.resolve(e);s.a.writeFileSync(n,t,"utf8")}(e,u()(l))})}})}},sketch:
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _skpm_dialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @skpm/dialog */ "./node_modules/@skpm/dialog/lib/index.js");
+/* harmony import */ var _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_skpm_dialog__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _skpm_path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @skpm/path */ "./node_modules/@skpm/path/index.js");
+/* harmony import */ var _skpm_path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_skpm_path__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _skpm_fs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @skpm/fs */ "./node_modules/@skpm/fs/index.js");
+/* harmony import */ var _skpm_fs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_skpm_fs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var json_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! json-format */ "./node_modules/json-format/index.js");
+/* harmony import */ var json_format__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(json_format__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sketch */ "sketch");
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
+
+
+
+
+
+
+
+function save(filename, fileContents) {
+  var targetFile = _skpm_path__WEBPACK_IMPORTED_MODULE_1___default.a.resolve(filename);
+  _skpm_fs__WEBPACK_IMPORTED_MODULE_2___default.a.writeFileSync(targetFile, fileContents, 'utf8');
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (function (context) {
+  var doc = context.document;
+  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["extractStyles"])(context, true);
+  var options = ["Array", "Object"];
+  var textSaveSelection = sketch__WEBPACK_IMPORTED_MODULE_4___default.a.UI.getInputFromUser("Would you like the text styles as an Array or Object", {
+    type: sketch__WEBPACK_IMPORTED_MODULE_4___default.a.UI.INPUT_TYPE.selection,
+    possibleValues: options
+  }, function (err, value) {
+    if (err) {
+      // most likely the user canceled the input
+      return;
+    } else {
+      if (value[2]) {
+        var textSaveMethod = true;
+        if (value === "Object") textSaveMethod = false;
+        if (value === "Array") textSaveMethod = true;
+        var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["generateJSONStyles"])(designTokens, textSaveMethod); // Save the file
+
+        _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
+          defaultPath: "tokens.json",
+          message: "Choose a folder to save your tokens"
+        }, function (filename) {
+          save(filename, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
+        });
+      }
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "sketch":
 /*!*************************!*\
   !*** external "sketch" ***!
   \*************************/
-/*! no static exports found */function(e,t){e.exports=require("sketch")},"sketch/dom":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch");
+
+/***/ }),
+
+/***/ "sketch/dom":
 /*!*****************************!*\
   !*** external "sketch/dom" ***!
   \*****************************/
-/*! no static exports found */function(e,t){e.exports=require("sketch/dom")},util:
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/dom");
+
+/***/ }),
+
+/***/ "util":
 /*!***********************!*\
   !*** external "util" ***!
   \***********************/
-/*! no static exports found */function(e,t){e.exports=require("util")}});"default"===e&&"function"==typeof n?n(t):n[e](t)}that.onRun=__skpm_run.bind(this,"default");
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("util");
+
+/***/ })
+
+/******/ });
+  if (key === 'default' && typeof exports === 'function') {
+    exports(context);
+  } else {
+    exports[key](context);
+  }
+}
+that['onRun'] = __skpm_run.bind(this, 'default')
+
+//# sourceMappingURL=renderJSON.js.map

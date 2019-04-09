@@ -55,7 +55,7 @@ export function extractStyles(context,convert) {
 
             // fontFamily : dom.fromNative(layer).style.fontFamily ,  
             // fontWeight : dom.fromNative(layer).style.fontWeight ,
-
+            //console.log(dom.fromNative(layer).style.fontStyle)
             TypographyStyles.push({
               name  : String(layer.name()),
               styles : {
@@ -63,7 +63,7 @@ export function extractStyles(context,convert) {
                 fontWeight :  dom.fromNative(layer).style.fontWeight ,
                 fontSize : layer.fontSize()+(convert ? 'px' :''),
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
-                fontStyle :  "normal" ,//dom.fromNative(layer).style.fontStyle   ,
+                fontStyle :  (dom.fromNative(layer).style.fontStyle!=undefined ?  dom.fromNative(layer).style.fontStyle : "normal"  )  ,
                 paragraphSpacing : dom.fromNative(layer).style.paragraphSpacing,
                 ...convert && { letterSpacing: String( (layer.characterSpacing()/10)  +'em') },
                 ...!convert && { kerning: layer.characterSpacing()  },

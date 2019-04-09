@@ -9,10 +9,11 @@
 		{
 			"name": "Style 1",
 			"styles": {
-				"fontFamily": "SFProDisplay-Semibold",
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 8,
 				"fontSize": "28px",
 				"lineHeight": "34px",
-				"fontWeight": 8,
+				"fontStyle": "normal",
 				"paragraphSpacing": 25,
 				"letterSpacing": "0.02em",
 				"textTransform": "none"
@@ -37,10 +38,11 @@
 		{
 			"name": "Style 2",
 			"styles": {
-				"fontFamily": "SFProText-Regular",
+				"fontFamily": "Helvetica Neue",
+				"fontWeight": 3,
 				"fontSize": "14px",
 				"lineHeight": "0px",
-				"fontWeight": 5,
+				"fontStyle": "normal",
 				"paragraphSpacing": 0,
 				"letterSpacing": "0em",
 				"textTransform": "none"
@@ -55,10 +57,11 @@
 		{
 			"name": "Style 3",
 			"styles": {
-				"fontFamily": "SFProText-Bold",
+				"fontFamily": "Arial",
+				"fontWeight": 9,
 				"fontSize": "14px",
 				"lineHeight": "0px",
-				"fontWeight": 9,
+				"fontStyle": "normal",
 				"paragraphSpacing": 0,
 				"letterSpacing": "0em",
 				"textTransform": "none"
@@ -73,10 +76,11 @@
 		{
 			"name": "Style 4",
 			"styles": {
-				"fontFamily": "SFProDisplay-Regular",
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 5,
 				"fontSize": "14px",
 				"lineHeight": "16px",
-				"fontWeight": 5,
+				"fontStyle": "normal",
 				"paragraphSpacing": 20,
 				"letterSpacing": "0.2em",
 				"textTransform": "uppercase"
@@ -108,13 +112,70 @@
 		{
 			"name": "Style 5",
 			"styles": {
-				"fontFamily": "SFProDisplay-LightItalic",
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 3,
 				"fontSize": "200px",
 				"lineHeight": "200px",
-				"fontWeight": 3,
-				"fontStyle": "italic",
-				"paragraphSpacing": 500,
+				"fontStyle": "normal",
+				"paragraphSpacing": 200,
 				"letterSpacing": "2em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		},
+		{
+			"name": "Style 6",
+			"styles": {
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 3,
+				"fontSize": "200px",
+				"lineHeight": "200px",
+				"fontStyle": "normal",
+				"paragraphSpacing": 200,
+				"letterSpacing": "2em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		},
+		{
+			"name": "Style 7",
+			"styles": {
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 2,
+				"fontSize": "200px",
+				"lineHeight": "200px",
+				"fontStyle": "normal",
+				"paragraphSpacing": 200,
+				"letterSpacing": "2em",
+				"textTransform": "none"
+			},
+			"alignments": [
+				"left",
+				"right",
+				"center"
+			],
+			"adjustments": []
+		},
+		{
+			"name": "Style 8",
+			"styles": {
+				"fontFamily": "SF Pro Display",
+				"fontWeight": 5,
+				"fontSize": "24px",
+				"lineHeight": "32px",
+				"fontStyle": "italic",
+				"paragraphSpacing": 100,
+				"letterSpacing": "0.1em",
 				"textTransform": "none"
 			},
 			"alignments": [
