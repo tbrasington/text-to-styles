@@ -7,21 +7,15 @@
       "name": "Render Type Styles",
       "identifier": "renderStyles",
       "script": "renderStyles.js"
-    },
-    {
-      "name": "Export JSON Tokens",
-      "identifier": "renderJSON",
-      "script": "renderJSON.js"
     }
   ],
   "menu": {
     "title": "Text to Styles",
     "items": [
-      "renderStyles",
-      "renderJSON"
+      "renderStyles"
     ]
   },
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Generates Sketch type styles programmatically from Artboards",
   "name": "Text to Styles",
   "identifier": "Text to Styles",

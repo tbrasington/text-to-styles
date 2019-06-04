@@ -4,6 +4,7 @@ import {extractStyles,generateTextStyles} from './generators'
 
 export default function(context) {
 
+ 
 
   const designTokens = extractStyles(context,false)
   const textStyles = generateTextStyles(designTokens);
@@ -16,19 +17,33 @@ export default function(context) {
   let document = sketch.fromNative(context.document);
 
   // reset styles
-  document.sharedTextStyles = [];
+  // not sure how to clear up unused styles, maybe we compare the arrays at the end
+  //document.sharedTextStyles = [];
 
-
+ 
   let previousFrame = null;
   Object.keys(textStyles).forEach(style=>{
     
-      document.sharedTextStyles.push({
-        name: String(style),
-        style: textStyles[style]
-      });
+    let styleName = String(style);
 
-      // attach the style to the render
-     let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
+    let checkStyle = document.sharedTextStyles.find((item) => item.name === styleName)
+     
+       if(typeof(checkStyle)==='object'){
+
+      var layer = new Text({
+        style: textStyles[style]
+      })
+      checkStyle.style = layer.style;
+
+      } else {
+        document.sharedTextStyles.push({
+          name: String(style),
+          style: textStyles[style]
+        });
+      }
+
+    //   // attach the style to the render
+     let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles(); // this probably wont work so we need to attach this via an id
      let latestStyle = sharedStyles[sharedStyles.length-1];
 
       let stylename = String(style);

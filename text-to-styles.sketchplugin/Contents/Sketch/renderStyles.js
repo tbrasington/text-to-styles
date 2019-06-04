@@ -156,6 +156,7 @@ function extractStyles(context, convert) {
           // fontFamily : dom.fromNative(layer).style.fontFamily ,  
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
+          //console.log(dom.fromNative(layer).style.borders)
 
           TypographyStyles.push({
             name: String(layer.name()),
@@ -171,7 +172,8 @@ function extractStyles(context, convert) {
             }, !convert && {
               kerning: layer.characterSpacing()
             }, {
-              textTransform: textTransform
+              textTransform: textTransform,
+              borders: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.borders || []
             }),
             alignments: textAlignments,
             adjustments: []
@@ -292,6 +294,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
@@ -301,16 +305,31 @@ __webpack_require__.r(__webpack_exports__);
   var RenderPage = context.document.addBlankPage();
   RenderPage.name = "Rendered Styles";
   var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document); // reset styles
+  // not sure how to clear up unused styles, maybe we compare the arrays at the end
+  //document.sharedTextStyles = [];
 
-  document.sharedTextStyles = [];
   var previousFrame = null;
   Object.keys(textStyles).forEach(function (style) {
-    document.sharedTextStyles.push({
-      name: String(style),
-      style: textStyles[style]
-    }); // attach the style to the render
+    var styleName = String(style);
+    var checkStyle = document.sharedTextStyles.find(function (item) {
+      return item.name === styleName;
+    });
 
-    var sharedStyles = context.document.documentData().layerTextStyles().sharedStyles();
+    if (_typeof(checkStyle) === 'object') {
+      var layer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+        style: textStyles[style]
+      });
+      checkStyle.style = layer.style;
+    } else {
+      document.sharedTextStyles.push({
+        name: String(style),
+        style: textStyles[style]
+      });
+    } //   // attach the style to the render
+
+
+    var sharedStyles = context.document.documentData().layerTextStyles().sharedStyles(); // this probably wont work so we need to attach this via an id
+
     var latestStyle = sharedStyles[sharedStyles.length - 1];
     var stylename = String(style);
     var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
