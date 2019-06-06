@@ -61,7 +61,7 @@ export function extractStyles(context,convert) {
               name  : String(layer.name()),
               styles : {
                 fontFamily : dom.fromNative(layer).style.fontFamily,     
-                fontWeight :  dom.fromNative(layer).style.fontWeight ,
+                fontWeight : (convert ?   dom.fromNative(layer).style.fontWeight * 100 : dom.fromNative(layer).style.fontWeight ),
                 fontSize : layer.fontSize()+(convert ? 'px' :''),
                 lineHeight : layer.lineHeight()+(convert ? 'px' :''),
                 fontStyle :  (dom.fromNative(layer).style.fontStyle!=undefined ?  dom.fromNative(layer).style.fontStyle : "normal"  )  ,

@@ -1962,12 +1962,13 @@ function extractStyles(context, convert) {
           // fontFamily : dom.fromNative(layer).style.fontFamily ,  
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
+          //console.log(dom.fromNative(layer).style.borders)
 
           TypographyStyles.push({
             name: String(layer.name()),
             styles: _objectSpread({
               fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
-              fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
+              fontWeight: convert ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight * 100 : sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
               fontSize: layer.fontSize() + (convert ? 'px' : ''),
               lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
               fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : "normal",
@@ -1977,7 +1978,8 @@ function extractStyles(context, convert) {
             }, !convert && {
               kerning: layer.characterSpacing()
             }, {
-              textTransform: textTransform
+              textTransform: textTransform,
+              borders: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.borders || []
             }),
             alignments: textAlignments,
             adjustments: []

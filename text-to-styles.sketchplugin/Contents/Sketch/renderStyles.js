@@ -162,7 +162,7 @@ function extractStyles(context, convert) {
             name: String(layer.name()),
             styles: _objectSpread({
               fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
-              fontWeight: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
+              fontWeight: convert ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight * 100 : sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
               fontSize: layer.fontSize() + (convert ? 'px' : ''),
               lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
               fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : "normal",
@@ -308,7 +308,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   // not sure how to clear up unused styles, maybe we compare the arrays at the end
   //document.sharedTextStyles = [];
 
-  var previousFrame = null;
+  var stored_styles = [];
   Object.keys(textStyles).forEach(function (style) {
     var styleName = String(style);
     var checkStyle = document.sharedTextStyles.find(function (item) {
@@ -320,29 +320,30 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         style: textStyles[style]
       });
       checkStyle.style = layer.style;
+      stored_styles.push(checkStyle);
     } else {
-      document.sharedTextStyles.push({
+      stored_styles.push({
         name: String(style),
         style: textStyles[style]
       });
-    } //   // attach the style to the render
+    }
+  }); // update the shared text styles with this array
 
+  document.sharedTextStyles = stored_styles;
+  var previousFrame = null; // now make a page 
 
-    var sharedStyles = context.document.documentData().layerTextStyles().sharedStyles(); // this probably wont work so we need to attach this via an id
-
-    var latestStyle = sharedStyles[sharedStyles.length - 1];
-    var stylename = String(style);
+  document.sharedTextStyles.forEach(function (style) {
     var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-      text: style.toString(),
+      text: style.name,
       parent: RenderPage,
-      style: textStyles[style],
       frame: {
         x: 0,
         y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
       },
-      sharedStyleId: latestStyle.objectID()
+      sharedStyleId: style.id,
+      style: style.style
     });
-    textLayer.name = stylename;
+    textLayer.name = style.name;
     previousFrame = textLayer;
   }); // success message
 

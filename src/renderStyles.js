@@ -19,9 +19,8 @@ export default function(context) {
   // reset styles
   // not sure how to clear up unused styles, maybe we compare the arrays at the end
   //document.sharedTextStyles = [];
-
+  let stored_styles = []
  
-  let previousFrame = null;
   Object.keys(textStyles).forEach(style=>{
     
     let styleName = String(style);
@@ -30,34 +29,38 @@ export default function(context) {
      
        if(typeof(checkStyle)==='object'){
 
-      var layer = new Text({
-        style: textStyles[style]
-      })
-      checkStyle.style = layer.style;
+        var layer = new Text({
+          style: textStyles[style]
+        })
+        
+        checkStyle.style = layer.style;
+        stored_styles.push(checkStyle)
 
       } else {
-        document.sharedTextStyles.push({
+        stored_styles.push({
           name: String(style),
           style: textStyles[style]
         });
       }
-
-    //   // attach the style to the render
-     let sharedStyles = context.document.documentData().layerTextStyles().sharedStyles(); // this probably wont work so we need to attach this via an id
-     let latestStyle = sharedStyles[sharedStyles.length-1];
-
-      let stylename = String(style);
-      let textLayer = new Text({ 
-        text: style.toString(),
-        parent : RenderPage,
-        style: textStyles[style],
-        frame : { x : 0 , y :  (previousFrame   !=null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0)},
-        sharedStyleId: latestStyle.objectID()
-      });
-
-      textLayer.name = stylename;
-      previousFrame = textLayer;
   })
+
+  // update the shared text styles with this array
+  document.sharedTextStyles = stored_styles;
+
+  let previousFrame = null;
+    // now make a page 
+    document.sharedTextStyles.forEach(style => {
+      let textLayer = new Text({ 
+        text: style.name,
+        parent : RenderPage,
+        frame : { x : 0 , y :  (previousFrame   !=null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0)},
+        sharedStyleId: style.id,
+        style :style.style
+      });
+ 
+      textLayer.name = style.name;
+      previousFrame = textLayer;
+    });
 
   // success message
   context.document.showMessage(`${Object.keys(textStyles).length} styles added (${Object.keys(designTokens.typography).length} Text Styles * ${Object.keys(designTokens.colours).length} colours * ${Object.keys(designTokens.textAlignments).length} alignments) 🙌`);
