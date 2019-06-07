@@ -1,6 +1,6 @@
 {
   "name": "text-to-styles",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "license": "MIT",
   "repository": "https://github.com/tbrasington/text-to-styles.git",
   "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
