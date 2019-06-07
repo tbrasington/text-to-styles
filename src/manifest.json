@@ -2,6 +2,8 @@
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
+  "name": "Text to Styles",
+  "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
   "commands": [
     {
       "name": "Render Type Styles",
