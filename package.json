@@ -27,7 +27,7 @@
   },
   "author": "Thomas Brasington <tbrasington@gmail.com>",
   "dependencies": {
-    "@skpm/dialog": "^0.2.5",
+    "@skpm/dialog": "^0.4.0",
     "@skpm/fs": "^0.1.4",
     "@skpm/path": "^0.1.4",
     "json-format": "^1.0.1",
