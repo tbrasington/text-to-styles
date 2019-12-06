@@ -105,9 +105,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateJSONStyles", function() { return generateJSONStyles; });
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
+/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_1__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -115,31 +118,42 @@ function convertSketchColourToRGBA(colour) {
   var red = Math.round(colour.red() * 255);
   var green = Math.round(colour.green() * 255);
   var blue = Math.round(colour.blue() * 255);
-  return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
+  return "rgba(" + red + "," + green + "," + blue + "," + colour.alpha() + ")";
 }
 
 function extractStyles(context, convert) {
   var doc = context.document;
-  var pages = doc.pages();
+  var pages = doc.pages(); // we need to check if we have all the pages
+
+  var pagesExist = {
+    alignments: false,
+    colors: false,
+    styles: false
+  }; // arrays and objects for our styles
+
   var TypographyStyles = [];
   var DocumentColours = {};
   var textAlignments = [];
-  pages.forEach(function (page, index) {
+  pages.forEach(function (page) {
     //  alignments
     if (String(page.name()) === "Alignments") {
+      // page exists set to true
+      pagesExist.alignments = true;
       page.layers().forEach(function (layer) {
-        //log(layer.name() + ' ' + layer.textAlignment()) 
-        var alignment = 'left';
-        if (layer.textAlignment() === 4) alignment = 'left';
-        if (layer.textAlignment() === 2) alignment = 'center';
-        if (layer.textAlignment() === 1) alignment = 'right';
+        //log(layer.name() + ' ' + layer.textAlignment())
+        var alignment = "left";
+        if (layer.textAlignment() === 4) alignment = "left";
+        if (layer.textAlignment() === 2) alignment = "center";
+        if (layer.textAlignment() === 1) alignment = "right";
         textAlignments.push(alignment);
       });
     } // page styles
 
 
     if (String(page.name()) === "Styles") {
-      // get styles
+      // page exists set to true
+      pagesExist.styles = true; // get styles
+
       page.layers().forEach(function (layer) {
         if (layer.class() === MSTextLayer) {
           // log(layer.font().fontName())
@@ -148,12 +162,12 @@ function extractStyles(context, convert) {
           // log(layer.characterSpacing())
           // log(layer.style().textStyle().encodedAttributes() )
           //log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])
-          var textTransform = 'none';
-          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
+          var textTransform = "none";
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === "1") textTransform = "uppercase"; //  null: none, 1: uppercase and 2 lowercase
 
-          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === '2') textTransform = 'lowercase'; // console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === "2") textTransform = "lowercase"; // console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
           // console.log("-----" )
-          // fontFamily : dom.fromNative(layer).style.fontFamily ,  
+          // fontFamily : dom.fromNative(layer).style.fontFamily ,
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
           //console.log(dom.fromNative(layer).style.borders)
@@ -163,12 +177,12 @@ function extractStyles(context, convert) {
             styles: _objectSpread({
               fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
               fontWeight: convert ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight * 100 : sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
-              fontSize: layer.fontSize() + (convert ? 'px' : ''),
-              lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
+              fontSize: layer.fontSize() + (convert ? "px" : ""),
+              lineHeight: layer.lineHeight() + (convert ? "px" : ""),
               fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : "normal",
               paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
             }, convert && {
-              letterSpacing: String(layer.characterSpacing() / 10 + 'em')
+              letterSpacing: String(layer.characterSpacing() / 10 + "em")
             }, !convert && {
               kerning: layer.characterSpacing()
             }, {
@@ -184,6 +198,8 @@ function extractStyles(context, convert) {
 
 
     if (String(page.name()) === "Colours" || String(page.name()) === "Colors") {
+      // page exists set to true
+      pagesExist.colors = true;
       DocumentColours = {};
       page.layers().forEach(function (layer) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
@@ -193,29 +209,73 @@ function extractStyles(context, convert) {
 
   for (var index = pages.length - 1; index >= 0; index -= 1) {
     if (pages.length > 1) {
-      String(pages[index].name()) === 'Rendered Styles' && doc.documentData().removePageAtIndex(index);
+      String(pages[index].name()) === "Rendered Styles" && doc.documentData().removePageAtIndex(index);
     }
   }
 
+  var allPagesHere = true;
+  var messages = []; // first check for pages
+
+  if (!pagesExist.alignments) {
+    messages.push('Your document is missing the page named "Alignments".');
+    allPagesHere = false;
+  }
+
+  if (!pagesExist.colors) {
+    messages.push('Your document is missing the page named "Colors". ');
+    allPagesHere = false;
+  }
+
+  if (!pagesExist.styles) {
+    messages.push('Your document is missing the page named "Styles".');
+    allPagesHere = false;
+  } // now that we have checked for pages, lets see if there is anything in them
+
+
+  if (pagesExist.alignments && textAlignments.length === 0) {
+    messages.push("Your alignments page has no alignments in it.");
+    allPagesHere = false;
+  }
+
+  if (pagesExist.colors && Object.keys(DocumentColours).length === 0) {
+    messages.push("Your colors page has no colors in it.");
+    allPagesHere = false;
+  }
+
+  if (pagesExist.styles && TypographyStyles.length === 0) {
+    messages.push("Your styles page has no styles in it.");
+    allPagesHere = false;
+  }
+
+  var messageString = "";
+  messages.forEach(function (message) {
+    messageString += message + "\n";
+  });
+  if (!allPagesHere) sketch_ui__WEBPACK_IMPORTED_MODULE_1___default.a.alert("Unable to render styles", messageString);
   var DesignSystemTokens = {
     colours: DocumentColours,
     typography: TypographyStyles,
-    textAlignments: textAlignments
+    textAlignments: textAlignments,
+    render: allPagesHere
   };
   return DesignSystemTokens;
 }
 function generateTextStyles(json) {
-  var typeStyles = {};
+  // can we calculate this beforehand?
+  var typeStyles = new Array();
   json.typography.forEach(function (item) {
     Object.keys(json.colours).forEach(function (colour) {
       item.alignments.map(function (align, index) {
         // this splits at a slash and adds the adjustments for breakpoints after the alignment
         // assumption is that there is only one adjusment
-        var name = item.name.split('/');
-        typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : ''))] = _objectSpread({
-          textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
-          alignment: align
-        }, item.styles);
+        var name = item.name.split("/");
+        typeStyles.push({
+          name: "".concat(name[0], "/").concat(colour, "/").concat(index + "_" + align + (name.length > 1 ? "/" + name[1] : "")),
+          style: _objectSpread({
+            textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
+            alignment: align
+          }, item.styles)
+        });
       });
     });
   });
@@ -223,11 +283,11 @@ function generateTextStyles(json) {
 }
 
 function checkMatch(baseStyle, newStyle, prop) {
-  var value = true; // for now we are just going off the previous style. As this would need to check 
+  var value = true; // for now we are just going off the previous style. As this would need to check
   // every prop across every adjustment :/
 
   if (JSON.stringify(baseStyle[prop]) === JSON.stringify(newStyle[prop])) {
-    // very primitive and breaks if order is out of sync 
+    // very primitive and breaks if order is out of sync
     value = false;
   } //log( prop + ' ' + baseStyle[prop] + ' ----- ' + prop  + ' ' +newStyle[prop] + '  value ' + value)
 
@@ -240,7 +300,7 @@ function generateJSONStyles(json, arrayFormat) {
   var refinedBreakpoints = []; //log(json.typography)
 
   json.typography.forEach(function (item) {
-    var name = item.name.split('/');
+    var name = item.name.split("/");
 
     if (!typeStyles[name[0]]) {
       typeStyles[name[0]] = {
@@ -256,12 +316,12 @@ function generateJSONStyles(json, arrayFormat) {
       var adjustmentLength = typeStyles[name[0]].adjustments.length;
       refinedBreakpoints[adjustmentLength] = {
         name: name[1],
-        styles: {} // if(adjustmentLength>0){
-        //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
-        // } 
-        //previousStyle,
+        styles: {}
+      }; // if(adjustmentLength>0){
+      //     previousStyle = typeStyles[name[0]].adjustments[adjustmentLength-1]
+      // }
+      //previousStyle,
 
-      };
       Object.keys(currentStyle).map(function (checked) {
         if (checkMatch(typeStyles[name[0]].styles, currentStyle, checked)) {
           refinedBreakpoints[adjustmentLength].styles[checked] = currentStyle[checked];
@@ -299,55 +359,76 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
+  console.log('starting');
   var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_1__["extractStyles"])(context, false);
-  var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_1__["generateTextStyles"])(designTokens); //console.log(textStyles)
+  console.log('tokens');
+  var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_1__["generateTextStyles"])(designTokens);
+  console.log('text style'); // all the pages are present so we can render the styles
 
-  var RenderPage = context.document.addBlankPage();
-  RenderPage.name = "Rendered Styles";
-  var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document); // reset styles
-  // not sure how to clear up unused styles, maybe we compare the arrays at the end
-  //document.sharedTextStyles = [];
+  if (designTokens.render) {
+    var RenderPage = context.document.addBlankPage();
+    RenderPage.name = "Rendered Styles";
+    var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document); // reset styles
+    // not sure how to clear up unused styles, maybe we compare the arrays at the end
+    //document.sharedTextStyles = [];
 
-  var stored_styles = [];
-  Object.keys(textStyles).forEach(function (style) {
-    var styleName = String(style);
-    var checkStyle = document.sharedTextStyles.find(function (item) {
-      return item.name === styleName;
-    });
+    var stored_styles = []; // for (const property in textStyles) {
 
-    if (_typeof(checkStyle) === 'object') {
-      var layer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-        style: textStyles[style]
+    var l = 100; // textStyles.length
+
+    var _loop = function _loop(property) {
+      var styleName = textStyles[property].name;
+      console.log(styleName);
+      var checkStyle = document.sharedTextStyles.find(function (item) {
+        return item.name === styleName;
       });
-      checkStyle.style = layer.style;
-      stored_styles.push(checkStyle);
-    } else {
-      stored_styles.push({
-        name: String(style),
-        style: textStyles[style]
+
+      if (_typeof(checkStyle) === "object") {
+        var layer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+          style: textStyles[property].style
+        });
+        checkStyle.style = layer.style;
+        stored_styles.push(checkStyle);
+      } else {
+        stored_styles.push({
+          name: styleName,
+          style: textStyles[property].style
+        });
+      }
+    };
+
+    for (var property = 0; property < l; property++) {
+      _loop(property);
+    } // update the shared text styles with this array
+
+
+    document.sharedTextStyles = stored_styles;
+    var previousFrame = null; // now make a page 
+
+    var stl = 100; //document.sharedTextStyles.length
+
+    for (var property = 0; property < stl; property++) {
+      var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+        text: document.sharedTextStyles[property].name,
+        parent: RenderPage,
+        frame: {
+          width: document.sharedTextStyles[property].name.length * document.sharedTextStyles[property].style.fontSize,
+          height: document.sharedTextStyles[property].style.lineHeight,
+          x: 0,
+          y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
+        },
+        sharedStyleId: document.sharedTextStyles[property].id,
+        style: document.sharedTextStyles[property].style
       });
+      textLayer.name = document.sharedTextStyles[property].name;
+      previousFrame = textLayer;
     }
-  }); // update the shared text styles with this array
 
-  document.sharedTextStyles = stored_styles;
-  var previousFrame = null; // now make a page 
-
-  document.sharedTextStyles.forEach(function (style) {
-    var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-      text: style.name,
-      parent: RenderPage,
-      frame: {
-        x: 0,
-        y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
-      },
-      sharedStyleId: style.id,
-      style: style.style
-    });
-    textLayer.name = style.name;
-    previousFrame = textLayer;
-  }); // success message
-
-  context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
+    ;
+    context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
+  } else {
+    context.document.showMessage("No styles rendered. Check your document setup. Documentation here https://github.com/tbrasington/text-to-styles");
+  }
 });
 
 /***/ }),
@@ -360,6 +441,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 /***/ (function(module, exports) {
 
 module.exports = require("sketch/dom");
+
+/***/ }),
+
+/***/ "sketch/ui":
+/*!****************************!*\
+  !*** external "sketch/ui" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/ui");
 
 /***/ })
 
