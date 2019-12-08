@@ -78,10 +78,16 @@ Order is set Left, Center, Right.
 
 ## Commands
 
-There are two commands available `Render Type Styles` and `Export JSON Tokens`
+There are two commands available `Create Text Styles`, `Render Style Sheet` and `Export JSON Tokens`
 
-### Render Type Styles
-Will generate all of your text styles into the Sketch Document and create a Page called "Rendered Styles" to show the output. Note this won't apply it to the styles themselves. It is recommended that you use this document now as a Library for your text styles.
+### Create Text Styles
+Will generate all of your text styles into the Sketch Document. 
+
+### Render Style Sheet
+This will reate a Page called "Rendered Styles" and create every combination within your text styles. Please make sure you have run the Create Text Styles command before.
+
+#### Performance
+This command can take a long time to run. The more combinations the longer it will take. 
 
 ### Export JSON Tokens
 

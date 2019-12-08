@@ -4,6 +4,11 @@
     "icon": "icon.png",
     "commands": [
       {
+        "name": "Run Document Setup",
+        "identifier": "runDocumentSetup",
+        "script": "./setupDocument.js"
+      },
+      {
         "name": "Create Text Styles",
         "identifier": "createTextStyles",
         "script": "./createTextStyles.js"

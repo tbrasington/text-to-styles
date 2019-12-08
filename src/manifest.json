@@ -6,15 +6,15 @@
   "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
   "commands": [
     {
-      "name": "Render Type Styles to a page",
-      "identifier": "renderStyleSheet",
-      "script": "./renderStyleSheet.js"
+      "name": "Run Document Setup",
+      "identifier": "runDocumentSetup",
+      "script": "./setupDocument.js"
     }
   ],
   "menu": {
     "title": "Text to Styles",
     "items": [
-      "renderStyleSheet"
+      "runDocumentSetup"
     ]
   }
 }

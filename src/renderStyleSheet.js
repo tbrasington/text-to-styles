@@ -23,18 +23,19 @@ export default function(context) {
     let textLayer = new Text({
       text: document.sharedTextStyles[property].name,
       frame: {
-        width : document.sharedTextStyles[property].name.length * document.sharedTextStyles[property].style.fontSize,
+        width:
+          document.sharedTextStyles[property].name.length *
+          document.sharedTextStyles[property].style.fontSize,
         height: document.sharedTextStyles[property].style.lineHeight,
         x: 0,
         y:
           previousFrame != null
-            ? Math.ceil(
-                previousFrame.frame.height + previousFrame.frame.y + 24
-              )
+            ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24)
             : 0
       },
       sharedStyleId: document.sharedTextStyles[property].id,
-      style: document.sharedTextStyles[property].style
+      style: document.sharedTextStyles[property].style,
+      parent : RenderPage
     });
 
     textLayer.name = document.sharedTextStyles[property].name;
