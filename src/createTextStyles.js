@@ -9,8 +9,7 @@ export default function(context) {
 
   // all the pages are present so we can render the styles
   if (designTokens.render) {
-    let RenderPage = context.document.addBlankPage();
-    RenderPage.name = "Rendered Styles";
+ 
 
     let document = sketch.fromNative(context.document);
     const cachedStyles = document.sharedTextStyles;

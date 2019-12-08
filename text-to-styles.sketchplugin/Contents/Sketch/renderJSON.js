@@ -2079,14 +2079,7 @@ function extractStyles(context, convert) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
-  }); // Remove previous rendered pages (thanks to react-sketchapp)
-
-  for (var index = pages.length - 1; index >= 0; index -= 1) {
-    if (pages.length > 1) {
-      String(pages[index].name()) === "Rendered Styles" && doc.documentData().removePageAtIndex(index);
-    }
-  }
-
+  });
   var allPagesHere = true;
   var messages = []; // first check for pages
 
@@ -2135,17 +2128,21 @@ function extractStyles(context, convert) {
   return DesignSystemTokens;
 }
 function generateTextStyles(json) {
-  var typeStyles = {};
+  // can we calculate this beforehand?
+  var typeStyles = new Array();
   json.typography.forEach(function (item) {
     Object.keys(json.colours).forEach(function (colour) {
       item.alignments.map(function (align, index) {
         // this splits at a slash and adds the adjustments for breakpoints after the alignment
         // assumption is that there is only one adjusment
         var name = item.name.split("/");
-        typeStyles["".concat(name[0], "/").concat(colour, "/").concat(index + "_" + align + (name.length > 1 ? "/" + name[1] : ""))] = _objectSpread({
-          textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
-          alignment: align
-        }, item.styles);
+        typeStyles.push({
+          name: "".concat(name[0], "/").concat(colour, "/").concat(index + "_" + align + (name.length > 1 ? "/" + name[1] : "")),
+          style: _objectSpread({
+            textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
+            alignment: align
+          }, item.styles)
+        });
       });
     });
   });
@@ -2240,6 +2237,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function save(filename, fileContents) {
+  console.log(filename);
   var targetFile = _skpm_path__WEBPACK_IMPORTED_MODULE_1___default.a.resolve(filename);
   _skpm_fs__WEBPACK_IMPORTED_MODULE_2___default.a.writeFileSync(targetFile, fileContents, "utf8");
 }
@@ -2265,11 +2263,11 @@ function save(filename, fileContents) {
           if (value === "Array") textSaveMethod = true;
           var arranged = Object(_generators__WEBPACK_IMPORTED_MODULE_5__["generateJSONStyles"])(designTokens, textSaveMethod); // Save the file
 
-          _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
+          var saveDialog = _skpm_dialog__WEBPACK_IMPORTED_MODULE_0___default.a.showSaveDialog(doc, {
             defaultPath: "tokens.json",
             message: "Choose a folder to save your tokens"
-          }, function (filename) {
-            save(filename, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
+          }).then(function (result) {
+            if (!result.cancelled) save(result.filePath, json_format__WEBPACK_IMPORTED_MODULE_3___default()(arranged));
           });
         }
       }

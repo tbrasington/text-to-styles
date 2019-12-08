@@ -9,12 +9,30 @@
       "name": "Run Document Setup",
       "identifier": "runDocumentSetup",
       "script": "setupDocument.js"
+    },
+    {
+      "name": "Create Text Styles",
+      "identifier": "createTextStyles",
+      "script": "createTextStyles.js"
+    },
+    {
+      "name": "Render Style Sheet",
+      "identifier": "renderStyleSheet",
+      "script": "renderStyleSheet.js"
+    },
+    {
+      "name": "Export JSON Tokens",
+      "identifier": "renderJSON",
+      "script": "renderJSON.js"
     }
   ],
   "menu": {
     "title": "Text to Styles",
     "items": [
-      "runDocumentSetup"
+      "runDocumentSetup",
+      "createTextStyles",
+      "renderStyleSheet",
+      "renderJSON"
     ]
   },
   "version": "3.4.3",

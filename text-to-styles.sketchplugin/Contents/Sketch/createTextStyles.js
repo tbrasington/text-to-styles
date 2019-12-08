@@ -86,7 +86,7 @@ var exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/renderStyles.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/createTextStyles.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -16216,6 +16216,80 @@ var zipWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0
 
 /***/ }),
 
+/***/ "./src/createTextStyles.js":
+/*!*********************************!*\
+  !*** ./src/createTextStyles.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var ramda__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ramda */ "./node_modules/ramda/es/index.js");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (context) {
+  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_2__["extractStyles"])(context, false);
+  var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_2__["generateTextStyles"])(designTokens); // all the pages are present so we can render the styles
+
+  if (designTokens.render) {
+    var document = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.fromNative(context.document);
+    var cachedStyles = document.sharedTextStyles;
+    var stored_styles = []; // const l = textStyles.length;
+    // for (let property = 0; property < l; property++) {
+    //   let styleName = textStyles[property].name;
+    //   let checkStyle = cachedStyles.find(item => item.name === styleName);
+    //   if (typeof checkStyle === "object") {
+    //     const layer = new Text({
+    //       style: textStyles[property].style
+    //     });
+    //     checkStyle.style = layer.style;
+    //     stored_styles.push(checkStyle);
+    //   } else {
+    //     stored_styles.push({
+    //       name: styleName,
+    //       style: textStyles[property].style
+    //     });
+    //   }
+    // }
+
+    Object(ramda__WEBPACK_IMPORTED_MODULE_0__["splitEvery"])(100, textStyles).forEach(function (styleChunk) {
+      styleChunk.forEach(function (style) {
+        var styleName = style.name;
+        var checkStyle = cachedStyles.find(function (item) {
+          return item.name === styleName;
+        });
+
+        if (_typeof(checkStyle) === "object") {
+          var layer = new sketch_dom__WEBPACK_IMPORTED_MODULE_1__["Text"]({
+            style: style.style
+          });
+          checkStyle.style = layer.style;
+          stored_styles.push(checkStyle);
+        } else {
+          stored_styles.push({
+            name: styleName,
+            style: style.style
+          });
+        }
+      });
+    }); // update the shared text styles with this array
+
+    document.sharedTextStyles = stored_styles;
+    context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
+  } else {
+    context.document.showMessage("No styles rendered. Check your document setup. Documentation here https://github.com/tbrasington/text-to-styles");
+  }
+});
+
+/***/ }),
+
 /***/ "./src/generators.js":
 /*!***************************!*\
   !*** ./src/generators.js ***!
@@ -16330,14 +16404,7 @@ function extractStyles(context, convert) {
         DocumentColours[layer.name()] = convert ? convertSketchColourToRGBA(layer.style().firstEnabledFill().color()) : layer.style().firstEnabledFill().color();
       });
     }
-  }); // Remove previous rendered pages (thanks to react-sketchapp)
-
-  for (var index = pages.length - 1; index >= 0; index -= 1) {
-    if (pages.length > 1) {
-      String(pages[index].name()) === "Rendered Styles" && doc.documentData().removePageAtIndex(index);
-    }
-  }
-
+  });
   var allPagesHere = true;
   var messages = []; // first check for pages
 
@@ -16467,97 +16534,6 @@ function generateJSONStyles(json, arrayFormat) {
 
 /***/ }),
 
-/***/ "./src/renderStyles.js":
-/*!*****************************!*\
-  !*** ./src/renderStyles.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var ramda__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ramda */ "./node_modules/ramda/es/index.js");
-/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
-/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _generators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./generators */ "./src/generators.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  var designTokens = Object(_generators__WEBPACK_IMPORTED_MODULE_2__["extractStyles"])(context, false);
-  var textStyles = Object(_generators__WEBPACK_IMPORTED_MODULE_2__["generateTextStyles"])(designTokens); // all the pages are present so we can render the styles
-
-  if (designTokens.render) {
-    var RenderPage = context.document.addBlankPage();
-    RenderPage.name = "Rendered Styles";
-    var document = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.fromNative(context.document);
-    var cachedStyles = document.sharedTextStyles;
-    var stored_styles = []; // const l = textStyles.length;
-    // for (let property = 0; property < l; property++) {
-    //   let styleName = textStyles[property].name;
-    //   let checkStyle = cachedStyles.find(item => item.name === styleName);
-    //   if (typeof checkStyle === "object") {
-    //     const layer = new Text({
-    //       style: textStyles[property].style
-    //     });
-    //     checkStyle.style = layer.style;
-    //     stored_styles.push(checkStyle);
-    //   } else {
-    //     stored_styles.push({
-    //       name: styleName,
-    //       style: textStyles[property].style
-    //     });
-    //   }
-    // }
-
-    Object(ramda__WEBPACK_IMPORTED_MODULE_0__["splitEvery"])(100, textStyles).forEach(function (styleChunk) {
-      styleChunk.forEach(function (style) {
-        var styleName = style.name;
-        var checkStyle = cachedStyles.find(function (item) {
-          return item.name === styleName;
-        });
-
-        if (_typeof(checkStyle) === "object") {
-          var layer = new sketch_dom__WEBPACK_IMPORTED_MODULE_1__["Text"]({
-            style: style.style
-          });
-          checkStyle.style = layer.style;
-          stored_styles.push(checkStyle);
-        } else {
-          stored_styles.push({
-            name: styleName,
-            style: style.style
-          });
-        }
-      });
-    }); // update the shared text styles with this array
-
-    document.sharedTextStyles = stored_styles;
-    var previousFrame = null; // now make a page
-
-    var stl = document.sharedTextStyles.length;
-
-    for (var property = 0; property < stl; property++) {
-      var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_1__["Text"]({
-        text: document.sharedTextStyles[property].name,
-        parent: RenderPage,
-        sharedStyleId: document.sharedTextStyles[property].id,
-        style: document.sharedTextStyles[property].style
-      });
-      textLayer.name = document.sharedTextStyles[property].name;
-      previousFrame = textLayer;
-    }
-
-    context.document.showMessage("".concat(Object.keys(textStyles).length, " styles added (").concat(Object.keys(designTokens.typography).length, " Text Styles * ").concat(Object.keys(designTokens.colours).length, " colours * ").concat(Object.keys(designTokens.textAlignments).length, " alignments) \uD83D\uDE4C"));
-  } else {
-    context.document.showMessage("No styles rendered. Check your document setup. Documentation here https://github.com/tbrasington/text-to-styles");
-  }
-});
-
-/***/ }),
-
 /***/ "sketch/dom":
 /*!*****************************!*\
   !*** external "sketch/dom" ***!
@@ -16589,4 +16565,4 @@ module.exports = require("sketch/ui");
 }
 that['onRun'] = __skpm_run.bind(this, 'default')
 
-//# sourceMappingURL=renderStyles.js.map
+//# sourceMappingURL=createTextStyles.js.map

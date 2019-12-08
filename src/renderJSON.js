@@ -7,6 +7,8 @@ import Sketch from "sketch";
 import { extractStyles, generateJSONStyles } from "./generators";
 
 function save(filename, fileContents) {
+  console.log(filename)
+
   const targetFile = path.resolve(filename);
   fs.writeFileSync(targetFile, fileContents, "utf8");
 }
@@ -38,16 +40,17 @@ export default function(context) {
             const arranged = generateJSONStyles(designTokens, textSaveMethod);
 
             // Save the file
-            dialog.showSaveDialog(
+            let saveDialog = dialog.showSaveDialog(
               doc,
               {
                 defaultPath: "tokens.json",
                 message: "Choose a folder to save your tokens"
-              },
-              function(filename) {
-                save(filename, jsonFormat(arranged));
               }
-            );
+            ).then( result => {
+               if(!result.cancelled) save(result.filePath, jsonFormat(arranged));
+            });
+
+
           }
         }
       }

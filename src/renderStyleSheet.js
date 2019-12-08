@@ -23,10 +23,8 @@ export default function(context) {
     let textLayer = new Text({
       text: document.sharedTextStyles[property].name,
       frame: {
-        width:
-          document.sharedTextStyles[property].name.length *
-          document.sharedTextStyles[property].style.fontSize,
-        height: document.sharedTextStyles[property].style.lineHeight,
+        width:100,
+        height: 32,
         x: 0,
         y:
           previousFrame != null
