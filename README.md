@@ -78,10 +78,13 @@ Order is set Left, Center, Right.
 
 ## Commands
 
-There are two commands available `Create Text Styles`, `Render Style Sheet` and `Export JSON Tokens`
+There are several commands available `Run Document Setup`, `Create Text Styles`, `Render Style Sheet` and `Export JSON Tokens`
+
+### Run Document Setup
+Sets up the Sketch document Page names with sample Styles, Alignments and Colors. You can then remove or modify them as you see fit.
 
 ### Create Text Styles
-Will generate all of your text styles into the Sketch Document. 
+Converts the contents of Styles, Alignments and Colors into text styles. 
 
 ### Render Style Sheet
 This will reate a Page called "Rendered Styles" and create every combination within your text styles. Please make sure you have run the Create Text Styles command before.
