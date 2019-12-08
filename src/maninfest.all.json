@@ -4,9 +4,14 @@
     "icon": "icon.png",
     "commands": [
       {
-        "name": "Render Type Styles",
-        "identifier": "renderStyles",
-        "script": "./renderStyles.js"
+        "name": "Create Text Styles",
+        "identifier": "createTextStyles",
+        "script": "./createTextStyles.js"
+      },
+      {
+        "name": "Render Style Sheet",
+        "identifier": "renderStyleSheet",
+        "script": "./renderStyleSheet.js"
       },
       {
         "name": "Export JSON Tokens",
@@ -17,7 +22,8 @@
     "menu": {
       "title": "Text to Styles",
       "items": [
-        "renderStyles",
+        "createTextStyles",
+        "renderStyleSheet",
         "renderJSON"
       ]
     }
