@@ -81,6 +81,8 @@ export function extractStyles(context, convert) {
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
           //console.log(dom.fromNative(layer).style.borders)
+
+         
           TypographyStyles.push({
             name: String(layer.name()),
             styles: {

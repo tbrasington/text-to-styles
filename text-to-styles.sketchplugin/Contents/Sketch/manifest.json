@@ -8,22 +8,22 @@
     {
       "name": "Run Document Setup",
       "identifier": "runDocumentSetup",
-      "script": "setupDocument.js"
+      "script": "__setupDocument.js"
     },
     {
       "name": "Create Text Styles",
       "identifier": "createTextStyles",
-      "script": "createTextStyles.js"
+      "script": "__createTextStyles.js"
     },
     {
       "name": "Render Style Sheet",
       "identifier": "renderStyleSheet",
-      "script": "renderStyleSheet.js"
+      "script": "__renderStyleSheet.js"
     },
     {
       "name": "Export JSON Tokens",
       "identifier": "renderJSON",
-      "script": "renderJSON.js"
+      "script": "__renderJSON.js"
     }
   ],
   "menu": {
@@ -35,7 +35,7 @@
       "renderJSON"
     ]
   },
-  "version": "3.4.3",
+  "version": "4.0.0",
   "identifier": "Text to Styles",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml",

@@ -23,7 +23,7 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.5.16"
+    "@skpm/builder": "^0.7.5"
   },
   "author": "Thomas Brasington <tbrasington@gmail.com>",
   "dependencies": {

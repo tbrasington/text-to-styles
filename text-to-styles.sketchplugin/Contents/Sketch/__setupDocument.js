@@ -1,6 +1,8 @@
-var that = this;
+var globalThis = this;
+var global = this;
 function __skpm_run (key, context) {
-  that.context = context;
+  globalThis.context = context;
+  try {
 
 var exports =
 /******/ (function(modules) { // webpackBootstrap
@@ -86,15 +88,15 @@ var exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/renderStyleSheet.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/setupDocument.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/renderStyleSheet.js":
-/*!*********************************!*\
-  !*** ./src/renderStyleSheet.js ***!
-  \*********************************/
+/***/ "./src/setupDocument.js":
+/*!******************************!*\
+  !*** ./src/setupDocument.js ***!
+  \******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -104,37 +106,139 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  var document = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(context.document);
-  var pages = context.document.pages(); // Remove previous rendered pages (thanks to react-sketchapp)
+  // Remove exisiting Pages
+  for (var index = context.document.pages().length - 1; index >= 0; index -= 1) {
+    context.document.documentData().removePageAtIndex(index);
+  } // Add pages
 
-  for (var index = pages.length - 1; index >= 0; index -= 1) {
-    if (pages.length > 1) {
-      String(pages[index].name()) === "Rendered Styles" && context.document.documentData().removePageAtIndex(index);
+
+  var StylesPage = context.document.addBlankPage();
+  StylesPage.name = "Styles";
+  var AlignmentsPage = context.document.addBlankPage();
+  AlignmentsPage.name = "Alignments";
+  var ColorsPage = context.document.addBlankPage();
+  ColorsPage.name = "Colors"; // Add Text to Styles Page
+
+  var textLayer1 = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+    text: "Style 1",
+    frame: {
+      width: 100,
+      height: 32,
+      x: 0,
+      y: 0
+    },
+    style: {
+      fontFamily: 'Helvetica',
+      fontWeight: 8,
+      fontSize: 24,
+      lineHeight: 24 * 1.5,
+      fontStyle: "normal",
+      paragraphSpacing: 24 * 1.5,
+      kerning: 0
+    },
+    parent: StylesPage
+  });
+  textLayer1.name = "Style 1";
+  var textLayer2 = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+    text: "Style 2",
+    frame: {
+      width: 100,
+      height: 32,
+      x: 0,
+      y: textLayer1.frame.height + 24
+    },
+    style: {
+      fontFamily: 'Helvetica',
+      fontWeight: 4,
+      fontSize: 16,
+      lineHeight: 16 * 1.5,
+      fontStyle: "normal",
+      paragraphSpacing: 16 * 1.5,
+      kerning: 0
+    },
+    parent: StylesPage
+  });
+  textLayer2.name = "Style 2"; // Add Alignments
+
+  var alignmentLayerLeft = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+    text: "Left",
+    frame: {
+      width: 100,
+      height: 32,
+      x: 0,
+      y: 0
+    },
+    style: {
+      fontFamily: 'Helvetica',
+      fontWeight: 4,
+      fontSize: 16,
+      lineHeight: 16 * 1.5,
+      fontStyle: "normal",
+      paragraphSpacing: 16 * 1.5,
+      kerning: 0,
+      alignment: 'left'
+    },
+    parent: AlignmentsPage
+  });
+  alignmentLayerLeft.name = "Left";
+  var alignmentLayerRight = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
+    text: "Right",
+    frame: {
+      width: 100,
+      height: 32,
+      x: 0,
+      y: 0
+    },
+    style: {
+      fontFamily: 'Helvetica',
+      fontWeight: 4,
+      fontSize: 16,
+      lineHeight: 16 * 1.5,
+      fontStyle: "normal",
+      paragraphSpacing: 16 * 1.5,
+      kerning: 0,
+      alignment: 'right'
+    },
+    parent: AlignmentsPage
+  });
+  alignmentLayerLeft.name = "Right"; // Add Colors
+
+  new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"]({
+    name: 'Black',
+    shapeType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"].ShapeType.Oval,
+    parent: ColorsPage,
+    frame: {
+      width: 100,
+      height: 100,
+      x: 0,
+      y: 0
+    },
+    style: {
+      fills: [{
+        color: '#111111',
+        fillType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Style"].FillType.Color
+      }],
+      borders: []
     }
-  }
-
-  var RenderPage = context.document.addBlankPage();
-  RenderPage.name = "Rendered Styles";
-  var previousFrame = null; // now make a page
-
-  var stl = document.sharedTextStyles.length;
-
-  for (var property = 0; property < stl; property++) {
-    var textLayer = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-      text: document.sharedTextStyles[property].name,
-      frame: {
-        width: 100,
-        height: 32,
-        x: 0,
-        y: previousFrame != null ? Math.ceil(previousFrame.frame.height + previousFrame.frame.y + 24) : 0
-      },
-      sharedStyleId: document.sharedTextStyles[property].id,
-      style: document.sharedTextStyles[property].style,
-      parent: RenderPage
-    });
-    textLayer.name = document.sharedTextStyles[property].name;
-    previousFrame = textLayer;
-  }
+  });
+  new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"]({
+    name: 'Red',
+    shapeType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"].ShapeType.Oval,
+    parent: ColorsPage,
+    frame: {
+      width: 100,
+      height: 100,
+      x: 124,
+      y: 0
+    },
+    style: {
+      fills: [{
+        color: '#cc0000',
+        fillType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Style"].FillType.Color
+      }],
+      borders: []
+    }
+  });
 });
 
 /***/ }),
@@ -151,12 +255,21 @@ module.exports = require("sketch/dom");
 /***/ })
 
 /******/ });
-  if (key === 'default' && typeof exports === 'function') {
-    exports(context);
-  } else {
-    exports[key](context);
+    if (key === 'default' && typeof exports === 'function') {
+      exports(context);
+    } else if (typeof exports[key] !== 'function') {
+      throw new Error('Missing export named "' + key + '". Your command should contain something like `export function " + key +"() {}`.');
+    } else {
+      exports[key](context);
+    }
+  } catch (err) {
+    if (typeof process !== 'undefined' && process.listenerCount && process.listenerCount('uncaughtException')) {
+      process.emit("uncaughtException", err, "uncaughtException");
+    } else {
+      throw err
+    }
   }
 }
-that['onRun'] = __skpm_run.bind(this, 'default')
+globalThis['onRun'] = __skpm_run.bind(this, 'default')
 
-//# sourceMappingURL=renderStyleSheet.js.map
+//# sourceMappingURL=__setupDocument.js.map
