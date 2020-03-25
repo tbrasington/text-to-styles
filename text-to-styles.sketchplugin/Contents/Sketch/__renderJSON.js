@@ -1896,7 +1896,7 @@ function convertSketchColourToRGBA(colour) {
   var red = Math.round(colour.red() * 255);
   var green = Math.round(colour.green() * 255);
   var blue = Math.round(colour.blue() * 255);
-  return 'rgba(' + red + ',' + green + ',' + blue + ',' + colour.alpha() + ')';
+  return "rgba(" + red + "," + green + "," + blue + "," + colour.alpha() + ")";
 }
 
 function extractStyles(context, convert) {
@@ -1912,74 +1912,55 @@ function extractStyles(context, convert) {
   var TypographyStyles = [];
   var DocumentColours = {};
   var textAlignments = [];
-  var FontWeightTable = {
-    "UltraThin": 1,
-    "ExtraThin": 1.5,
-    "UltraLight": 2,
-    "Thin": 2.5,
-    "Light": 3,
-    "Book": 3.5,
-    "Regular": 4,
-    "Roman": 4,
-    "Thick": 4.25,
-    "ExtraThick": 4.5,
-    "Dark": 5,
-    "ExtraDark": 5.5,
-    "Medium": 6,
-    "Semibold": 6,
-    "Bold": 9,
-    "Extrabold": 9.5,
-    "Ultrabold": 10,
-    "Heavy": 10,
-    "Black": 11,
-    "XBlack": 14
-  };
   pages.forEach(function (page) {
     //  alignments
-    if (String(page.name()) === 'Alignments') {
+    if (String(page.name()) === "Alignments") {
       // page exists set to true
       pagesExist.alignments = true;
       page.layers().forEach(function (layer) {
         //log(layer.name() + ' ' + layer.textAlignment())
-        var alignment = 'left';
-        if (layer.textAlignment() === 4) alignment = 'left';
-        if (layer.textAlignment() === 2) alignment = 'center';
-        if (layer.textAlignment() === 1) alignment = 'right';
+        var alignment = "left";
+        if (layer.textAlignment() === 4) alignment = "left";
+        if (layer.textAlignment() === 2) alignment = "center";
+        if (layer.textAlignment() === 1) alignment = "right";
         textAlignments.push(alignment);
       });
     } // page styles
 
 
-    if (String(page.name()) === 'Styles') {
+    if (String(page.name()) === "Styles") {
       // page exists set to true
       pagesExist.styles = true; // get styles
 
       page.layers().forEach(function (layer) {
         if (layer.class() === MSTextLayer) {
-          var textTransform = 'none';
-          if (String(layer.styleAttributes()['MSAttributedStringTextTransformAttribute']) === '1') textTransform = 'uppercase'; //  null: none, 1: uppercase and 2 lowercase
+          // log(layer.font().fontName())
+          // log(layer.fontSize())
+          // log(layer.lineHeight())
+          // log(layer.characterSpacing())
+          // log(layer.style().textStyle().encodedAttributes() )
+          //log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])
+          var textTransform = "none";
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === "1") textTransform = "uppercase"; //  null: none, 1: uppercase and 2 lowercase
 
-          if (String(layer.styleAttributes()['MSAttributedStringTextTransformAttribute']) === '2') textTransform = 'lowercase';
-          var font = layer.font();
-          var weight = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight; // console.log(font.fontName(), weight);
-          // let GetNamedWeight = font.fontName().split('-');
-          // GetNamedWeight = GetNamedWeight[1]
-          // if(GetNamedWeight.match(/^Light$/) !==null ) {
-          //   weight =3.5
-          // }
-          //console.log(font.fontName(), weight);
+          if (String(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"]) === "2") textTransform = "lowercase"; // console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
+          // console.log("-----" )
+          // fontFamily : dom.fromNative(layer).style.fontFamily ,
+          // fontWeight : dom.fromNative(layer).style.fontWeight ,
+          //console.log(dom.fromNative(layer).style.fontStyle)
+          //console.log(dom.fromNative(layer).style.borders)
 
           TypographyStyles.push({
             name: String(layer.name()),
             styles: _objectSpread({
-              fontFamily: font.fontName(),
-              fontWeight: convert ? weight * 100 : weight,
-              fontSize: layer.fontSize() + (convert ? 'px' : ''),
-              lineHeight: layer.lineHeight() + (convert ? 'px' : ''),
-              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : 'normal',
+              fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
+              fontWeight: convert ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight * 100 : sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
+              fontSize: layer.fontSize() + (convert ? "px" : ""),
+              lineHeight: layer.lineHeight() + (convert ? "px" : ""),
+              fontStyle: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle != undefined ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontStyle : "normal",
               paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
             }, convert && {
-              letterSpacing: String(layer.characterSpacing() / 10 + 'em')
+              letterSpacing: String(layer.characterSpacing() / 10 + "em")
             }, {}, !convert && {
               kerning: layer.characterSpacing()
             }, {
@@ -1994,7 +1975,7 @@ function extractStyles(context, convert) {
     } // get colours
 
 
-    if (String(page.name()) === 'Colours' || String(page.name()) === 'Colors') {
+    if (String(page.name()) === "Colours" || String(page.name()) === "Colors") {
       // page exists set to true
       pagesExist.colors = true;
       DocumentColours = {};
@@ -2023,25 +2004,25 @@ function extractStyles(context, convert) {
 
 
   if (pagesExist.alignments && textAlignments.length === 0) {
-    messages.push('Your alignments page has no alignments in it.');
+    messages.push("Your alignments page has no alignments in it.");
     allPagesHere = false;
   }
 
   if (pagesExist.colors && Object.keys(DocumentColours).length === 0) {
-    messages.push('Your colors page has no colors in it.');
+    messages.push("Your colors page has no colors in it.");
     allPagesHere = false;
   }
 
   if (pagesExist.styles && TypographyStyles.length === 0) {
-    messages.push('Your styles page has no styles in it.');
+    messages.push("Your styles page has no styles in it.");
     allPagesHere = false;
   }
 
-  var messageString = '';
+  var messageString = "";
   messages.forEach(function (message) {
-    messageString += message + '\n';
+    messageString += message + "\n";
   });
-  if (!allPagesHere) sketch_ui__WEBPACK_IMPORTED_MODULE_1___default.a.alert('Unable to render styles', messageString);
+  if (!allPagesHere) sketch_ui__WEBPACK_IMPORTED_MODULE_1___default.a.alert("Unable to render styles", messageString);
   var DesignSystemTokens = {
     colours: DocumentColours,
     typography: TypographyStyles,
@@ -2058,9 +2039,9 @@ function generateTextStyles(json) {
       item.alignments.map(function (align, index) {
         // this splits at a slash and adds the adjustments for breakpoints after the alignment
         // assumption is that there is only one adjusment
-        var name = item.name.split('/');
+        var name = item.name.split("/");
         typeStyles.push({
-          name: "".concat(name[0], "/").concat(colour, "/").concat(index + '_' + align + (name.length > 1 ? '/' + name[1] : '')),
+          name: "".concat(name[0], "/").concat(colour, "/").concat(index + "_" + align + (name.length > 1 ? "/" + name[1] : "")),
           style: _objectSpread({
             textColor: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.Style.colorToString(json.colours[colour]),
             alignment: align
@@ -2090,7 +2071,7 @@ function generateJSONStyles(json, arrayFormat) {
   var refinedBreakpoints = []; //log(json.typography)
 
   json.typography.forEach(function (item) {
-    var name = item.name.split('/');
+    var name = item.name.split("/");
 
     if (!typeStyles[name[0]]) {
       typeStyles[name[0]] = {
@@ -2128,22 +2109,7 @@ function generateJSONStyles(json, arrayFormat) {
     }) : typeStyles
   };
   return formattedTokens;
-} // log(layer.font().fontName())
-// log(layer.fontSize())
-// log(layer.lineHeight())
-// log(layer.characterSpacing())
-// log(layer.style().textStyle().encodedAttributes() )
-//log(layer.styleAttributes()["MSAttributedStringTextTransformAttribute"])	
-// console.log( String(layer.name()) +  " " +  layer.font().fontName() + " "  + dom.fromNative(layer).style.fontWeight + " " +  dom.fromNative(layer).style.fontStyle  )
-// console.log("-----" )
-// fontFamily : dom.fromNative(layer).style.fontFamily ,
-// fontWeight : dom.fromNative(layer).style.fontWeight ,
-//console.log(dom.fromNative(layer).style.fontStyle)
-//console.log(dom.fromNative(layer).style.borders)
-// console.log(layer.name(),dom.fromNative(layer).style.fontFamily,dom.fromNative(layer).style.fontWeight)
-//.log(layer.font().fontDescriptorWithFontAttributes_)
-//console.log(NSFontManager.sharedFontManager().traitsOfFont_(layer.font()));
-//fontDescriptorWithFontAttributes
+}
 
 /***/ }),
 
