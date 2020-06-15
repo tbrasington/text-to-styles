@@ -1,11 +1,11 @@
 {
   "name": "text-to-styles",
-  "version": "4.0.0",
+  "version": "5.0.0-alpha",
   "license": "MIT",
   "repository": "https://github.com/tbrasington/text-to-styles.git",
   "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
   "engines": {
-    "sketch": ">=53.0"
+    "sketch": ">=49.0"
   },
   "skpm": {
     "name": "Text to Styles",
@@ -23,7 +23,7 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.7.5"
+    "@skpm/builder": "^0.7.0"
   },
   "author": "Thomas Brasington <tbrasington@gmail.com>",
   "dependencies": {

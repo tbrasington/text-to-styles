@@ -3,39 +3,22 @@
   "bundleVersion": 1,
   "icon": "icon.png",
   "name": "Text to Styles",
+  "$schema": "https://raw.githubusercontent.com/sketch-hq/SketchAPI/develop/docs/sketch-plugin-manifest-schema.json",
   "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
   "commands": [
     {
-      "name": "Run Document Setup",
-      "identifier": "runDocumentSetup",
-      "script": "__setupDocument.js"
-    },
-    {
-      "name": "Create Text Styles",
-      "identifier": "createTextStyles",
-      "script": "__createTextStyles.js"
-    },
-    {
-      "name": "Render Style Sheet",
-      "identifier": "renderStyleSheet",
-      "script": "__renderStyleSheet.js"
-    },
-    {
-      "name": "Export JSON Tokens",
-      "identifier": "renderJSON",
-      "script": "__renderJSON.js"
+      "name": "test ",
+      "identifier": "text-to-styles.testCommand",
+      "script": "__advanced.js"
     }
   ],
   "menu": {
     "title": "Text to Styles",
     "items": [
-      "runDocumentSetup",
-      "createTextStyles",
-      "renderStyleSheet",
-      "renderJSON"
+      "text-to-styles.testCommand"
     ]
   },
-  "version": "4.0.0",
+  "version": "5.0.0-alpha",
   "identifier": "Text to Styles",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/tbrasington/text-to-styles/master/.appcast.xml",

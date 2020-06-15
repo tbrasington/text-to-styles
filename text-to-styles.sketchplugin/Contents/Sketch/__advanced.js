@@ -88,15 +88,15 @@ var exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/setupDocument.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/advanced.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/setupDocument.js":
-/*!******************************!*\
-  !*** ./src/setupDocument.js ***!
-  \******************************/
+/***/ "./src/advanced.js":
+/*!*************************!*\
+  !*** ./src/advanced.js ***!
+  \*************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -105,138 +105,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_0__);
 
+var properties = ['opacity', 'blendingMode', 'blur', 'fills', 'borders', 'borderOptions', 'shadows', 'innerShadows', 'alignment', 'verticalAlignment', 'kerning', 'lineHeight', 'paragraphSpacing', 'textColor', 'textTransform', 'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'fontVariant', 'fontStretch', 'textUnderline', 'textStrikethrough', 'fontAxes']; //testCommand
+
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  // Remove exisiting Pages
-  for (var index = context.document.pages().length - 1; index >= 0; index -= 1) {
-    context.document.documentData().removePageAtIndex(index);
-  } // Add pages
+  var checkPropertyExistsOnPage = function checkPropertyExistsOnPage(_ref) {
+    var page = _ref.page,
+        properties = _ref.properties;
+    return properties.forEach(function (item) {
+      if (String(item) === String(page)) return true;
+    });
+  }; // get the base styles from the text layer
+  // we will remove properties based on the other layer names
 
 
-  var StylesPage = context.document.addBlankPage();
-  StylesPage.name = "Styles";
-  var AlignmentsPage = context.document.addBlankPage();
-  AlignmentsPage.name = "Alignments";
-  var ColorsPage = context.document.addBlankPage();
-  ColorsPage.name = "Colors"; // Add Text to Styles Page
+  var extractStyles = function extractStyles(page, properties) {
+    var baseStyles = [];
+    page.layers().forEach(function (layer) {
+      if (layer.class() === MSTextLayer) {
+        var allStyles = {};
+        properties.forEach(function (property) {
+          allStyles[property] = sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style[property];
+        });
+        baseStyles.push({
+          name: layer.name(),
+          styles: allStyles,
+          tokens: []
+        });
+      }
+    });
+    return baseStyles;
+  };
 
-  var textLayer1 = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-    text: "Style 1",
-    frame: {
-      width: 100,
-      height: 32,
-      x: 0,
-      y: 0
-    },
-    style: {
-      fontFamily: 'Helvetica',
-      fontWeight: 8,
-      fontSize: 24,
-      lineHeight: 24 * 1.5,
-      fontStyle: "normal",
-      paragraphSpacing: 24 * 1.5,
-      kerning: 0
-    },
-    parent: StylesPage
-  });
-  textLayer1.name = "Style 1";
-  var textLayer2 = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-    text: "Style 2",
-    frame: {
-      width: 100,
-      height: 32,
-      x: 0,
-      y: textLayer1.frame.height + 24
-    },
-    style: {
-      fontFamily: 'Helvetica',
-      fontWeight: 4,
-      fontSize: 16,
-      lineHeight: 16 * 1.5,
-      fontStyle: "normal",
-      paragraphSpacing: 16 * 1.5,
-      kerning: 0
-    },
-    parent: StylesPage
-  });
-  textLayer2.name = "Style 2"; // Add Alignments
+  var doc = context.document;
+  var pages = doc.pages();
+  var propertyPages = [];
+  pages.forEach(function (page) {
+    var pageExists = checkPropertyExistsOnPage({
+      page: page.name(),
+      properties: properties
+    }); // get the base, throw an error if it doesn't exist
 
-  var alignmentLayerLeft = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-    text: "Left",
-    frame: {
-      width: 100,
-      height: 32,
-      x: 0,
-      y: 0
-    },
-    style: {
-      fontFamily: 'Helvetica',
-      fontWeight: 4,
-      fontSize: 16,
-      lineHeight: 16 * 1.5,
-      fontStyle: "normal",
-      paragraphSpacing: 16 * 1.5,
-      kerning: 0,
-      alignment: 'left'
-    },
-    parent: AlignmentsPage
-  });
-  alignmentLayerLeft.name = "Left";
-  var alignmentLayerRight = new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Text"]({
-    text: "Right",
-    frame: {
-      width: 100,
-      height: 32,
-      x: 0,
-      y: 0
-    },
-    style: {
-      fontFamily: 'Helvetica',
-      fontWeight: 4,
-      fontSize: 16,
-      lineHeight: 16 * 1.5,
-      fontStyle: "normal",
-      paragraphSpacing: 16 * 1.5,
-      kerning: 0,
-      alignment: 'right'
-    },
-    parent: AlignmentsPage
-  });
-  alignmentLayerLeft.name = "Right"; // Add Colors
-
-  new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"]({
-    name: 'Black',
-    shapeType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"].ShapeType.Oval,
-    parent: ColorsPage,
-    frame: {
-      width: 100,
-      height: 100,
-      x: 0,
-      y: 0
-    },
-    style: {
-      fills: [{
-        color: '#111111',
-        fillType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Style"].FillType.Color
-      }],
-      borders: []
+    if (String(page.name()) === 'Styles') {
+      var extractedBaseStyles = extractStyles(page, properties);
+      console.log(extractedBaseStyles);
     }
-  });
-  new sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"]({
-    name: 'Red',
-    shapeType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["ShapePath"].ShapeType.Oval,
-    parent: ColorsPage,
-    frame: {
-      width: 100,
-      height: 100,
-      x: 124,
-      y: 0
-    },
-    style: {
-      fills: [{
-        color: '#cc0000',
-        fillType: sketch_dom__WEBPACK_IMPORTED_MODULE_0__["Style"].FillType.Color
-      }],
-      borders: []
+
+    if (pageExists) {
+      propertyPages.push({
+        key: page.name(),
+        page: page
+      });
     }
   });
 });
@@ -272,4 +190,4 @@ module.exports = require("sketch/dom");
 }
 globalThis['onRun'] = __skpm_run.bind(this, 'default')
 
-//# sourceMappingURL=__setupDocument.js.map
+//# sourceMappingURL=__advanced.js.map
