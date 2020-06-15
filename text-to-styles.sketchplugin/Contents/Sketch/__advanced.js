@@ -134,27 +134,36 @@ var properties = ['opacity', 'blendingMode', 'blur', 'fills', 'borders', 'border
       }
     });
     return baseStyles;
-  };
+  }; // extract the specfic style from a page
+  // take into account if its for one style or everyone Style 1/center
+
+
+  var extractProperty = function extractProperty(page, properties, baseStyles) {
+    var style = {};
+    return style;
+  }; // lets build the style objects
+
 
   var doc = context.document;
-  var pages = doc.pages();
-  var propertyPages = [];
+  var pages = doc.pages(); // get the base styles first
+
+  var extractedBaseStyles = {};
+  pages.forEach(function (page) {
+    if (String(page.name()) === 'Styles') {
+      extractedBaseStyles = extractStyles(page, properties);
+    }
+  }); // get the base, throw an error if it doesn't exist
+  //console.log(extractedBaseStyles);
+
   pages.forEach(function (page) {
     var pageExists = checkPropertyExistsOnPage({
       page: page.name(),
       properties: properties
-    }); // get the base, throw an error if it doesn't exist
+    }); // does the page exist within the array?
 
-    if (String(page.name()) === 'Styles') {
-      var extractedBaseStyles = extractStyles(page, properties);
-      console.log(extractedBaseStyles);
-    }
-
-    if (pageExists) {
-      propertyPages.push({
-        key: page.name(),
-        page: page
-      });
+    if (String(page.name()) !== 'Styles' && pageExists) {
+      //const extractedProperty = 
+      extractProperty(page, properties, extractedBaseStyles);
     }
   });
 });
