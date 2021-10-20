@@ -80,9 +80,14 @@ export function extractStyles(context, convert) {
           // fontFamily : dom.fromNative(layer).style.fontFamily ,
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
-          //console.log(dom.fromNative(layer).style.borders)
+         console.log(layer.sketchObject)
 
-         
+         function appKitWeightToCSSWeight(weight){
+          return [100,100,100,200,300,400,500,500,600,700,800,900,900,900,900,900][weight]
+        }
+        var weight = NSFontManager.sharedFontManager().weightOfFont_(layer.font());
+        log(appKitWeightToCSSWeight(weight)); 
+
           TypographyStyles.push({
             name: String(layer.name()),
             styles: {

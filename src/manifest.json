@@ -5,25 +5,11 @@
   "name": "Text to Styles",
   "description": "Generates Sketch Text Styles from Layers to easily manage, size, colour and alignment variations",
   "commands": [
-    {
-      "name": "Run Document Setup",
-      "identifier": "runDocumentSetup",
-      "script": "./setupDocument.js"
-    },
+
     {
       "name": "Create Text Styles",
       "identifier": "createTextStyles",
       "script": "./createTextStyles.js"
-    },
-    {
-      "name": "Render Style Sheet",
-      "identifier": "renderStyleSheet",
-      "script": "./renderStyleSheet.js"
-    },
-    {
-      "name": "Export JSON Tokens",
-      "identifier": "renderJSON",
-      "script": "./renderJSON.js"
     }
   ],
   "menu": {

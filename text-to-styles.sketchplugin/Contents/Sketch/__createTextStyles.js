@@ -16359,6 +16359,10 @@ function extractStyles(context, convert) {
 
       page.layers().forEach(function (layer) {
         if (layer.class() === MSTextLayer) {
+          var appKitWeightToCSSWeight = function appKitWeightToCSSWeight(weight) {
+            return [100, 100, 100, 200, 300, 400, 500, 500, 600, 700, 800, 900, 900, 900, 900, 900][weight];
+          };
+
           // log(layer.font().fontName())
           // log(layer.fontSize())
           // log(layer.lineHeight())
@@ -16373,11 +16377,13 @@ function extractStyles(context, convert) {
           // fontFamily : dom.fromNative(layer).style.fontFamily ,
           // fontWeight : dom.fromNative(layer).style.fontWeight ,
           //console.log(dom.fromNative(layer).style.fontStyle)
-          //console.log(dom.fromNative(layer).style.borders)
 
+          console.log(layer.sketchObject);
+          var weight = NSFontManager.sharedFontManager().weightOfFont_(layer.font());
+          log(appKitWeightToCSSWeight(weight));
           TypographyStyles.push({
             name: String(layer.name()),
-            styles: _objectSpread({
+            styles: _objectSpread(_objectSpread(_objectSpread({
               fontFamily: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontFamily,
               fontWeight: convert ? sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight * 100 : sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.fontWeight,
               fontSize: layer.fontSize() + (convert ? "px" : ""),
@@ -16386,9 +16392,9 @@ function extractStyles(context, convert) {
               paragraphSpacing: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.paragraphSpacing
             }, convert && {
               letterSpacing: String(layer.characterSpacing() / 10 + "em")
-            }, {}, !convert && {
+            }), !convert && {
               kerning: layer.characterSpacing()
-            }, {
+            }), {}, {
               textTransform: textTransform,
               borders: sketch_dom__WEBPACK_IMPORTED_MODULE_0___default.a.fromNative(layer).style.borders || []
             }),
